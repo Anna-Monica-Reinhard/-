@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.AuthenticationAndRegister">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardviewEditUserprofile"
+        style="@style/myMaterialCardAuth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:cardElevation="6dp"
+        app:cardPreventCornerOverlap="false"
+        app:contentPaddingBottom="54dp"
+        app:contentPaddingLeft="16dp"
+        app:contentPaddingRight="16dp"
+        app:contentPaddingTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/empty_tall_divider"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textColor="@color/txt_color"
+                android:textSize="34dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_layout_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Login">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Login" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_layout_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Name" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_layout_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    tools:text="Email" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_layout_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone number">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Phone number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_layout_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    tools:text="Password" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_layout_password_repeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Repeat password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password_repeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    tools:text="Repeat password" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_login_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:text="login"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/don_t_have_any_account_signup" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/llHorizontal"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="20dp"-->
+    <!--        android:background="@drawable/round_corner_bgr_stroke"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:padding="5dp">-->
+
+    <!--        <com.hbb20.CountryCodePicker-->
+    <!--            android:id="@+id/countryCodePicker"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center_vertical"-->
+    <!--            app:ccpDialog_keyboardAutoPopup="false"-->
+    <!--            app:ccpDialog_textColor="@color/txt_color"-->
+    <!--            app:ccpDialog_background="@color/et_bgr_color"-->
+    <!--            app:ccp_arrowSize="16sp"-->
+    <!--            app:ccp_autoDetectCountry="true"-->
+    <!--            app:ccp_autoDetectLanguage="true"-->
+    <!--            app:ccp_autoFormatNumber="true"-->
+    <!--            app:ccp_contentColor="@color/txt_color"-->
+    <!--            app:ccp_countryAutoDetectionPref="LOCALE_ONLY"-->
+    <!--            app:ccp_showArrow="true"-->
+    <!--            app:ccp_showFlag="true"-->
+    <!--            app:ccp_showFullName="false"-->
+    <!--            app:ccp_showNameCode="false"-->
+    <!--            app:ccp_showPhoneCode="true"-->
+    <!--            app:ccp_textSize="16sp" />-->
+
+    <!--        <EditText-->
+    <!--            android:id="@+id/etPhoneNumber"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:background="@color/white"-->
+    <!--            android:hint="@string/phone_number"-->
+    <!--            android:inputType="phone"-->
+    <!--            android:maxLength="29"-->
+    <!--            android:textColor="@color/txt_color"-->
+    <!--            android:textSize="16sp" />-->
+    <!--    </LinearLayout>-->
+
+</LinearLayout>
