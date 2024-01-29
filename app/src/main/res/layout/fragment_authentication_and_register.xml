@@ -49,10 +49,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_layout_login"
+                    style="@style/myTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_input_height"
                     android:layout_marginTop="16dp"
-                    style="@style/myTextInputLayout"
                     android:hint="Login">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -64,10 +64,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_layout_password"
+                    style="@style/myTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_input_height"
                     android:layout_marginTop="16dp"
-                    style="@style/myTextInputLayout"
                     android:hint="Password">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -88,11 +88,11 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_layout_name"
+                    style="@style/myTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Name"
-                    style="@style/myTextInputLayout"
 
                     >
 
@@ -107,10 +107,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_layout_email"
+                    style="@style/myTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_input_height"
                     android:layout_marginTop="16dp"
-                    style="@style/myTextInputLayout"
 
                     android:hint="Email">
 
@@ -118,39 +118,41 @@
                         android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
                         android:background="@drawable/round_corner_edittext"
+                        android:inputType="textEmailAddress"
                         tools:text="Email" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_layout_phone_number"
+                    style="@style/myTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_input_height"
                     android:layout_marginTop="16dp"
-                    style="@style/myTextInputLayout"
                     android:hint="Phone number">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_phone_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_edittext"
                         tools:text="Phone number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_layout_password_repeat"
+                    style="@style/myTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_input_height"
                     android:layout_marginTop="16dp"
-                    style="@style/myTextInputLayout"
                     android:hint="Repeat password">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_password_repeat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_edittext"
                         android:inputType="textPassword"
                         tools:text="Repeat password" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -166,8 +168,11 @@
                 android:textColor="@color/white" />
 
             <TextView
+                android:id="@+id/btn_sign_up"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
                 android:text="@string/don_t_have_any_account_signup" />
             <!--hz-->
             <com.google.android.material.divider.MaterialDivider

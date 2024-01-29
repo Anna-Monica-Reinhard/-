@@ -11,4 +11,11 @@
     <color name="stroke_color">#3F51B5</color>
     <color name="txt_color">@color/material_dynamic_neutral30</color>
     <color name="theme_cardview_bgr_color">@color/material_dynamic_neutral99</color>
+    <color name="theme_cardview_bgr">#AAA0BD</color>
+    <color name="theme_ic_color">#000000</color>
+    <color name="btn_disabled_color">#EFEEEC</color>
+    <color name="btn_pressed_color">#333364E0</color>
+    <color name="btn_enabled_color">#3364E0</color>
+    <color name="hint_text">#625670</color>
+
 </resources>

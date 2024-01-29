@@ -6,7 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".UI.ProductsFragment">
 
+    <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        local:layout_constraintLeft_toLeftOf="parent"
+        local:layout_constraintRight_toRightOf="parent"
+        local:layout_constraintTop_toTopOf="parent"
+        local:menu="@menu/products_actionbar_menu"
+        local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."
+        local:theme="@style/ThemeOverlay.AppCompat.Dark"
+        local:titleTextAppearance="@style/txtCenterToolbar"
+        local:titleTextColor="@color/black">
 
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textAppearance="@style/txtCenterToolbar" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:listitem="@layout/rv_category_item" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_dishes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="12dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/rv_tags"
+        app:spanCount="3"
+        tools:itemCount="20"
+        tools:listitem="@layout/rv_product_item" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_add_product"
