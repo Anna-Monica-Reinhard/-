@@ -13,5 +13,5 @@
         android:icon="@drawable/ic_add"
         android:title="Filter"
         app:actionViewClass="androidx.appcompat.widget.AppCompatSpinner"
-        app:showAsAction="collapseActionView" />
+        app:showAsAction="always" />
 </menu>

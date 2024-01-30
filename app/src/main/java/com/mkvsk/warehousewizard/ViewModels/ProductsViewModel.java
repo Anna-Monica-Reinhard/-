@@ -16,4 +16,6 @@ public class ProductsViewModel extends ViewModel {
     public LiveData<String> getText() {
         return mText;
     }
+
+
 }
