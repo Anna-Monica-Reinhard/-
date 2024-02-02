@@ -1,0 +1,219 @@
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import java.util.concurrent.Executors;
+import android.util.Log;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import java.util.concurrent.Executors;
+import android.util.Log;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import java.util.concurrent.Executors;
+import android.util.Log;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import java.util.concurrent.Executors;
+import android.util.Log;
+
+public class CategoryViewModel extends ViewModel {
+    private FavouritesRepository repository;
+    public LiveData<List<Person>> people;
+    public LiveData<List<Starship>> starship;
+    public LiveData<List<Film>> films;
+    public LiveData<List<Planet>> planets;
+
+    public FavouritesViewModel(FavouritesRepository repository) {
+        this.repository = repository;
+        this.people = LiveDataReactiveStreams.fromPublisher(repository.getAllPeople());
+        this.starship = LiveDataReactiveStreams.fromPublisher(repository.getAllStarship());
+        this.films = LiveDataReactiveStreams.fromPublisher(repository.getAllFilms());
+        this.planets = LiveDataReactiveStreams.fromPublisher(repository.getAllPlanets());
+    }
+
+    public LiveData<List<Person>> fetchFavPeople() {
+        return LiveDataReactiveStreams.fromPublisher(
+            repository.getAllPeople()
+        );
+    }
+
+    public void insert(Object value) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            Long newRowId = null;
+            if (value instanceof Person) {
+                newRowId = repository.insert((Person) value);
+            } else if (value instanceof Starship) {
+                newRowId = repository.insert((Starship) value);
+            } else if (value instanceof Film) {
+                newRowId = repository.insert((Film) value);
+            } else if (value instanceof Planet) {
+                newRowId = repository.insert((Planet) value);
+            }
+
+            if (newRowId != null && newRowId > -1) {
+                Log.d("TAG", "Inserted Successfully " + newRowId);
+            } else {
+                Log.d("TAG", "Error Occurred");
+            }
+        });
+    }
+
+    public void delete(Object value) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            if (value instanceof Person) {
+                repository.delete((Person) value);
+            }
+        });
+    }
+}
+
+000000000
+
+ private fun loadSharedPreferences() {
+        sharedPreferences =
+            getSharedPreferences(SP_TAG, MODE_PRIVATE)
+        setDefaultNightMode(
+            if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)) {
+                MODE_NIGHT_YES
+            } else {
+                MODE_NIGHT_NO
+            }
+        )
+
+        username = sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
+        password = sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
+        if (username!!.isEmpty() || password!!.isEmpty()) {
+            Log.d(TAG, "logout: no username / password found")
+            logout()
+        } else {
+            Log.d(TAG, "login: $username")
+            login()
+        }
+    }
+
+ private fun logout() {
+        sharedPreferences.edit().putString(SP_TAG_USERNAME, StringUtils.EMPTY).apply()
+        sharedPreferences.edit().putString(SP_TAG_PASSWORD, StringUtils.EMPTY).apply()
+        startMainScreen("", "")
+    }
+
+
+ private fun saveUserDataToSharedPrefs() {
+         val sharedPreferences = requireActivity().getSharedPreferences(SP_TAG, MODE_PRIVATE)
+         val editor = sharedPreferences.edit()
+         editor.putString(SP_TAG_USERNAME, authViewModel.username.value)
+         editor.putString(SP_TAG_PASSWORD, authViewModel.password.value)
+         editor.apply()
+     }
+
+
+     import android.arch.lifecycle.LiveData;
+     import android.arch.lifecycle.MutableLiveData;
+     import android.arch.lifecycle.ViewModel;
+     import android.widget.Toast;
+
+     import java.util.List;
+
+     import retrofit2.Call;
+     import retrofit2.Callback;
+     import retrofit2.Response;
+     import retrofit2.Retrofit;
+     import retrofit2.converter.gson.GsonConverterFactory;
+
+     public class HeroesViewModel extends ViewModel {
+
+         //this is the data that we will fetch asynchronously
+         private MutableLiveData<List<Hero>> heroList;
+
+         //we will call this method to get the data
+         public LiveData<List<Hero>> getHeroes() {
+             //if the list is null
+             if (heroList == null) {
+                 heroList = new MutableLiveData<List<Hero>>();
+                 //we will load it asynchronously from server in this method
+                 loadHeroes();
+             }
+
+             //finally we will return the list
+             return heroList;
+         }
+
+
+         //This method is using Retrofit to get the JSON data from URL
+         private void loadHeroes() {
+             Retrofit retrofit = new Retrofit.Builder()
+                     .baseUrl(Api.BASE_URL)
+                     .addConverterFactory(GsonConverterFactory.create())
+                     .build();
+
+             Api api = retrofit.create(Api.class);
+             Call<List<Hero>> call = api.getHeroes();
+
+
+             call.enqueue(new Callback<List<Hero>>() {
+                 @Override
+                 public void onResponse(Call<List<Hero>> call, Response<List<Hero>> response) {
+
+                     //finally we are setting the list to our MutableLiveData
+                     heroList.setValue(response.body());
+                 }
+
+                 @Override
+                 public void onFailure(Call<List<Hero>> call, Throwable t) {
+
+                 }
+             });
+         }
+     }
+
+
+
+
+
+     private void saveNewUser(String firstName, String lastName) {
+             AppDatabase db  = AppDatabase.getDbInstance(this.getApplicationContext());
+
+             User user = new User();
+             user.firstName = firstName;
+             user.lastName = lastName;
+             db.userDao().insertUser(user);
+
+             finish();
+
+         }
+
+
+
+
+
+         @Database(entities = {User.class}, version  = 1)
+         public abstract class AppDatabase extends RoomDatabase {
+
+             public abstract UserDao userDao();
+
+             private static AppDatabase INSTANCE;
+
+             public static AppDatabase getDbInstance(Context context) {
+
+                 if(INSTANCE == null) {
+                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "DB_NAME")
+                             .allowMainThreadQueries()
+                             .build();
+
+                 }
+                 return INSTANCE;
+             }
+         }

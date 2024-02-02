@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="myMaterialCardDialogs" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/theme_cardview_bgr_color</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_right
+        </item>
+    </style>
+
     <style name="myMaterialCardAuth" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr_color</item>
         <item name="shapeAppearanceOverlay">
@@ -10,13 +17,13 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_right" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">0dp</item>
-        <item name="cornerSizeTopLeft">50dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeTopRight">10dp</item>
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeBottomRight">10dp</item>
+        <item name="cornerSizeBottomLeft">10dp</item>
     </style>
 
-<!--    myTextInputLayout-->
+    <!--    myTextInputLayout-->
     <style name="myTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>

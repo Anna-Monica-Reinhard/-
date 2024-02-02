@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.ProductsFragment">
+    tools:context=".ui.view.ProductsFragment">
 
     <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
@@ -31,12 +31,12 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_tags"
+        android:id="@+id/rv_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -44,18 +44,19 @@
         tools:listitem="@layout/rv_category_item" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_dishes"
+        android:id="@+id/rv_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="12dp"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:overScrollMode="never"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="12dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/rv_tags"
+        app:layout_constraintTop_toBottomOf="@id/rv_category"
         app:spanCount="3"
         tools:itemCount="20"
+        tools:layout_editor_absoluteX="12dp"
         tools:listitem="@layout/rv_product_item" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

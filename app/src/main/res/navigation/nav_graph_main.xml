@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/navigation_products"
-        android:name="com.mkvsk.warehousewizard.UI.ProductsFragment"
+        android:name="com.mkvsk.warehousewizard.ui.view.ProductsFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_products" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.mkvsk.warehousewizard.UI.DashboardFragment"
+        android:name="com.mkvsk.warehousewizard.ui.view.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_auth_and_register"
-        android:name="com.mkvsk.warehousewizard.UI.AuthenticationAndRegister"
-        tools:layout="@layout/fragment_authentication_and_register" />
+        android:name="com.mkvsk.warehousewizard.ui.view.AuthAndRegisterFragment"
+        tools:layout="@layout/fragment_auth_and_register" />
 </navigation>

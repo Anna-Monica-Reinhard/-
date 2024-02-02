@@ -14,10 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
         app:cardElevation="0dp"
-        app:strokeColor="@color/black"
-        app:strokeWidth="2dp"
         app:cardPreventCornerOverlap="false"
-        app:layout_constraintDimensionRatio="H,1:1">
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl"
@@ -29,7 +29,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/img"
+                tools:src="@drawable/loader"
+                android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="H,1:1"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -39,13 +40,24 @@
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
-        android:id="@+id/tv_product_name"
+        android:id="@+id/tv_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginHorizontal="4dp"
-        android:autoSizeMaxTextSize="14sp"
-        android:autoSizeMinTextSize="9sp"
+        android:layout_marginHorizontal="6dp"
+        android:autoSizeStepGranularity="1sp"
+        android:textColor="@color/black"
+        android:textSize="9sp"
+        tools:text="Product code: 38838383" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="6dp"
+        android:autoSizeMaxTextSize="13sp"
+        android:autoSizeMinTextSize="8sp"
         android:autoSizeStepGranularity="1sp"
         android:maxLines="2"
         android:textColor="@color/black"
