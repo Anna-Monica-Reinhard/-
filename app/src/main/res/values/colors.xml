@@ -21,5 +21,6 @@
     <color name="main_text_color">#000000</color>
     <color name="theme_primary_bgr">#ECEFF1</color>
     <color name="bag_buttons_bgr_color">#625670</color>
+    <color name="btn_disabled_color_fragments">#B7BFC5</color>
 
 </resources>

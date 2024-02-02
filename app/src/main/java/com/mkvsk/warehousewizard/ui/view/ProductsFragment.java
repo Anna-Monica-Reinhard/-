@@ -8,7 +8,6 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mkvsk.warehousewizard.MainActivity;
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
@@ -54,15 +54,15 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ProductViewModel productViewModel =
-                new ViewModelProvider(this).get(ProductViewModel.class);
+//        ProductViewModel productViewModel =
+//                new ViewModelProvider(this).get(ProductViewModel.class);
 
         binding = FragmentProductsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+
 
 //        final TextView textView = binding.textHome;
 //        productViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+        return binding.getRoot();
     }
 
     @Override

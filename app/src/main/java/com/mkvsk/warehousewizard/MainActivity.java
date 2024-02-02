@@ -1,5 +1,8 @@
 package com.mkvsk.warehousewizard;
 
+import static com.mkvsk.warehousewizard.ui.util.Constants.SP_TAG_USERNAME;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     CategoryViewModel categoryViewModel;
     UserViewModel userViewModel;
     DashboardViewModel dashboardViewModel;
+    String login = "";
+    String password = "";
+    NavController navController;
+    boolean isAuthMode = true;
 
     @Override
     protected void onDestroy() {
@@ -50,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
         setContentView(binding.getRoot());
         loadSharedPreferences();
         BottomNavigationView navView = binding.navView;
@@ -58,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //                R.id.navigation_products, R.id.navigation_dashboard)
 //                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 //        initDatabase();
@@ -72,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-
+        if (!login.isBlank() && !password.isBlank()) {
+            navController.navigate(R.id.navigation_products);
+        }
     }
 
     private void initDatabase() {
@@ -89,13 +99,17 @@ public class MainActivity extends AppCompatActivity {
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
-
-//        userViewModel.getLogin().observe(this, binding.etLogin::setText);
-//        userViewModel.getPassword().observe(getViewLifecycleOwner(), binding.etPassword::setText);
-
     }
 
     private void loadSharedPreferences() {
+        login = sharedPreferences.getString(SP_TAG_USERNAME, "");
+        password = sharedPreferences.getString(SP_TAG_USERNAME, "");
 
+        if (!login.isBlank() && !login.isEmpty()
+                && !password.isBlank() && !password.isEmpty()) {
+            userViewModel.setLogin(login);
+            userViewModel.setPassword(password);
+        }
     }
+
 }
