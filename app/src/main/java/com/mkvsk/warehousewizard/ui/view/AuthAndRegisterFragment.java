@@ -1,10 +1,14 @@
 package com.mkvsk.warehousewizard.ui.view;
 
+import static com.mkvsk.warehousewizard.ui.util.Constants.PASSWORD_REGEX;
 import static com.mkvsk.warehousewizard.ui.util.Constants.SP_TAG_PASSWORD;
 import static com.mkvsk.warehousewizard.ui.util.Constants.SP_TAG_USERNAME;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +44,7 @@ public class AuthAndRegisterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        initObservers();
+        getDataFromSharedPrefs();
         initViews();
         initListeners();
     }
@@ -98,23 +103,36 @@ public class AuthAndRegisterFragment extends Fragment {
         binding.etEmail.setText("");
         binding.etPhoneNumber.setText("");
         binding.etCreatePassword.setText("");
+        binding.btnLoginRegister.setEnabled(false);
     }
 
     private void saveUserDataToSharedPrefs(String login, String password) {
+        sharedPreferences = this.requireActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(SP_TAG_USERNAME, login);
-        editor.putString(SP_TAG_PASSWORD, password);
-        editor.apply();
+        editor.clear();
+        editor.putString(login, SP_TAG_USERNAME).apply();
+        editor.putString(password, SP_TAG_PASSWORD).apply();
     }
 
     private void getDataFromSharedPrefs() {
-        login = sharedPreferences.getString(SP_TAG_USERNAME, "");
-        password = sharedPreferences.getString(SP_TAG_USERNAME, "");
-
-        if (!login.isBlank() && !login.isEmpty()
-                && !password.isBlank() && !password.isEmpty()) {
+        try {
+            sharedPreferences = this.requireActivity().getPreferences(Context.MODE_PRIVATE);
+            login = sharedPreferences.getString(SP_TAG_USERNAME, "");
+            password = sharedPreferences.getString(SP_TAG_PASSWORD, "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (!login.isBlank() && !login.isEmpty()
+                    && !password.isBlank() && !password.isEmpty()) {
 //            userViewModel.setLogin(login);
 //            userViewModel.setPassword(password);
+                binding.etLogin.setText(login);
+                binding.etPassword.setText(password);
+                binding.btnLoginRegister.setEnabled(true);
+            } else {
+                isAuthMode = true;
+                setAuthOrRegisterMode();
+            }
         }
     }
 
@@ -124,6 +142,152 @@ public class AuthAndRegisterFragment extends Fragment {
             setAuthOrRegisterMode();
         });
 
+        binding.btnLoginRegister.setOnClickListener(view -> saveUserDataToSharedPrefs(login, password));
+        binding.etCreatePassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.length() > 0) {
+                    if (!passwordValidate(editable.toString())) {
+                        binding.textLayoutCreatePassword.setHint("Введите 6-20 символов. Разрешены !@#$%^&*");
+                    } else {
+                        binding.textLayoutCreatePassword.setHint("Пароль");
+                        checkDataFilled();
+                    }
+                }
+            }
+        });
+        binding.etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.length() > 0) {
+                    if (!passwordValidate(editable.toString())) {
+                        binding.textLayoutCreatePassword.setHint("Введите от 6 символов. Разрешены спец.символы !@#$%^&*");
+                    } else {
+                        binding.textLayoutCreatePassword.setHint("Пароль");
+                        checkDataFilled();
+                    }
+                }
+            }
+        });
+        binding.etLogin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkDataFilled();
+            }
+        });
+        binding.etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkDataFilled();
+            }
+        });
+        binding.etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkDataFilled();
+            }
+        });
+        binding.etPhoneNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkDataFilled();
+            }
+        });
+
+
+    }
+
+    private void checkDataFilled() {
+        if (binding.llAuth.getVisibility() == View.VISIBLE) {
+            if (binding.etLogin.getText().toString().isBlank()
+                    && binding.etPassword.getText().toString().isBlank()) {
+                binding.btnLoginRegister.setEnabled(false);
+                login = "";
+                password = "";
+            } else {
+                binding.btnLoginRegister.setEnabled(true);
+                login = binding.etEmail.getText().toString();
+                password = binding.etCreatePassword.getText().toString();
+            }
+        }
+
+        if (binding.llRegister.getVisibility() == View.VISIBLE) {
+            if (binding.etEmail.getText().toString().isBlank()
+                    && binding.etName.getText().toString().isBlank()
+                    && binding.etCreatePassword.getText().toString().isBlank()) {
+                binding.btnLoginRegister.setEnabled(false);
+                login = "";
+                password = "";
+            } else {
+                login = binding.etEmail.getText().toString();
+                password = binding.etCreatePassword.getText().toString();
+                binding.btnLoginRegister.setEnabled(true);
+            }
+        }
+    }
+
+    private boolean passwordValidate(String password) {
+        return PASSWORD_REGEX.matcher(password).matches();
     }
 
 //    private void handleBackPressed() {
