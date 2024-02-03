@@ -17,7 +17,7 @@
     <color name="btn_pressed_color">#333364E0</color>
     <color name="btn_enabled_color">#3364E0</color>
     <color name="hint_text">#625670</color>
-    <color name="accent_color">#9A3E91</color>
+    <color name="accent_color">#E6DCD6</color>
     <color name="main_text_color">#000000</color>
     <color name="theme_primary_bgr">#ECEFF1</color>
     <color name="bag_buttons_bgr_color">#625670</color>

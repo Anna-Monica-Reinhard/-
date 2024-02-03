@@ -17,14 +17,10 @@ import com.mkvsk.warehousewizard.ui.view.listeners.OnProductClickListener;
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ItemViewHolder> {
-    private Context context;
+    public Context context;
     private ArrayList<Product> data = new ArrayList<>();
     private OnProductClickListener listener;
     private RvProductItemBinding binding;
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
     @NonNull
     @Override

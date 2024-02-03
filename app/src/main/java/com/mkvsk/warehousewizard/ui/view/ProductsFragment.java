@@ -13,10 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mkvsk.warehousewizard.MainActivity;
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
@@ -37,10 +35,10 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     private FragmentProductsBinding binding;
     private boolean isFabGroupVisible = false;
-    private CategoryAdapter categoryAdapter;
+    private final CategoryAdapter categoryAdapter = new CategoryAdapter();
     private RecyclerView rvCategory;
     private ArrayList<Category> allCategories = new ArrayList<>();
-    private ProductAdapter productAdapter;
+    private final ProductAdapter productAdapter = new ProductAdapter();
     private RecyclerView rvProduct;
     private ArrayList<Product> productsByCategory;
     private ArrayList<Product> allProducts = new ArrayList<>();
@@ -68,7 +66,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViewModels();
+//        initViewModels();
         setupAdapters();
         initViews();
         initListeners();
@@ -77,12 +75,12 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     private void setupAdapters() {
         rvCategory = binding.rvCategory;
-        categoryAdapter.setContext(requireContext());
+//        categoryAdapter.context = this.requireContext();
         categoryAdapter.setClickListener(this::onCategoryClick);
         rvCategory.setAdapter(categoryAdapter);
 
         rvProduct = binding.rvProduct;
-        productAdapter.setContext(requireContext());
+        productAdapter.context = this.requireContext();
         mRecyclerView = rvProduct;
         productAdapter.setClickListener(this::onProductClick);
         rvProduct.setAdapter(productAdapter);

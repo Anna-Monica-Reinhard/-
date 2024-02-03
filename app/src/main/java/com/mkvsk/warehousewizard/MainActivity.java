@@ -107,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (!login.isBlank() && !login.isEmpty()
                 && !password.isBlank() && !password.isEmpty()) {
-            userViewModel.setLogin(login);
-            userViewModel.setPassword(password);
+//            userViewModel.setLogin(login);
+//            userViewModel.setPassword(password);
         }
     }
 

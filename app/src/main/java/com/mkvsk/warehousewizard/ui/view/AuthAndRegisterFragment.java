@@ -24,7 +24,6 @@ import com.mkvsk.warehousewizard.ui.util.Utils;
 public class AuthAndRegisterFragment extends Fragment {
 
     private FragmentAuthAndRegisterBinding binding;
-    private SharedPreferences sharedPreferences;
     //    UserViewModel userViewModel;
     String login = "";
     String password = "";
@@ -107,16 +106,17 @@ public class AuthAndRegisterFragment extends Fragment {
     }
 
     private void saveUserDataToSharedPrefs(String login, String password) {
-        sharedPreferences = this.requireActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.requireActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.putString(login, SP_TAG_USERNAME).apply();
-        editor.putString(password, SP_TAG_PASSWORD).apply();
+        editor.clear().commit();
+
+        editor.putString(SP_TAG_USERNAME, login).apply();
+        editor.putString(SP_TAG_PASSWORD, password).apply();
     }
 
     private void getDataFromSharedPrefs() {
         try {
-            sharedPreferences = this.requireActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = this.requireActivity().getPreferences(Context.MODE_PRIVATE);
             login = sharedPreferences.getString(SP_TAG_USERNAME, "");
             password = sharedPreferences.getString(SP_TAG_PASSWORD, "");
         } catch (Exception e) {

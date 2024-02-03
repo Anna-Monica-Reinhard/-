@@ -16,18 +16,12 @@ import com.mkvsk.warehousewizard.databinding.RvCategoryItemBinding;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnCategoryClickListener;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemViewHolder> {
-    private Context context;
     private ArrayList<Category> data = new ArrayList<>();
     private OnCategoryClickListener listener;
     private int selectedTag = 0;
     private RvCategoryItemBinding binding;
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
     @NonNull
     @Override
