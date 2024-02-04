@@ -131,7 +131,7 @@
         tools:text="available in online shop" />
 
     <ImageButton
-        android:id="@+id/btnClose"
+        android:id="@+id/btnCloseFullInfo"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="8dp"
@@ -149,7 +149,7 @@
         android:background="@drawable/round_corner_rect"
         android:padding="8dp"
         android:src="@drawable/ic_dismiss"
-        app:layout_constraintRight_toLeftOf="@id/btnClose"
+        app:layout_constraintRight_toLeftOf="@id/btnCloseFullInfo"
         app:layout_constraintTop_toTopOf="@id/ivImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

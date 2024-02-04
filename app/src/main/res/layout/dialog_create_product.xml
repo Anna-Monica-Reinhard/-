@@ -10,14 +10,13 @@
     android:paddingVertical="16dp"
     android:showDividers="middle">
 
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/ll"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:divider="@drawable/empty_tall_divider"-->
-    <!--        android:orientation="vertical"-->
-    <!--        android:padding="24dp"-->
-    <!--        android:showDividers="middle">-->
+    <ImageButton
+        android:id="@+id/btnCloseNewProduct"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:background="@drawable/round_corner_rect"
+        android:src="@drawable/ic_close" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_layout_add_product"
@@ -143,7 +142,5 @@
         android:enabled="false"
         android:text="save"
         android:textColor="@color/text_on_btn_color" />
-
-    <!--    </LinearLayout>-->
 
 </LinearLayout>

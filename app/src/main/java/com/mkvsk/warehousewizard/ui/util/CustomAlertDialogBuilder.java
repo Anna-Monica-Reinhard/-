@@ -38,7 +38,7 @@ public final class CustomAlertDialogBuilder {
         final TextView tvQty = dialogView.findViewById(R.id.tvQty);
         final ImageButton btnPlus = dialogView.findViewById(R.id.btnPlus);
         final ImageButton btnMinus = dialogView.findViewById(R.id.btnMinus);
-        final ImageButton btnClose = dialogView.findViewById(R.id.btnClose);
+        final ImageButton btnClose = dialogView.findViewById(R.id.btnCloseFullInfo);
         final ImageView ivImage = dialogView.findViewById(R.id.ivImage);
 
         tvName.setText(product.getTitle());
@@ -98,6 +98,7 @@ public final class CustomAlertDialogBuilder {
 //        final TextInputEditText tvDescription = dialogView.findViewById(R.id.et_add_product_description);
 //        final TextInputEditText tvAvailability = dialogView.findViewById(R.id.tv_add_product_availability);
         final AppCompatButton btnSave = dialogView.findViewById(R.id.btn_save_product);
+        final ImageButton btnClose = dialogView.findViewById(R.id.btnCloseNewProduct);
 
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
@@ -133,8 +134,9 @@ public final class CustomAlertDialogBuilder {
         btnSave.setOnClickListener(v -> {
 //            listener.onSaveNewData();
             alertDialog.dismiss();
-            Toast.makeText(context, "Product added", Toast.LENGTH_SHORT).show();
         });
+
+        btnClose.setOnClickListener(v -> alertDialog.dismiss());
         Objects.requireNonNull(alertDialog.getWindow())
                 .setBackgroundDrawable(context.getDrawable(R.drawable.alert_dialog_bgr));
         return alertDialog;
@@ -148,6 +150,7 @@ public final class CustomAlertDialogBuilder {
 
         final TextInputEditText tvName = dialogView.findViewById(R.id.et_add_category_title);
         final AppCompatButton btnSave = dialogView.findViewById(R.id.btn_save_category);
+        final ImageButton btnClose = dialogView.findViewById(R.id.btnCloseNewCategory);
 
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
@@ -172,6 +175,7 @@ public final class CustomAlertDialogBuilder {
             alertDialog.dismiss();
             Toast.makeText(context, "Category added", Toast.LENGTH_SHORT).show();
         });
+        btnClose.setOnClickListener(v -> alertDialog.dismiss());
         Objects.requireNonNull(alertDialog.getWindow())
                 .setBackgroundDrawable(context.getDrawable(R.drawable.alert_dialog_bgr));
         return alertDialog;

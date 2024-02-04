@@ -1,61 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="16dp"
     android:background="@drawable/dialog_background_inset"
     android:divider="@drawable/empty_tall_divider"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingVertical="16dp"
+    android:showDividers="middle">
 
-<!--    <com.google.android.material.card.MaterialCardView-->
-<!--        android:id="@+id/cardview_alert_dialog"-->
-<!--        style="@style/myMaterialCardAuth"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:cardElevation="6dp"-->
-<!--        app:cardPreventCornerOverlap="false"-->
-<!--        app:contentPaddingBottom="54dp"-->
-<!--        app:contentPaddingLeft="16dp"-->
-<!--        app:contentPaddingRight="16dp"-->
-<!--        app:contentPaddingTop="32dp">-->
+    <ImageButton
+        android:id="@+id/btnCloseNewCategory"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:background="@drawable/round_corner_rect"
+        android:src="@drawable/ic_close" />
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/ll_add_category"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:divider="@drawable/empty_tall_divider"-->
-<!--            android:orientation="vertical"-->
-<!--            android:showDividers="middle"-->
-<!--            android:visibility="visible">-->
+    <!--    <com.google.android.material.card.MaterialCardView-->
+    <!--        android:id="@+id/cardview_alert_dialog"-->
+    <!--        style="@style/myMaterialCardAuth"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:cardElevation="6dp"-->
+    <!--        app:cardPreventCornerOverlap="false"-->
+    <!--        app:contentPaddingBottom="54dp"-->
+    <!--        app:contentPaddingLeft="16dp"-->
+    <!--        app:contentPaddingRight="16dp"-->
+    <!--        app:contentPaddingTop="32dp">-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_layout_add_category"
-                style="@style/myTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/text_input_height"
-                android:hint="Category name">
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/ll_add_category"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:divider="@drawable/empty_tall_divider"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:showDividers="middle"-->
+    <!--            android:visibility="visible">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_add_category_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/round_corner_edittext"
-                    android:inputType="textPersonName" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout_add_category"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Category name">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_save_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/selector_button"
-                android:enabled="false"
-                android:text="save"
-                android:textColor="@color/text_on_btn_color" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_add_category_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-<!--        </LinearLayout>-->
-<!--    </com.google.android.material.card.MaterialCardView>-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_save_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/selector_button"
+        android:enabled="false"
+        android:text="save"
+        android:textColor="@color/text_on_btn_color" />
+
+    <!--        </LinearLayout>-->
+    <!--    </com.google.android.material.card.MaterialCardView>-->
 
 </LinearLayout>
