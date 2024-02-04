@@ -19,7 +19,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.mkvsk.warehousewizard.R;
+import com.mkvsk.warehousewizard.core.User;
 import com.mkvsk.warehousewizard.databinding.FragmentAuthAndRegisterBinding;
+import com.mkvsk.warehousewizard.ui.repository.UserRepository;
 import com.mkvsk.warehousewizard.ui.util.Utils;
 
 public class AuthAndRegisterFragment extends Fragment {
@@ -29,6 +31,7 @@ public class AuthAndRegisterFragment extends Fragment {
     String login = "";
     String password = "";
     boolean isAuthMode = true;
+    private UserRepository userRepository;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +47,7 @@ public class AuthAndRegisterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        initObservers();
+        userRepository = new UserRepository(getContext());
         getDataFromSharedPrefs();
         initViews();
         initListeners();
@@ -149,6 +153,10 @@ public class AuthAndRegisterFragment extends Fragment {
 
         binding.btnLoginRegister.setOnClickListener(view -> {
 //                save user to db
+            User newUser = new User();
+            newUser.setEmail(login);
+            newUser.setPassword(password);
+            userRepository.insert(newUser);
             saveUserDataToSharedPrefs(login, password);
             NavHostFragment.findNavController(this).navigate(R.id.action_go_to_products_from_auth);
         });
