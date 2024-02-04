@@ -1,5 +1,6 @@
 package com.mkvsk.warehousewizard.ui.util;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.text.Editable;
@@ -21,8 +22,11 @@ import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnAddNewItemClickListener;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnProductCardClickListener;
 
+import java.util.Objects;
+
 public final class CustomAlertDialogBuilder {
-    public static AlertDialog productCard(final Context context, Product product, OnProductCardClickListener listener) {
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public static AlertDialog productCardFullInfo(final Context context, Product product, OnProductCardClickListener listener) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_full_product_info, null, false);
         dialog.setView(dialogView);
@@ -74,17 +78,19 @@ public final class CustomAlertDialogBuilder {
 
             alertDialog.dismiss();
         });
-
+        Objects.requireNonNull(alertDialog.getWindow())
+                .setBackgroundDrawable(context.getDrawable(R.drawable.alert_dialog_bgr));
         return alertDialog;
     }
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public static AlertDialog cardAddNewProduct(final Context context, Product newProduct, OnAddNewItemClickListener listener) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_create_product, null, false);
         dialog.setView(dialogView);
 
-//        final TextInputEditText tvName = dialogView.findViewById(R.id.et_add_product_name);
+        final TextInputEditText tvName = dialogView.findViewById(R.id.et_add_product_name);
 //        final TextInputEditText tvCategory = dialogView.findViewById(R.id.et_add_product_category);
 //        final TextInputEditText tvCode = dialogView.findViewById(R.id.et_add_product_code);
 //        final TextInputEditText tvQty = dialogView.findViewById(R.id.et_add_product_qty);
@@ -96,22 +102,25 @@ public final class CustomAlertDialogBuilder {
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
 
-//        tvName.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-////                btnSave.setEnabled(tvName.getText() != null || tvCode.getText() != null || tvCategory.getText() != null);
-//            }
-//        });
+        tvName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0) {
+                    btnSave.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+//                btnSave.setEnabled(tvName.getText() != null || tvCode.getText() != null || tvCategory.getText() != null);
+            }
+        });
 
 //        newProduct.setTitle(tvName.getText().toString());
 //        newProduct.setCategory(tvCategory.getText().toString());
@@ -122,37 +131,16 @@ public final class CustomAlertDialogBuilder {
 //        newProduct.setAvailable();
 
         btnSave.setOnClickListener(v -> {
-            listener.onSaveNewData();
+//            listener.onSaveNewData();
             alertDialog.dismiss();
             Toast.makeText(context, "Product added", Toast.LENGTH_SHORT).show();
         });
-
+        Objects.requireNonNull(alertDialog.getWindow())
+                .setBackgroundDrawable(context.getDrawable(R.drawable.alert_dialog_bgr));
         return alertDialog;
     }
 
-//    public static AlertDialog cardAddNewCategory(final Context context, Category newCategory, OnAddNewItemClickListener listener) {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-//        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_create_category, null, false);
-//        dialog.setView(dialogView);
-//
-//        final TextInputEditText tvTitle = dialogView.findViewById(R.id.et_add_category_title);
-//        final AppCompatButton btnSave = dialogView.findViewById(R.id.btn_save_category);
-//
-//        dialog.setCancelable(false);
-//        AlertDialog alertDialog = dialog.create();
-//
-//
-//        btnSave.setEnabled(tvTitle.getText() != null);
-//
-//        btnSave.setOnClickListener(v -> {
-//            listener.onSaveNewData();
-//            alertDialog.dismiss();
-//            Toast.makeText(context, "Category added", Toast.LENGTH_SHORT).show();
-//        });
-//
-//        return alertDialog;
-//    }
-
+    @SuppressLint("UseCompatLoadingForDrawables")
     public static AlertDialog cardAddNewCategory(final Context context, Category newCategory, OnAddNewItemClickListener listener) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_create_category, null, false);
@@ -184,7 +172,8 @@ public final class CustomAlertDialogBuilder {
             alertDialog.dismiss();
             Toast.makeText(context, "Category added", Toast.LENGTH_SHORT).show();
         });
-
+        Objects.requireNonNull(alertDialog.getWindow())
+                .setBackgroundDrawable(context.getDrawable(R.drawable.alert_dialog_bgr));
         return alertDialog;
     }
 

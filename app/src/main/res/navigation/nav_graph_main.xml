@@ -17,10 +17,6 @@
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard">
 
-        <action
-            android:id="@+id/action_go_to_auth_and_register"
-            app:destination="@id/navigation_auth_and_register"
-            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

@@ -6,8 +6,10 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(tableName = "product", indices = {@Index(value = "code", unique = true)})
@@ -15,18 +17,26 @@ public class Product {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     long id;
+    //    @Builder.Default
     @ColumnInfo(name = "category")
-    String category;
+    String category = "other";
+    //    @Builder.Default
     @ColumnInfo(name = "title")
-    String title;
+    String title = "Unknown";
+
     @ColumnInfo(name = "code")
     String code;
+    //    @Builder.Default
     @ColumnInfo(name = "qty")
-    long qty;
+    long qty = 0;
+    //    @Builder.Default
     @ColumnInfo(name = "image")
-    String image;
+    String image = "https://bit.ly/3SGyDfX";
+    //    @Builder.Default
     @ColumnInfo(name = "description")
-    String description;
+    String description = "...";
+    @ColumnInfo(name = "last_editor")
+    String lastEditor = "No name";
 
     @Override
     public String toString() {
@@ -38,6 +48,7 @@ public class Product {
                 ", qty=" + qty +
                 ", image='" + image + '\'' +
                 ", description='" + description + '\'' +
+                ", lastEditor='" + lastEditor + '\'' +
                 '}';
     }
 

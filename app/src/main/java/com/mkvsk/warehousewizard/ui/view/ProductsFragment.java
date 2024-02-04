@@ -150,11 +150,12 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
 
     private void addNewCategory() {
-        Toast.makeText(requireContext(), "CATEGORY", Toast.LENGTH_SHORT).show();
         Category newCategory = new Category();
         CustomAlertDialogBuilder.cardAddNewCategory(this.requireContext(), newCategory, () -> {
+        Toast.makeText(requireContext(), "CATEGORY", Toast.LENGTH_SHORT).show();
+
 //            categoryViewModel.insert(newCategory);
-        });
+        }).show();
     }
 
     private void addNewProduct() {
@@ -162,7 +163,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         Product newProduct = new Product();
         CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(), newProduct, () -> {
 //                productViewModel.insert(newProduct);
-        });
+        }).show();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -201,7 +202,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     @Override
     public void onProductClick(Product product) {
-        CustomAlertDialogBuilder.productCard(this.getContext(), product, new OnProductCardClickListener() {
+        CustomAlertDialogBuilder.productCardFullInfo(this.getContext(), product, new OnProductCardClickListener() {
             @Override
             public void onEditQty(boolean add) {
 

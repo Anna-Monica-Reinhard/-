@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingVertical="16dp"
+    android:background="@drawable/dialog_background_inset"
+    android:divider="@drawable/empty_tall_divider"
     android:orientation="vertical">
 
 <!--    <com.google.android.material.card.MaterialCardView-->
@@ -18,14 +21,14 @@
 <!--        app:contentPaddingRight="16dp"-->
 <!--        app:contentPaddingTop="32dp">-->
 
-        <LinearLayout
-            android:id="@+id/ll_add_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@drawable/empty_tall_divider"
-            android:orientation="vertical"
-            android:showDividers="middle"
-            android:visibility="visible">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/ll_add_category"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:divider="@drawable/empty_tall_divider"-->
+<!--            android:orientation="vertical"-->
+<!--            android:showDividers="middle"-->
+<!--            android:visibility="visible">-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_layout_add_category"
@@ -47,12 +50,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:background="@color/black"
+                android:background="@drawable/selector_button"
                 android:enabled="false"
                 android:text="save"
-                android:textColor="@color/white" />
+                android:textColor="@color/text_on_btn_color" />
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 <!--    </com.google.android.material.card.MaterialCardView>-->
 
 </LinearLayout>

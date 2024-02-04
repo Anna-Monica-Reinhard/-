@@ -82,7 +82,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void startMainScreen() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_auth_and_register);
+        NavHostFragment.findNavController(this).navigate(R.id.navigation_auth_and_register);
     }
 
     @Override

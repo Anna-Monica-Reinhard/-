@@ -5,142 +5,145 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_background_inset"
-    android:backgroundTint="@color/background_color">
+    android:divider="@drawable/empty_tall_divider"
+    android:orientation="vertical"
+    android:paddingVertical="16dp"
+    android:showDividers="middle">
 
-    <LinearLayout
-        android:id="@+id/ll"
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/ll"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:divider="@drawable/empty_tall_divider"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:padding="24dp"-->
+    <!--        android:showDividers="middle">-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout_add_product"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Product name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_add_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="textPersonName"
+            android:textAppearance="@style/myTextInputStyle"
+            tools:text="product name" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout_add_product_category"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Category">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_add_product_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="textPersonName"
+            android:textAppearance="@style/myTextInputStyle" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout_add_product_code"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Code">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_add_product_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="textPersonName"
+            android:textAppearance="@style/myTextInputStyle" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout_add_product_qty"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Quantity">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_add_product_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="numberDecimal"
+            android:textAppearance="@style/myTextInputStyle" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_add_product_availability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="-40dp"
+        android:layout_marginEnd="10dp"
+        android:paddingBottom="4dp"
+        android:textAppearance="@style/additionalTextStyle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llButtons"
+        tools:text="available in online shop" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout_add_product_image"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Image link">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_add_product_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="textPersonName"
+            android:textAppearance="@style/myTextInputStyle" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout_add_product_description"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_add_product_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="textCapSentences"
+            android:maxLength="200"
+            android:maxLines="4"
+            android:textAppearance="@style/myTextInputStyle" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_save_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@drawable/empty_tall_divider"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:showDividers="middle">
+        android:layout_marginTop="24dp"
+        android:background="@drawable/selector_button"
+        android:enabled="false"
+        android:text="save"
+        android:textColor="@color/text_on_btn_color" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_layout_add_product"
-            style="@style/myTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text_input_height"
-            android:hint="Product name">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_add_product_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner_edittext"
-                android:inputType="textPersonName"
-                android:textAppearance="@style/myTextInputStyle"
-                tools:text="product name" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_layout_add_product_category"
-            style="@style/myTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text_input_height"
-            android:hint="Category">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_add_product_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner_edittext"
-                android:inputType="textPersonName"
-                android:textAppearance="@style/myTextInputStyle" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_layout_add_product_code"
-            style="@style/myTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text_input_height"
-            android:hint="Code">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_add_product_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner_edittext"
-                android:inputType="textPersonName"
-                android:textAppearance="@style/myTextInputStyle" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_layout_add_product_qty"
-            style="@style/myTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text_input_height"
-            android:hint="Quantity">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_add_product_qty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner_edittext"
-                android:inputType="numberDecimal"
-                android:textAppearance="@style/myTextInputStyle" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tv_add_product_availability"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="-40dp"
-            android:layout_marginEnd="10dp"
-            android:paddingBottom="4dp"
-            android:textAppearance="@style/additionalTextStyle"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llButtons"
-            tools:text="available in online shop" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_layout_add_product_image"
-            style="@style/myTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text_input_height"
-            android:hint="Image link">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_add_product_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner_edittext"
-                android:inputType="textPersonName"
-                android:textAppearance="@style/myTextInputStyle" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_layout_add_product_description"
-            style="@style/myTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text_input_height"
-            android:hint="Description">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_add_product_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner_edittext"
-                android:inputType="textCapSentences"
-                android:maxLength="200"
-                android:maxLines="4"
-                android:textAppearance="@style/myTextInputStyle" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_save_product"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/selector_button"
-            android:enabled="false"
-            android:text="save"
-            android:textColor="@color/text_on_btn_color" />
-
-    </LinearLayout>
+    <!--    </LinearLayout>-->
 
 </LinearLayout>

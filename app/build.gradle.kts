@@ -57,7 +57,7 @@ dependencies {
 //    implementation("android.arch.lifecycle:extensions:1.1.1")
 //
 //  images
-    implementation("com.github.bumptech.glide:glide:4.14.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 //    generate random data
     implementation("com.github.javafaker:javafaker:1.0.2")
 //  rv libraries

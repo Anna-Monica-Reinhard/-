@@ -83,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         if (!login.isBlank() && !password.isBlank()) {
             navController.navigate(R.id.navigation_products);
-        } else {
-            binding.navView.setVisibility(View.GONE);
+//            binding.navView.setVisibility(View.GONE);
         }
+
     }
 
     private void initDatabase() {

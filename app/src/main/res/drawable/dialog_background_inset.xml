@@ -2,6 +2,6 @@
 <inset
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:drawable="@drawable/alert_dialog_bgr"
-    android:insetRight="8dp"
-    android:insetLeft="8dp">
+    android:insetRight="16dp"
+    android:insetLeft="16dp">
 </inset>

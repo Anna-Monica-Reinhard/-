@@ -6,8 +6,11 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(tableName = "user", indices = {@Index(value = {"email", "phone_number"})})
@@ -15,8 +18,9 @@ public class User {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     long id;
+//    @Builder.Default
     @ColumnInfo(name = "full_name")
-    String fullName;
+    String fullName = "No name";
     @ColumnInfo(name = "password")
     String password;
     @ColumnInfo(name = "email")
