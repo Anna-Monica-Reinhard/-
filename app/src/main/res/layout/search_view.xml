@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+<!--    <androidx.appcompat.widget.SearchView-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginEnd="5dp"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:queryHint="You're looking for..." />-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:outlineSpotShadowColor="@android:color/transparent"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:endIconDrawable="@drawable/ic_close"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/theme_ic_color"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/round_corner_search_edittext"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="24dp"
+            android:inputType="text"
+            android:lines="1"
+            android:outlineSpotShadowColor="@android:color/transparent"
+            android:padding="5dp"
+            android:paddingHorizontal="5dp"
+            android:textAppearance="@style/myTextInputStyle" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

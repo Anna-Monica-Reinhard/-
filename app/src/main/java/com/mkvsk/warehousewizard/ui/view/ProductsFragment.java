@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,15 +22,12 @@ import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.AutoTransition;
-import androidx.transition.Scene;
 
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.databinding.FragmentProductsBinding;
 import com.mkvsk.warehousewizard.ui.util.CustomAlertDialogBuilder;
-import com.mkvsk.warehousewizard.ui.util.Utils;
 import com.mkvsk.warehousewizard.ui.view.adapters.CategoryAdapter;
 import com.mkvsk.warehousewizard.ui.view.adapters.ProductAdapter;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnCategoryClickListener;
@@ -61,14 +60,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        ProductViewModel productViewModel =
-//                new ViewModelProvider(this).get(ProductViewModel.class);
-
         binding = FragmentProductsBinding.inflate(inflater, container, false);
-
-
-//        final TextView textView = binding.textHome;
-//        productViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return binding.getRoot();
     }
 
@@ -84,6 +76,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     private void setupMenu() {
         MenuHost menuHost = binding.toolbar;
+        binding.etSearch.setTextAppearance(getContext(), R.style.mySearchTextInputStyle);
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -92,25 +85,13 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.menu_item_filter) {
-                    Utils.hideKeyboard(requireActivity());
-                    //                       list sort
-                    setSearchMode(binding.toolbar.getMenu().findItem(R.id.menu_item_filter),
-                            binding.toolbar.getMenu().findItem(R.id.menu_item_search));
-                } else if (menuItem.getItemId() == R.id.menu_item_search) {
-                    setSearchMode(binding.toolbar.getMenu().findItem(R.id.menu_item_search),
-                            binding.toolbar.getMenu().findItem(R.id.menu_item_filter));
+                if (menuItem.getItemId() == R.id.miSortByAlphabetAZ) {
+//                    Utils.hideKeyboard(requireActivity());
+//                    //                       list sort
                 }
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
-    }
-
-    private void setSearchMode(MenuItem searchItem, MenuItem unselectItem) {
-        androidx.transition.TransitionManager.go(new Scene(binding.toolbar), new AutoTransition());
-        Objects.requireNonNull(binding.edittextSearch.getText()).clear();
-//        searchItem.icon !!.setTint(ContextCompat.getColor(context !!, R.color.pink_a200))
-//        unselectItem ?.icon !!.setTint(ContextCompat.getColor(context !!, R.color.main_text))
     }
 
     private void setupAdapters() {
@@ -144,10 +125,29 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     private void initListeners() {
         binding.fabAdd.setOnClickListener(v -> onAddClick());
-
         binding.fabAddCategory.setOnClickListener(view -> addNewCategory());
         binding.fabAddProduct.setOnClickListener(view -> addNewProduct());
+        binding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence queryText, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence queryText, int i, int i1, int i2) {
+                if (queryText.length() > 2) {
+                    binding.nsvSearch.smoothScrollTo(0, 0);
+//                    findProduct(queryText.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable queryText) {
+
+            }
+        });
     }
+
 
     private void addNewCategory() {
         Toast.makeText(requireContext(), "CATEGORY", Toast.LENGTH_SHORT).show();

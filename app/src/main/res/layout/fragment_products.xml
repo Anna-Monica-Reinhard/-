@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sfLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
@@ -11,171 +12,158 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_color"
-        android:elevation="0dp"
-        android:outlineSpotShadowColor="@android:color/transparent"
-        android:translationZ="0dp"
+        app:elevation="0dp"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:outlineSpotShadowColor="@android:color/transparent"
             app:layout_scrollFlags="enterAlways"
+            local:layout_constraintEnd_toEndOf="parent"
+            local:layout_constraintStart_toStartOf="parent"
+            local:layout_constraintTop_toTopOf="parent"
             local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."
-            local:theme="@style/ThemeOverlay.AppCompat.Dark" />
+            local:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <!--                    <SearchView-->
-        <!--                        android:id="@+id/search_view"-->
-        <!--                        android:layout_width="match_parent"-->
-        <!--                        android:layout_height="30dp"-->
-        <!--                        android:layout_marginHorizontal="10dp"-->
-        <!--                        android:animateLayoutChanges="true"-->
-        <!--                        android:background="@drawable/round_corner_edittext_pink_frame"-->
-        <!--                        android:visibility="gone"-->
-        <!--                        app:theme="@style/SearchViewStyle"-->
-        <!--                        local:queryHint="find in users or recipes"-->
-        <!--                        local:searchIcon="@drawable/ic_search_recipe" />-->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_search_layout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="5dp"
-            android:outlineSpotShadowColor="@android:color/transparent"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:endIconDrawable="@drawable/ic_close"
-            app:endIconMode="clear_text"
-            app:endIconTint="@color/theme_ic_color"
-            app:hintAnimationEnabled="false"
-            app:hintEnabled="false">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_search"
+            <LinearLayout
+                android:id="@+id/llSearch"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginHorizontal="16dp"
-                android:background="@drawable/round_corner_search_edittext"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="24dp"
-                android:inputType="text"
-                android:lines="1"
-                android:outlineSpotShadowColor="@android:color/transparent"
-                android:padding="5dp"
-                android:paddingHorizontal="5dp"
-                android:textAppearance="@style/myTextInputStyle" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/search_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconDrawable="@drawable/ic_close"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/theme_ic_color"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_corner_search_edittext"
+                        android:drawableStart="@drawable/ic_search"
+                        android:drawablePadding="8dp"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:padding="5dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <!--    <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"-->
-    <!--        android:id="@+id/toolbar"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:background="@color/background_secondary_color"-->
-    <!--        android:minHeight="?attr/actionBarSize"-->
-    <!--        app:layout_scrollFlags="scroll|enterAlways"-->
-    <!--        local:layout_constraintLeft_toLeftOf="parent"-->
-    <!--        local:layout_constraintRight_toRightOf="parent"-->
-    <!--        local:layout_constraintTop_toTopOf="parent"-->
-    <!--        local:menu="@menu/products_actionbar_menu"-->
-    <!--        local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."-->
-    <!--        local:theme="@style/ThemeOverlay.AppCompat.Dark"-->
-    <!--        local:titleTextAppearance="@style/txtCenterToolbar"-->
-    <!--        local:titleTextColor="@color/black">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/toolbar_title"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:textAppearance="@style/txtCenterToolbar" />-->
-    <!--    </androidx.appcompat.widget.Toolbar>-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_category"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         android:overScrollMode="never"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-        tools:listitem="@layout/rv_category_item" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_product"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/rv_category_item" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/rv_category"
+                app:spanCount="3"
+                tools:itemCount="20"
+                tools:layout_editor_absoluteX="12dp"
+                tools:listitem="@layout/rv_product_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="12dp"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:overScrollMode="never"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/rv_category"
-        app:spanCount="3"
-        tools:itemCount="20"
-        tools:layout_editor_absoluteX="12dp"
-        tools:listitem="@layout/rv_product_item" />
+        android:layout_height="match_parent"
+        android:layout_gravity="end|bottom">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab_add_product"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/accent_btn_color"
-        android:gravity="fill"
-        android:outlineSpotShadowColor="@color/hint_text"
-        android:text="product"
-        android:textColor="@color/text_on_btn_color"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:icon="@drawable/ic_add"
-        app:iconTint="@color/text_on_btn_color"
-        app:layout_constraintBottom_toTopOf="@id/fab_add"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_add_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/accent_btn_color"
+            android:gravity="fill"
+            android:outlineSpotShadowColor="@color/hint_text"
+            android:text="product"
+            android:textColor="@color/text_on_btn_color"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:icon="@drawable/ic_add"
+            app:iconTint="@color/text_on_btn_color"
+            app:layout_constraintBottom_toTopOf="@id/fab_add"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab_add_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/accent_btn_color"
-        android:gravity="center"
-        android:outlineSpotShadowColor="@color/hint_text"
-        android:text="category"
-        android:textColor="@color/text_on_btn_color"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:icon="@drawable/ic_add"
-        app:iconTint="@color/text_on_btn_color"
-        app:layout_constraintBottom_toTopOf="@id/fab_add_product"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_add_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/accent_btn_color"
+            android:gravity="center"
+            android:outlineSpotShadowColor="@color/hint_text"
+            android:text="category"
+            android:textColor="@color/text_on_btn_color"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:icon="@drawable/ic_add"
+            app:iconTint="@color/text_on_btn_color"
+            app:layout_constraintBottom_toTopOf="@id/fab_add_product"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="85dp"
-        android:backgroundTint="@color/accent_btn_color"
-        android:outlineSpotShadowColor="@color/hint_text"
-        android:text="add new"
-        android:textColor="@color/text_on_btn_color"
-        android:textSize="14sp"
-        app:fabSize="normal"
-        app:icon="@drawable/ic_add"
-        app:iconTint="@color/text_on_btn_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="85dp"
+            android:backgroundTint="@color/accent_btn_color"
+            android:outlineSpotShadowColor="@color/hint_text"
+            android:text="add new"
+            android:textColor="@color/text_on_btn_color"
+            android:textSize="14sp"
+            app:fabSize="normal"
+            app:icon="@drawable/ic_add"
+            app:iconTint="@color/text_on_btn_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
