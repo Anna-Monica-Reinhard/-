@@ -1,13 +1,27 @@
 package com.mkvsk.warehousewizard.ui.view;
 
+import static com.mkvsk.warehousewizard.ui.util.Constants.SP_TAG_PASSWORD;
+import static com.mkvsk.warehousewizard.ui.util.Constants.SP_TAG_USERNAME;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.navigation.fragment.NavHostFragment;
 
+import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.databinding.FragmentDashboardBinding;
 
 public class DashboardFragment extends Fragment {
@@ -25,6 +39,50 @@ public class DashboardFragment extends Fragment {
 //        final TextView textView = binding.textDashboard;
 //        userViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupMenu();
+        initListeners();
+    }
+
+    private void setupMenu() {
+        MenuHost menuHost = binding.toolbar;
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.dashboard_actionbar_menu, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.menu_item_logout) {
+                    startMainScreen();
+                }
+                return false;
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+    }
+
+    private void initListeners() {
+
+    }
+
+    private void logout() {
+        SharedPreferences sharedPreferences = this.requireActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear().commit();
+
+        editor.putString(SP_TAG_USERNAME, "").apply();
+        editor.putString(SP_TAG_PASSWORD, "").apply();
+
+//        startMainScreen("", "");
+    }
+
+    private void startMainScreen() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_auth_and_register);
     }
 
     @Override

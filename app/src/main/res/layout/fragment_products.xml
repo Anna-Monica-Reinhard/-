@@ -23,7 +23,6 @@
             android:layout_height="?attr/actionBarSize"
             android:outlineSpotShadowColor="@android:color/transparent"
             app:layout_scrollFlags="enterAlways"
-            local:menu="@menu/products_actionbar_menu"
             local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."
             local:theme="@style/ThemeOverlay.AppCompat.Dark" />
 

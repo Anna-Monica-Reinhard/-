@@ -74,6 +74,7 @@ dependencies {
 //    https://android-er.blogspot.com/2016/07/mpandroidchart-powerful-android-chart.html
 //    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 //    base
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("android.arch.lifecycle:viewmodel:1.1.1")
     implementation("android.arch.lifecycle:extensions:1.1.1")
     implementation("androidx.appcompat:appcompat:1.6.1")

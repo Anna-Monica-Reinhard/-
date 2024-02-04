@@ -9,7 +9,7 @@
         app:showAsAction="always"
 
         />
-<!--        app:showAsAction="ifRoom|collapseActionView"-->
+    <!--        app:showAsAction="ifRoom|collapseActionView"-->
 
 
     <item
@@ -17,4 +17,30 @@
         android:icon="@drawable/ic_filter_list"
         android:title="Filter"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/miSortByAlphabetAZ"
+        android:title="Sort by alphabet A-Z"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/miSortByAlphabetZA"
+        android:title="Sort by alphabet Z-A"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/miSortByQtyDesc"
+        android:title="Sort by quantity descending"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/miSortByQtyAsc"
+        android:title="Sort by quantity ascending"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/miSortByCategory"
+        android:title="Sort by category"
+        app:showAsAction="never" />
+
 </menu>

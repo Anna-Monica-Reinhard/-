@@ -28,6 +28,7 @@ import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.databinding.FragmentProductsBinding;
 import com.mkvsk.warehousewizard.ui.util.CustomAlertDialogBuilder;
+import com.mkvsk.warehousewizard.ui.util.Utils;
 import com.mkvsk.warehousewizard.ui.view.adapters.CategoryAdapter;
 import com.mkvsk.warehousewizard.ui.view.adapters.ProductAdapter;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnCategoryClickListener;
@@ -82,7 +83,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     }
 
     private void setupMenu() {
-        MenuHost menuHost = requireActivity();
+        MenuHost menuHost = binding.toolbar;
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -92,14 +93,13 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.menu_item_filter) {
+                    Utils.hideKeyboard(requireActivity());
                     //                       list sort
                     setSearchMode(binding.toolbar.getMenu().findItem(R.id.menu_item_filter),
                             binding.toolbar.getMenu().findItem(R.id.menu_item_search));
-                    return true;
                 } else if (menuItem.getItemId() == R.id.menu_item_search) {
                     setSearchMode(binding.toolbar.getMenu().findItem(R.id.menu_item_search),
                             binding.toolbar.getMenu().findItem(R.id.menu_item_filter));
-                    return true;
                 }
                 return false;
             }
