@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface ProductDao {
     @Query("SELECT * FROM product")
-    LiveData<List<Product>> getAllProducts();
+    List<Product> getAllProducts();
 
     @Query("SELECT * FROM product WHERE id = :id")
     Product getById(long id);

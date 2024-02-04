@@ -16,15 +16,7 @@ public class ProductViewModel extends ViewModel {
     public MutableLiveData<List<Product>> allProducts;
 
     public ProductViewModel() {
-        repository = new ProductRepository(DatabaseClient.getInstance().context);
-    }
-
-    public void fetchAll() {
-        try {
-            allProducts.setValue(repository.getAllProducts().getValue());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        repository = new ProductRepository();
     }
 
 }

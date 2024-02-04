@@ -19,10 +19,12 @@ import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.databinding.FragmentDashboardBinding;
+import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 public class DashboardFragment extends Fragment {
 

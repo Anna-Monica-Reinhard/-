@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.mkvsk.warehousewizard.core.Category;
+import com.mkvsk.warehousewizard.ui.local.AppDatabase;
 import com.mkvsk.warehousewizard.ui.local.DatabaseClient;
 import com.mkvsk.warehousewizard.ui.repository.CategoryRepository;
 
@@ -16,7 +17,7 @@ public class CategoryViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Category>> allCategories;
 
     public CategoryViewModel() {
-        repository = new CategoryRepository(DatabaseClient.getInstance().context);
+        repository = new CategoryRepository();
     }
 
     //    @Contract("null -> fail")

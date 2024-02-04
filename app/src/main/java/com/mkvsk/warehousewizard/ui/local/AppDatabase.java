@@ -10,6 +10,7 @@ import androidx.room.TypeConverters;
 import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.core.User;
+import com.mkvsk.warehousewizard.ui.util.Utils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,7 +21,7 @@ import java.util.concurrent.Executors;
                 User.class,
                 Category.class,
                 Product.class
-        }, exportSchema = true
+        }, exportSchema = false
 )
 @TypeConverters(ListConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
@@ -35,11 +36,11 @@ public abstract class AppDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static AppDatabase getDatabase(Context context) {
+    public static AppDatabase getDatabase() {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context,
+                    INSTANCE = Room.databaseBuilder(Utils.getAppContext(),
                                     AppDatabase.class, "app_database")
                             .fallbackToDestructiveMigration()
                             .setTransactionExecutor(databaseWriteExecutor)

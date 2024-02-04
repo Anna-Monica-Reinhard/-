@@ -18,7 +18,7 @@ import java.util.List;
 public interface CategoryDao {
     @Query("SELECT * FROM category")
     @TypeConverters(ListConverter.class)
-    LiveData<List<Category>> getAllCategories();
+    List<Category> getAllCategories();
 
     @Query("SELECT * FROM category WHERE id = :id")
     Category getById(long id);

@@ -8,20 +8,19 @@ import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.ui.local.AppDatabase;
 import com.mkvsk.warehousewizard.ui.local.CategoryDao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryRepository implements CategoryDao {
     private final CategoryDao dao;
     private AppDatabase appDatabase;
 
-    public CategoryRepository(Context context) {
-        appDatabase = AppDatabase.getDatabase(context);
+    public CategoryRepository() {
+        appDatabase = AppDatabase.getDatabase();
         dao = appDatabase.getCategoryDao();
     }
 
     @Override
-    public LiveData<List<Category>> getAllCategories() {
+    public List<Category> getAllCategories() {
         return dao.getAllCategories();
     }
 

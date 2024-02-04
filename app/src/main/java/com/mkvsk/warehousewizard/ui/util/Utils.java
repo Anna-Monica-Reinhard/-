@@ -1,6 +1,7 @@
 package com.mkvsk.warehousewizard.ui.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -8,7 +9,17 @@ import com.bumptech.glide.request.RequestOptions;
 import com.mkvsk.warehousewizard.R;
 
 public class Utils {
-    static RequestOptions options;
+    public static RequestOptions options;
+
+    private static Context appContext;
+
+    public static void initContext(Context context) {
+        appContext = context;
+    }
+
+    public static Context getAppContext() {
+        return appContext;
+    }
 
     public static RequestOptions getOptions() {
         return options = new RequestOptions()

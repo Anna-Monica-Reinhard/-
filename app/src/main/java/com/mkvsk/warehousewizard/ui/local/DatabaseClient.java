@@ -5,6 +5,8 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.mkvsk.warehousewizard.ui.util.Utils;
+
 public class DatabaseClient {
     public static DatabaseClient instance;
     private AppDatabase appDatabase;
@@ -21,6 +23,9 @@ public class DatabaseClient {
     }
 
     public static DatabaseClient getInstance() {
+        if (instance == null) {
+            instance = new DatabaseClient(Utils.getAppContext());
+        }
         return instance;
     }
 

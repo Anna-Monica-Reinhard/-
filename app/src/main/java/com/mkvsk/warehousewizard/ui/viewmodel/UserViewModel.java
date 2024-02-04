@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.mkvsk.warehousewizard.core.User;
-import com.mkvsk.warehousewizard.ui.local.DatabaseClient;
 import com.mkvsk.warehousewizard.ui.repository.UserRepository;
 
 import java.util.List;
@@ -17,11 +16,15 @@ public class UserViewModel extends ViewModel {
     private MutableLiveData<Boolean> isAuthMode;
 
     public UserViewModel() {
-        repository = new UserRepository(DatabaseClient.getInstance().context);
+        repository = new UserRepository();
+    }
+
+    public void createNewUser(User user) {
+        repository.insert(user);
     }
 
     public List<User> getAllUsers() {
-        return repository.getAllUsers().getValue();
+        return repository.getAllUsers();
     }
 
     // Auth and register

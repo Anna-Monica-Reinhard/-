@@ -16,18 +16,21 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.mkvsk.warehousewizard.MainActivity;
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.User;
 import com.mkvsk.warehousewizard.databinding.FragmentAuthAndRegisterBinding;
 import com.mkvsk.warehousewizard.ui.repository.UserRepository;
 import com.mkvsk.warehousewizard.ui.util.Utils;
+import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 public class AuthAndRegisterFragment extends Fragment {
 
     private FragmentAuthAndRegisterBinding binding;
-    //    UserViewModel userViewModel = new UserViewModel();
+    private UserViewModel userViewModel;
     String login = "";
     String password = "";
     boolean isAuthMode = true;
@@ -37,8 +40,7 @@ public class AuthAndRegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-//        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         binding = FragmentAuthAndRegisterBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -47,7 +49,7 @@ public class AuthAndRegisterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        initObservers();
-        userRepository = new UserRepository(getContext());
+//        userRepository = new UserRepository(getContext());
         getDataFromSharedPrefs();
         initViews();
         initListeners();
@@ -156,7 +158,7 @@ public class AuthAndRegisterFragment extends Fragment {
             User newUser = new User();
             newUser.setEmail(login);
             newUser.setPassword(password);
-            userRepository.insert(newUser);
+            userViewModel.createNewUser(newUser);
             saveUserDataToSharedPrefs(login, password);
             NavHostFragment.findNavController(this).navigate(R.id.action_go_to_products_from_auth);
         });

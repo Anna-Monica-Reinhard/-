@@ -17,11 +17,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mkvsk.warehousewizard.databinding.ActivityMainBinding;
 import com.mkvsk.warehousewizard.ui.local.AppDatabase;
 import com.mkvsk.warehousewizard.ui.local.CategoryDao;
+import com.mkvsk.warehousewizard.ui.local.DatabaseClient;
 import com.mkvsk.warehousewizard.ui.local.ProductDao;
 import com.mkvsk.warehousewizard.ui.local.UserDao;
 import com.mkvsk.warehousewizard.ui.repository.CategoryRepository;
 import com.mkvsk.warehousewizard.ui.repository.ProductRepository;
 import com.mkvsk.warehousewizard.ui.repository.UserRepository;
+import com.mkvsk.warehousewizard.ui.util.Utils;
 import com.mkvsk.warehousewizard.ui.viewmodel.CategoryViewModel;
 import com.mkvsk.warehousewizard.ui.viewmodel.DashboardViewModel;
 import com.mkvsk.warehousewizard.ui.viewmodel.ProductViewModel;
@@ -38,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
     private CategoryRepository categoryRepository;
     private UserRepository userRepository;
     //    private AppDatabase db = App.getInstance().getDatabase();
-    ProductViewModel productViewModel;
-    CategoryViewModel categoryViewModel;
-    UserViewModel userViewModel;
-    DashboardViewModel dashboardViewModel;
-    String login = "";
-    String password = "";
-    NavController navController;
+    private ProductViewModel productViewModel;
+    private CategoryViewModel categoryViewModel;
+    private UserViewModel userViewModel;
+    private DashboardViewModel dashboardViewModel;
+    private String login = "";
+    private String password = "";
+    private NavController navController;
     boolean isAuthMode = true;
 
     @Override
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.initContext(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
         setContentView(binding.getRoot());
@@ -69,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-//        initDatabase();
-//        initViewModels();
+        initDatabase();
+        initViewModels();
         initViews();
     }
 
@@ -88,18 +91,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDatabase() {
-        appDatabase = AppDatabase.getDatabase(this);
-        userRepository = new UserRepository(this);
-        categoryRepository = new CategoryRepository(this);
-        productRepository = new ProductRepository(this);
+        appDatabase = AppDatabase.getDatabase();
+
 //        LiveData<List<Category>> categoryLiveData = db.categoryDao().getAllCategories();
 //        categoryLiveData.observe(this, categories -> Log.d("TAG", "onChanged: "));
     }
 
     private void initViewModels() {
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
     }
 

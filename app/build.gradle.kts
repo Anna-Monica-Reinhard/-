@@ -48,8 +48,15 @@ dependencies {
     implementation("android.arch.lifecycle:runtime:1.1.1")
     implementation("android.arch.lifecycle:livedata:1.1.1")
     implementation("android.arch.lifecycle:reactivestreams:1.1.1")
-    implementation("android.arch.persistence.room:runtime:1.1.1")
-    implementation("android.arch.persistence.room:rxjava2:1.1.1")
+
+//    implementation("android.arch.persistence.room:runtime:1.1.1")
+//    implementation("android.arch.persistence.room:rxjava2:1.1.1")
+
+    val room_version = "2.6.1"
+    implementation ("androidx.room:room-runtime:$room_version")
+    annotationProcessor ("androidx.room:room-compiler:$room_version")
+    ksp ("androidx.room:room-compiler:$room_version")
+
 //    androidTestImplementation ("com.android.support.test:rules:1.0.2")
     androidTestImplementation("android.arch.core:core-testing:1.1.1")
 //    androidTestImplementation ("com.android.support:support-compat:28.0.0")
@@ -62,13 +69,16 @@ dependencies {
     implementation("com.github.javafaker:javafaker:1.0.2")
 //  rv libraries
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+
 //  local db
-    implementation("androidx.room:room-runtime:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+//    implementation("androidx.room:room-runtime:2.6.1")
+//    ksp("androidx.room:room-compiler:2.6.1")
+
     // To use Kotlin annotation processing tool (kapt)
     /*kapt "androidx.room:room-compiler:$room_version"*/
     // To use Kotlin Symbol Processing (KSP)
-    implementation("androidx.room:room-ktx:2.6.1")
+
+//    implementation("androidx.room:room-ktx:2.6.1")
 //    implementation("androidx.room:room-paging:+ $roomVersion")
 //    charts
 //    https://android-er.blogspot.com/2016/07/mpandroidchart-powerful-android-chart.html

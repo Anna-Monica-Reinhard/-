@@ -1,6 +1,5 @@
 package com.mkvsk.warehousewizard.ui.repository;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
@@ -15,13 +14,13 @@ public class ProductRepository implements ProductDao {
     private final ProductDao dao;
     private AppDatabase appDatabase;
 
-    public ProductRepository(Context context) {
-        appDatabase = AppDatabase.getDatabase(context);
+    public ProductRepository() {
+        appDatabase = AppDatabase.getDatabase();
         dao = appDatabase.getProductDao();
     }
 
     @Override
-    public LiveData<List<Product>> getAllProducts() {
+    public List<Product> getAllProducts() {
         return dao.getAllProducts();
     }
 

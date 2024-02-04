@@ -6,7 +6,6 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,16 +16,15 @@ import lombok.NoArgsConstructor;
 public class User {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    long id;
-//    @Builder.Default
+    public long id;
     @ColumnInfo(name = "full_name")
-    String fullName = "No name";
+    public String fullName = "";
     @ColumnInfo(name = "password")
-    String password;
+    public String password = "";
     @ColumnInfo(name = "email")
-    String email;
+    public String email = "";
     @ColumnInfo(name = "phone_number")
-    String phoneNumber;
+    public String phoneNumber = "";
 
     @Override
     public String toString() {

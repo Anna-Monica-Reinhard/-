@@ -3,26 +3,23 @@ package com.mkvsk.warehousewizard.ui.repository;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.TypeConverter;
 
 import com.mkvsk.warehousewizard.core.User;
 import com.mkvsk.warehousewizard.ui.local.AppDatabase;
-import com.mkvsk.warehousewizard.ui.local.ListConverter;
 import com.mkvsk.warehousewizard.ui.local.UserDao;
 
 import java.util.List;
 
 public class UserRepository implements UserDao {
     private final UserDao dao;
-    private AppDatabase appDatabase;
 
-    public UserRepository(Context context) {
-        appDatabase = AppDatabase.getDatabase(context);
+    public UserRepository() {
+        AppDatabase appDatabase = AppDatabase.getDatabase();
         dao = appDatabase.getUserDao();
     }
 
     @Override
-    public LiveData<List<User>> getAllUsers() {
+    public List<User> getAllUsers() {
         return dao.getAllUsers();
     }
 
