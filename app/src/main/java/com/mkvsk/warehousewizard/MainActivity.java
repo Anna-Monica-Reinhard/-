@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         if (!login.isBlank() && !password.isBlank()) {
             navController.navigate(R.id.navigation_products);
+        } else {
+            binding.navView.setVisibility(View.GONE);
         }
     }
 

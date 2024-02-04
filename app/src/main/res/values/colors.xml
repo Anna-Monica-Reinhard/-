@@ -5,22 +5,38 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+<!--            <color name="et_bgr_color">#F8E6DA</color>-->
+            <color name="stroke_color">#C1AFA5</color>
+            <color name="secondary_text_color">#473A33</color>
+            <color name="theme_cardview_bgr_color">#F8E6DA</color>
+            <color name="theme_cardview_bgr">#F8E6DA</color>
+<!--            <color name="theme_ic_color">#251E1A</color>-->
+<!--            <color name="btn_disabled_color">#E6DCD6</color>-->
+<!--            <color name="btn_pressed_color">#977E6E</color>-->
+            <color name="btn_enabled_color">#BD9F8B</color>
+            <color name="hint_text">#71625A</color>
+            <color name="accent_color">#E6DCD6</color>
+            <color name="primary_text_color">#251E1A</color>
+            <color name="theme_primary_bgr">#D6BFB0</color>
+            <color name="bag_buttons_bgr_color">#BD9F8B</color>
+            <color name="btn_disabled_color_fragments">#E6DCD6</color>
+
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="et_bgr_color">#B9C8D8</color>
-    <color name="stroke_color">#3F51B5</color>
-    <color name="txt_color">@color/material_dynamic_neutral30</color>
-    <color name="theme_cardview_bgr_color">@color/material_dynamic_neutral99</color>
-    <color name="theme_cardview_bgr">#AAA0BD</color>
-    <color name="theme_ic_color">#000000</color>
-    <color name="btn_disabled_color">#EFEEEC</color>
-    <color name="btn_pressed_color">#333364E0</color>
-    <color name="btn_enabled_color">#3364E0</color>
-    <color name="hint_text">#625670</color>
-    <color name="accent_color">#E6DCD6</color>
-    <color name="main_text_color">#000000</color>
-    <color name="theme_primary_bgr">#ECEFF1</color>
-    <color name="bag_buttons_bgr_color">#625670</color>
-    <color name="btn_disabled_color_fragments">#B7BFC5</color>
+    <color name="background_color">#EBE5D9</color>
+    <color name="background_secondary_color">#F3EFE8</color>
+    <color name="et_bgr_color">#FCFCFC</color>
+    <color name="accent_btn_color">#D3EABC</color>
+    <color name="btn_disabled_color">#C1D0B1</color>
+    <color name="btn_pressed_color">#C8EEA1</color>
+    <color name="btn_secondary_color">#D3EABC</color>
+    <color name="btn_tertiary_color">#D3EABC</color>
+    <color name="text_on_btn_color">#3F512B</color>
+    <color name="selected_element_color">#FADEBC</color>
+    <color name="text_hint_secondary_color">#807465</color>
+    <color name="theme_ic_color">#807465</color>
+    <color name="text_primary_color">#282623</color>
 
 </resources>

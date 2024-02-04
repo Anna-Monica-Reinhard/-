@@ -2,16 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/search"
+        android:id="@+id/menu_item_search"
         android:icon="@drawable/ic_search"
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="always"
+
+        />
+<!--        app:showAsAction="ifRoom|collapseActionView"-->
+
 
     <item
-        android:id="@+id/filter"
-        android:icon="@drawable/ic_add"
+        android:id="@+id/menu_item_filter"
+        android:icon="@drawable/ic_filter_list"
         android:title="Filter"
-        app:actionViewClass="androidx.appcompat.widget.AppCompatSpinner"
         app:showAsAction="always" />
 </menu>

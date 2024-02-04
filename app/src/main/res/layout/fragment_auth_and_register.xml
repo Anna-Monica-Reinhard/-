@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/background_color"
     tools:context=".ui.view.AuthAndRegisterFragment">
 
     <com.google.android.material.card.MaterialCardView
@@ -14,7 +14,8 @@
         android:layout_height="0dp"
         android:layout_gravity="bottom"
         android:layout_marginTop="100dp"
-        app:cardElevation="6dp"
+        android:translationZ="0dp"
+        app:cardElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:contentPaddingBottom="54dp"
         app:contentPaddingLeft="16dp"
@@ -36,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Login"
-                android:textColor="@color/txt_color"
+                android:textColor="@color/text_primary_color"
                 android:textSize="34dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +65,7 @@
                         android:background="@drawable/round_corner_edittext"
                         android:inputType="textEmailAddress"
                         android:maxLength="40"
+                        android:textAppearance="@style/myTextInputStyle"
                         tools:text="Login" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,6 +84,7 @@
                         android:background="@drawable/round_corner_edittext"
                         android:inputType="textPassword"
                         android:maxLength="30"
+                        android:textAppearance="@style/myTextInputStyle"
                         tools:text="Password" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -106,9 +109,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/text_input_height"
                         android:background="@drawable/round_corner_edittext"
-                        android:visibility="visible"
                         android:inputType="textPersonName"
                         android:maxLines="1"
+                        android:textAppearance="@style/myTextInputStyle"
+                        android:visibility="visible"
                         tools:text="Name" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,6 +132,7 @@
                         android:background="@drawable/round_corner_edittext"
                         android:inputType="textEmailAddress"
                         android:maxLength="40"
+                        android:textAppearance="@style/myTextInputStyle"
                         tools:text="Email" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -143,9 +148,10 @@
                         android:id="@+id/et_phone_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_edittext"
                         android:inputType="phone"
                         android:maxLength="30"
-                        android:background="@drawable/round_corner_edittext"
+                        android:textAppearance="@style/myTextInputStyle"
                         tools:text="Phone number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -165,6 +171,7 @@
                         android:background="@drawable/round_corner_edittext"
                         android:inputType="textPassword"
                         android:maxLength="30"
+                        android:textAppearance="@style/myTextInputStyle"
                         tools:text="Repeat password" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -173,14 +180,14 @@
                 android:id="@+id/tv_info_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_marginTop="2dp"
+                android:layout_marginEnd="6dp"
                 android:clickable="true"
                 android:enabled="true"
-                android:layout_gravity="end"
-                android:textSize="11sp"
-                android:visibility="gone"
-                android:layout_marginEnd="6dp"
-                android:text="Пароль должен состоять от 6 до 20 символов" />
+                android:text="Пароль должен состоять от 6 до 20 символов"
+                android:textAppearance="@style/additionalTextStyle"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login_register"
@@ -188,9 +195,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/selector_button"
-                android:enabled="false"
+                android:enabled="true"
+                android:outlineAmbientShadowColor="@android:color/transparent"
+                android:outlineProvider="none"
                 android:text="login"
-                android:textColor="@color/white" />
+                android:textColor="@color/text_on_btn_color" />
 
             <TextView
                 android:id="@+id/btn_sign_up"
@@ -200,7 +209,8 @@
                 android:clickable="true"
                 android:enabled="true"
                 android:gravity="center"
-                android:text="@string/don_t_have_any_account_signup" />
+                android:text="@string/don_t_have_any_account_signup"
+                android:textColor="@color/text_hint_secondary_color" />
             <!--hz-->
 
         </LinearLayout>

@@ -2,15 +2,15 @@
     <!-- Base application theme. -->
     <style name="Theme.WarehouseWizard" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/background_color</item>
+        <item name="colorPrimaryVariant">@color/background_secondary_color</item>
+        <item name="colorOnPrimary">@color/accent_btn_color</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/selected_element_color</item>
+        <item name="colorSecondaryVariant">@color/text_hint_secondary_color</item>
+        <item name="colorOnSecondary">@color/text_primary_color</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:statusBarColor">@color/background_color</item>
         <!-- Customize your theme here. -->
     </style>
 

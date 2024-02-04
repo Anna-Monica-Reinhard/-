@@ -6,14 +6,22 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.AutoTransition;
+import androidx.transition.Scene;
 
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.Category;
@@ -67,11 +75,43 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        initViewModels();
+        setupMenu();
         setupAdapters();
         initViews();
         initListeners();
     }
 
+    private void setupMenu() {
+        MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.products_actionbar_menu, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.menu_item_filter) {
+                    //                       list sort
+                    setSearchMode(binding.toolbar.getMenu().findItem(R.id.menu_item_filter),
+                            binding.toolbar.getMenu().findItem(R.id.menu_item_search));
+                    return true;
+                } else if (menuItem.getItemId() == R.id.menu_item_search) {
+                    setSearchMode(binding.toolbar.getMenu().findItem(R.id.menu_item_search),
+                            binding.toolbar.getMenu().findItem(R.id.menu_item_filter));
+                    return true;
+                }
+                return false;
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+    }
+
+    private void setSearchMode(MenuItem searchItem, MenuItem unselectItem) {
+        androidx.transition.TransitionManager.go(new Scene(binding.toolbar), new AutoTransition());
+        Objects.requireNonNull(binding.edittextSearch.getText()).clear();
+//        searchItem.icon !!.setTint(ContextCompat.getColor(context !!, R.color.pink_a200))
+//        unselectItem ?.icon !!.setTint(ContextCompat.getColor(context !!, R.color.main_text))
+    }
 
     private void setupAdapters() {
         rvCategory = binding.rvCategory;
@@ -89,8 +129,8 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     }
 
     private void initViewModels() {
-        categoryViewModel.allCategories.observe(getViewLifecycleOwner(),
-                newData -> categoryAdapter.setData(newData));
+//        categoryViewModel.allCategories.observe(getViewLifecycleOwner(),
+//                newData -> categoryAdapter.setData(newData));
 
 //        productViewModel.allProducts.observe(getViewLifecycleOwner(),
 //                newData -> productAdapter.setData(newData));
@@ -104,6 +144,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     private void initListeners() {
         binding.fabAdd.setOnClickListener(v -> onAddClick());
+
         binding.fabAddCategory.setOnClickListener(view -> addNewCategory());
         binding.fabAddProduct.setOnClickListener(view -> addNewProduct());
     }
@@ -111,15 +152,15 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     private void addNewCategory() {
         Toast.makeText(requireContext(), "CATEGORY", Toast.LENGTH_SHORT).show();
         Category newCategory = new Category();
-        CustomAlertDialogBuilder.cardAddNewCategory(requireContext(), newCategory, () -> {
-            categoryViewModel.insert(newCategory);
+        CustomAlertDialogBuilder.cardAddNewCategory(this.requireContext(), newCategory, () -> {
+//            categoryViewModel.insert(newCategory);
         });
     }
 
     private void addNewProduct() {
         Toast.makeText(requireContext(), "PRODUCT", Toast.LENGTH_SHORT).show();
         Product newProduct = new Product();
-        CustomAlertDialogBuilder.cardAddNewProduct(requireContext(), newProduct, () -> {
+        CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(), newProduct, () -> {
 //                productViewModel.insert(newProduct);
         });
     }

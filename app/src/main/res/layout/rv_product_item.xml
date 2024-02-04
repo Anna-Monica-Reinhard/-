@@ -5,19 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="14dp">
+    android:paddingBottom="16dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_product"
-        style="@style/myMaterialCardRounded"
+        style="@style/myTagCardRounded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="false"
-        app:layout_constraintDimensionRatio="H,1:1"
-        app:strokeColor="@color/black"
-        app:strokeWidth="2dp">
+        app:layout_constraintDimensionRatio="H,1:1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl"
@@ -28,14 +26,14 @@
                 android:id="@+id/iv_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:scaleType="fitCenter"
-                tools:src="@drawable/loader"
-                android:background="@color/white"
+                android:background="@color/background_secondary_color"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="H,1:1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/loader" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -45,10 +43,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginHorizontal="6dp"
+        android:autoSizeMaxTextSize="11sp"
+        android:autoSizeMinTextSize="9sp"
         android:autoSizeStepGranularity="1sp"
-        android:textColor="@color/black"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_primary_color"
         android:textSize="9sp"
-        tools:text="Product code: 38838383" />
+        tools:text="Product code: 388383835555555555555555" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -56,10 +58,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginHorizontal="6dp"
-        android:autoSizeMaxTextSize="13sp"
+        android:autoSizeMaxTextSize="12sp"
         android:autoSizeMinTextSize="8sp"
         android:autoSizeStepGranularity="1sp"
         android:maxLines="2"
-        android:textColor="@color/black"
+        android:textColor="@color/text_primary_color"
+        android:textSize="11sp"
         tools:text="Text" />
 </LinearLayout>

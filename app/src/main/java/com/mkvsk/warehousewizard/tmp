@@ -217,3 +217,38 @@ public class CategoryViewModel extends ViewModel {
                  return INSTANCE;
              }
          }
+
+
+
+
+         ___________________
+
+
+
+ val menuHost: MenuHost = requireActivity()
+
+     // Add menu items without using the Fragment Menu APIs
+     // Note how we can tie the MenuProvider to the viewLifecycleOwner
+     // and an optional Lifecycle.State (here, RESUMED) to indicate when
+     // the menu should be visible
+     menuHost.addMenuProvider(object : MenuProvider {
+       override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+         // Add menu items here
+         menuInflater.inflate(R.menu.example_menu, menu)
+       }
+
+       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+         // Handle the menu selection
+             return when (menuItem.itemId) {
+                 R.id.menu_clear -> {
+                     // clearCompletedTasks()
+                     true
+                 }
+                 R.id.menu_refresh -> {
+                     // loadTasks(true)
+                     true
+                 }
+                 else -> false
+             }
+       }
+     }, viewLifecycleOwner, Lifecycle.State.RESUMED)

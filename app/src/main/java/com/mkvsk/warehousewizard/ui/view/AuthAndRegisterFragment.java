@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.databinding.FragmentAuthAndRegisterBinding;
@@ -24,7 +25,7 @@ import com.mkvsk.warehousewizard.ui.util.Utils;
 public class AuthAndRegisterFragment extends Fragment {
 
     private FragmentAuthAndRegisterBinding binding;
-    //    UserViewModel userViewModel;
+    //    UserViewModel userViewModel = new UserViewModel();
     String login = "";
     String password = "";
     boolean isAuthMode = true;
@@ -49,6 +50,7 @@ public class AuthAndRegisterFragment extends Fragment {
     }
 
     private void setAuthOrRegisterMode() {
+        clearFields();
         if (isAuthMode) {
             binding.llRegister.setVisibility(View.GONE);
             binding.llAuth.setVisibility(View.VISIBLE);
@@ -56,6 +58,10 @@ public class AuthAndRegisterFragment extends Fragment {
             binding.btnSignUp.setText(R.string.don_t_have_any_account_signup);
             binding.btnLoginRegister.setText(R.string.btn_login);
             isAuthMode = false;
+            if (!login.isEmpty() && !password.isEmpty()) {
+                binding.etLogin.setText(login);
+                binding.etPassword.setText(password);
+            }
         } else {
             binding.llRegister.setVisibility(View.VISIBLE);
             binding.llAuth.setVisibility(View.GONE);
@@ -64,7 +70,6 @@ public class AuthAndRegisterFragment extends Fragment {
             binding.btnLoginRegister.setText(R.string.btn_confirm_new_account);
             isAuthMode = true;
         }
-        clearFields();
     }
 
 //    private void initObservers() {
@@ -124,8 +129,8 @@ public class AuthAndRegisterFragment extends Fragment {
         } finally {
             if (!login.isBlank() && !login.isEmpty()
                     && !password.isBlank() && !password.isEmpty()) {
-//            userViewModel.setLogin(login);
-//            userViewModel.setPassword(password);
+//                userViewModel.setLogin(login);
+//                userViewModel.setPassword(password);
                 binding.etLogin.setText(login);
                 binding.etPassword.setText(password);
                 binding.btnLoginRegister.setEnabled(true);
@@ -142,7 +147,11 @@ public class AuthAndRegisterFragment extends Fragment {
             setAuthOrRegisterMode();
         });
 
-        binding.btnLoginRegister.setOnClickListener(view -> saveUserDataToSharedPrefs(login, password));
+        binding.btnLoginRegister.setOnClickListener(view -> {
+//                save user to db
+            saveUserDataToSharedPrefs(login, password);
+            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_products_from_auth);
+        });
         binding.etCreatePassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

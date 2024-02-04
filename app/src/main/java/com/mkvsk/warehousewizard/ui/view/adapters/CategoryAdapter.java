@@ -79,13 +79,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemVi
         }
 
         private void selectItem(MaterialCardView cardView, TextView textView) {
-            cardView.setBackgroundResource(R.drawable.selected_tag_item);
+//            cardView.setBackgroundResource(R.drawable.selected_tag_item);
             cardView.setClickable(false);
             textView.setSelected(true);
         }
 
         private void unselectItem(MaterialCardView cardView, TextView textView) {
-            cardView.setBackgroundResource(R.drawable.unselected_tag_item);
+//            cardView.setBackgroundResource(R.drawable.unselected_tag_item);
             cardView.setClickable(true);
             textView.setSelected(false);
         }

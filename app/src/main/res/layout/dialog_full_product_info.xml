@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_background_inset"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@drawable/dialog_background_inset">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/theme_cardview_bgr"
+        android:background="@color/background_color"
         android:scaleType="fitCenter"
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -21,12 +19,12 @@
         app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
 
     <TextView
-        android:id="@+id/tvProductTitle"
+        android:id="@+id/tv_product_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Name"
-        android:textColor="@color/black"
+        android:textColor="@color/text_primary_color"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -38,10 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="text"
-        android:textColor="@color/black"
+        android:textColor="@color/text_primary_color"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvProductTitle" />
+        app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
 
     <TextView
         android:id="@+id/tvProductCode"
@@ -49,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:text="text"
+        android:textColor="@color/text_primary_color"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/tvLabelCode"
         app:layout_constraintLeft_toRightOf="@+id/tvLabelCode"
@@ -60,7 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/black"
+        android:textColor="@color/text_primary_color"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvLabelCode"
@@ -86,7 +85,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:layout_weight="1"
-            android:background="@color/bag_buttons_bgr_color"
+            android:background="@color/accent_btn_color"
             android:paddingHorizontal="16dp"
             android:src="@drawable/ic_minus"
             app:layout_constraintRight_toRightOf="@id/ivImage"
@@ -100,7 +99,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:paddingHorizontal="8dp"
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/text_on_btn_color"
             android:textSize="20sp"
             tools:text="9999999" />
 
@@ -110,7 +109,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:layout_weight="1"
-            android:background="@color/bag_buttons_bgr_color"
+            android:background="@color/accent_btn_color"
             android:paddingHorizontal="16dp"
             android:src="@drawable/ic_plus"
             app:layout_constraintRight_toRightOf="@id/ivImage"
@@ -122,8 +121,9 @@
         android:id="@+id/tvAvailability"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/hint_text"
+        android:layout_marginTop="4dp"
+        android:textAlignment="center"
+        android:textColor="@color/text_hint_secondary_color"
         android:textSize="13sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

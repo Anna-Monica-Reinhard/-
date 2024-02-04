@@ -9,7 +9,7 @@
     </style>
 
     <style name="myMaterialCardAuth" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">@color/theme_cardview_bgr_color</item>
+        <item name="cardBackgroundColor">@color/background_secondary_color</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_right
         </item>
@@ -17,10 +17,10 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_right" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">10dp</item>
-        <item name="cornerSizeTopLeft">10dp</item>
-        <item name="cornerSizeBottomRight">10dp</item>
-        <item name="cornerSizeBottomLeft">10dp</item>
+        <item name="cornerSizeTopRight">40dp</item>
+        <item name="cornerSizeTopLeft">40dp</item>
+        <item name="cornerSizeBottomRight">40dp</item>
+        <item name="cornerSizeBottomLeft">40dp</item>
     </style>
 
     <!--    myTextInputLayout-->
@@ -29,6 +29,17 @@
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="hintAnimationEnabled">true</item>
         <item name="hintEnabled">true</item>
+        <item name="hintTextColor">@color/text_hint_secondary_color</item>
+    </style>
+
+    <style name="myTextInputStyle" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_primary_color</item>
+    </style>
+
+    <style name="additionalTextStyle" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/text_hint_secondary_color</item>
     </style>
 
     <style name="ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary." parent="Theme.AppCompat.Light">
@@ -43,7 +54,7 @@
     </style>
 
     <style name="myMaterialCardRounded" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">@color/black</item>
+        <item name="cardBackgroundColor">@color/background_secondary_color</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_round
         </item>
@@ -55,6 +66,21 @@
         <item name="cornerSizeTopLeft">10dp</item>
         <item name="cornerSizeBottomRight">10dp</item>
         <item name="cornerSizeBottomLeft">10dp</item>
+    </style>
+
+    <style name="myTagCardRounded" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/background_secondary_color</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_tag_round
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_tag_round" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
@@ -76,5 +102,11 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">18sp</item>
         <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_gravity">bottom</item>
     </style>
 </resources>
