@@ -22,6 +22,7 @@ import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mkvsk.warehousewizard.R;
@@ -61,6 +62,8 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
+        categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
         binding = FragmentProductsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -152,8 +155,8 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     private void addNewProduct() {
         Toast.makeText(requireContext(), "PRODUCT", Toast.LENGTH_SHORT).show();
         Product newProduct = new Product();
-        CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(), newProduct, () -> {
-//                productViewModel.insert(newProduct);
+        CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(), newProduct, categoryViewModel.getAllCategoriesTitles(), () -> {
+            productViewModel.insert(newProduct);
             Toast.makeText(getContext(), "Product added", Toast.LENGTH_SHORT).show();
         }).show();
     }
@@ -186,7 +189,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         categoryAdapter.setSelected(selectedItem);
         categoryAdapter.notifyItemChanged(previousItem);
         categoryAdapter.notifyItemChanged(selectedItem);
-//        productsViewModel.setCategory(categoryTitle);
+//        categoryViewModel.setCategory(categoryTitle);
         if (selectedItem > 3) {
             binding.rvCategory.smoothScrollToPosition(selectedItem);
         }

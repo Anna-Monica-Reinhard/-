@@ -21,13 +21,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.mkvsk.warehousewizard.MainActivity;
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.User;
 import com.mkvsk.warehousewizard.databinding.FragmentAuthAndRegisterBinding;
-import com.mkvsk.warehousewizard.ui.repository.UserRepository;
 import com.mkvsk.warehousewizard.ui.util.Utils;
 import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
+
+import java.util.Objects;
 
 public class AuthAndRegisterFragment extends Fragment {
 
@@ -40,7 +40,6 @@ public class AuthAndRegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         binding = FragmentAuthAndRegisterBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -136,11 +135,6 @@ public class AuthAndRegisterFragment extends Fragment {
             e.printStackTrace();
         } finally {
             if (!login.isBlank() && !password.isBlank()) {
-//                userViewModel.setLogin(login);
-//                binding.etLogin.setText(login);
-//                binding.etPassword.setText(password);
-//                binding.btnLogin.setEnabled(true);
-//                binding.btnRegister.setEnabled(true);
                 loginUser();
             } else {
                 isAuthMode = true;
@@ -156,8 +150,8 @@ public class AuthAndRegisterFragment extends Fragment {
         });
 
         binding.btnLogin.setOnClickListener(view -> {
-            login = binding.etLogin.getText().toString();
-            password = binding.etPassword.getText().toString();
+            login = Objects.requireNonNull(binding.etLogin.getText()).toString();
+            password = Objects.requireNonNull(binding.etPassword.getText()).toString();
             loginUser();
         });
         binding.btnRegister.setOnClickListener(view -> registerUser());

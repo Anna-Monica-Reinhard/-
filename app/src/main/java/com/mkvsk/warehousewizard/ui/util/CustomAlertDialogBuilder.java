@@ -7,14 +7,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.Category;
@@ -22,6 +25,9 @@ import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnAddNewItemClickListener;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnProductCardClickListener;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 import java.util.Objects;
 
 public final class CustomAlertDialogBuilder {
@@ -85,11 +91,12 @@ public final class CustomAlertDialogBuilder {
 
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public static AlertDialog cardAddNewProduct(final Context context, Product newProduct, OnAddNewItemClickListener listener) {
+    public static AlertDialog cardAddNewProduct(final Context context, Product newProduct, List<String> listCategories, OnAddNewItemClickListener listener) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_create_product, null, false);
         dialog.setView(dialogView);
 
+        final MaterialAutoCompleteTextView ddListItem = dialogView.findViewById(R.id.dd_list_product_category);
         final TextInputEditText tvName = dialogView.findViewById(R.id.et_add_product_name);
 //        final TextInputEditText tvCategory = dialogView.findViewById(R.id.et_add_product_category);
 //        final TextInputEditText tvCode = dialogView.findViewById(R.id.et_add_product_code);
@@ -103,6 +110,19 @@ public final class CustomAlertDialogBuilder {
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
 
+        listCategories.add("Other");
+        listCategories.add("Skin care");
+        listCategories.add("Make up");
+        listCategories.add("Accessories");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.list_item, listCategories);
+        ddListItem.setAdapter(adapter);
+
+        ddListItem.setDropDownBackgroundDrawable(
+                ResourcesCompat.getDrawable(context.getResources(), R.drawable.drop_down_list_bgr, null)
+        );
+        ddListItem.setOnItemClickListener((adapterView, view, position, l)
+                -> newProduct.setCategory(adapterView.getItemAtPosition(position).toString()));
         tvName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

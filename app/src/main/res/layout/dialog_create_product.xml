@@ -18,6 +18,49 @@
         android:background="@drawable/round_corner_rect"
         android:src="@drawable/ic_close" />
 
+    <!--    style="@style/myTextInputLayout"-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout_add_product_category"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:background="@drawable/round_corner_edittext"
+        android:hint="Category"
+        app:boxBackgroundColor="@color/et_bgr_color"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:endIconDrawable="@drawable/ic_expand_more"
+        app:endIconTint="@color/theme_ic_color"
+        app:hintTextColor="@color/hint_text">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/dd_list_product_category"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="1dp"
+            android:background="@null"
+            android:drawableTint="@color/theme_ic_color"
+            android:dropDownSelector="@drawable/drop_down_item_selector"
+            android:ellipsize="end"
+            android:inputType="none"
+            android:maxLines="1"
+            android:overScrollMode="never"
+            android:singleLine="true"
+            android:textAppearance="@style/myTextInputStyle"
+            app:simpleItemLayout="@layout/list_item" />
+        <!--        <com.google.android.material.textfield.TextInputEditText-->
+        <!--            android:id="@+id/et_add_product_category"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/round_corner_edittext"-->
+        <!--            android:inputType="textPersonName"-->
+        <!--            android:textAppearance="@style/myTextInputStyle" />-->
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_layout_add_product"
         style="@style/myTextInputLayout"
@@ -36,23 +79,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_layout_add_product_category"
-        style="@style/myTextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/text_input_height"
-        android:hint="Category">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_add_product_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_edittext"
-            android:inputType="textPersonName"
-            android:textAppearance="@style/myTextInputStyle" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_layout_add_product_code"
         style="@style/myTextInputLayout"
         android:layout_width="match_parent"
@@ -65,6 +91,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_corner_edittext"
             android:inputType="textPersonName"
+            android:textAllCaps="true"
             android:textAppearance="@style/myTextInputStyle" />
     </com.google.android.material.textfield.TextInputLayout>
 

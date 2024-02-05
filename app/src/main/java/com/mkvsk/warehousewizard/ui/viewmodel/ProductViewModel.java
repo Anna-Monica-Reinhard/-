@@ -18,4 +18,28 @@ public class ProductViewModel extends ViewModel {
         repository = new ProductRepository();
     }
 
+    public MutableLiveData<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(MutableLiveData<Product> product) {
+        this.product = product;
+    }
+
+    public MutableLiveData<List<Product>> getAllProducts() {
+        return allProducts;
+    }
+
+    public void setAllProducts(MutableLiveData<List<Product>> allProducts) {
+        this.allProducts = allProducts;
+    }
+
+    public List<Product> getAllProductsFromDB(){
+        return repository.getAllProducts();
+    }
+
+    public void insert(Product product) {
+        repository.insert(product);
+    }
+
 }
