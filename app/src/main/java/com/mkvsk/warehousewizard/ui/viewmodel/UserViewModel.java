@@ -11,24 +11,36 @@ import java.util.List;
 
 public class UserViewModel extends ViewModel {
     private UserRepository repository;
-    private final MutableLiveData<String> login = new MutableLiveData<>("");
+    private MutableLiveData<String> login;
     private MutableLiveData<String> password;
     private MutableLiveData<Boolean> isAuthMode;
+    private MutableLiveData<User> currentUser;
+    private MutableLiveData<User> newUser;
+    private MutableLiveData<User> userByEmail;
+    private MutableLiveData<List<User>> allUsers;
+
+    public MutableLiveData<User> getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(MutableLiveData<User> currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public MutableLiveData<User> getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(MutableLiveData<User> newUser) {
+        this.newUser = newUser;
+    }
 
     public UserViewModel() {
         repository = new UserRepository();
     }
 
-    public void createNewUser(User user) {
-        repository.insert(user);
-    }
-
     public User login(String login) {
         return repository.getByEmailOrPhoneNumber(login);
-    }
-
-    public List<User> getAllUsers() {
-        return repository.getAllUsers();
     }
 
     // Auth and register
@@ -57,32 +69,32 @@ public class UserViewModel extends ViewModel {
     }
 
     // DB queries
-
-
-    private final MutableLiveData<User> userByEmail = new MutableLiveData<>();
-
-    public LiveData<User> getUserByEmail(String email) {
-        return userByEmail;
+    public void createNewUser(User user) {
+        repository.insert(user);
     }
 
-    public User fetchUserByEmail(String email) {
+    public List<User> getAllUsers() {
+        return repository.getAllUsers();
+    }
+
+    public void setAllUsers(LiveData<List<User>> allUsers) {
+        this.allUsers.setValue(allUsers.getValue());
+    }
+
+    public User getUserByEmail(String email) {
         return repository.getByEmail(email);
     }
 
-//    public void setUserByEmail(LiveData<User> userByEmail) {
-//        this.userByEmail.setValue();
-//    }
-
-    private final MutableLiveData<User> userByPhoneNumber = new MutableLiveData<>();
-
-    public LiveData<User> getUserByPhoneNumber(String phoneNumber) {
-        return userByPhoneNumber;
+    public User getUserByPhoneNumber(String phoneNumber) {
+        return repository.getByPhoneNumber(phoneNumber);
     }
 
-    public void fetchUserByPhoneNumber(String phoneNumber) {
-        userByPhoneNumber.setValue(repository.getByPhoneNumber(phoneNumber));
+    public void updateUser(User user) {
+        repository.update(user);
     }
 
-//    public MutableLiveData
+    public void deleteUser(User user) {
+        repository.delete(user);
+    }
 
 }
