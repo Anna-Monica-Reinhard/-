@@ -5,23 +5,22 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity(tableName = "category", indices = {@Index(value = "title", unique = true)})
 
 public class Category {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     public long id;
-//    @Builder.Default
     @ColumnInfo(name = "title")
-    String title = "other";
+    public String title = "";
+
+    public Category() {
+    }
+
+    public Category(long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 
     @Override
     public String toString() {

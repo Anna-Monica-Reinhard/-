@@ -1,42 +1,49 @@
 package com.mkvsk.warehousewizard.core;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity(tableName = "product", indices = {@Index(value = "code", unique = true)})
 public class Product {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
-    long id;
-    //    @Builder.Default
+    private long id;
     @ColumnInfo(name = "category")
-    String category = "other";
-    //    @Builder.Default
+    private String category = "";
     @ColumnInfo(name = "title")
-    String title = "Unknown";
-
+    private String title = "";
     @ColumnInfo(name = "code")
-    String code;
-    //    @Builder.Default
+    private String code = "";
     @ColumnInfo(name = "qty")
-    long qty = 0;
-    //    @Builder.Default
+    private long qty = 0;
     @ColumnInfo(name = "image")
-    String image = "https://bit.ly/3SGyDfX";
-    //    @Builder.Default
+    private String image = "https://bit.ly/3SGyDfX";
     @ColumnInfo(name = "description")
-    String description = "...";
+    private String description = "...";
     @ColumnInfo(name = "last_editor")
-    String lastEditor = "No name";
+    private String lastEditor = "";
+    @ColumnInfo(name = "price")
+    private double price = 0.0;
+
+    public Product() {
+    }
+
+    public Product(long id, String category, String title, String code, long qty, String image, String description, String lastEditor, double price) {
+        this.id = id;
+        this.category = category;
+        this.title = title;
+        this.code = code;
+        this.qty = qty;
+        this.image = image;
+        this.description = description;
+        this.lastEditor = lastEditor;
+        this.price = price;
+    }
 
     @Override
     public String toString() {
@@ -49,6 +56,7 @@ public class Product {
                 ", image='" + image + '\'' +
                 ", description='" + description + '\'' +
                 ", lastEditor='" + lastEditor + '\'' +
+                ", price='" + price + '\'' +
                 '}';
     }
 
@@ -108,4 +116,19 @@ public class Product {
         this.description = description;
     }
 
+    public String getLastEditor() {
+        return lastEditor;
+    }
+
+    public void setLastEditor(String lastEditor) {
+        this.lastEditor = lastEditor;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }

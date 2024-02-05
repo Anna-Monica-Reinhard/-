@@ -23,6 +23,9 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE phone_number = :phoneNumber")
     User getByPhoneNumber(String phoneNumber);
 
+    @Query("SELECT * FROM user WHERE email = :login OR phone_number = :login")
+    User getByEmailOrPhoneNumber(String login);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 

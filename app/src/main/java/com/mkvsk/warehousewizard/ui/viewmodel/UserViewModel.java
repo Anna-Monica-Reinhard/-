@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UserViewModel extends ViewModel {
     private UserRepository repository;
-    private MutableLiveData<String> login;
+    private final MutableLiveData<String> login = new MutableLiveData<>("");
     private MutableLiveData<String> password;
     private MutableLiveData<Boolean> isAuthMode;
 
@@ -21,6 +21,10 @@ public class UserViewModel extends ViewModel {
 
     public void createNewUser(User user) {
         repository.insert(user);
+    }
+
+    public User login(String login) {
+        return repository.getByEmailOrPhoneNumber(login);
     }
 
     public List<User> getAllUsers() {

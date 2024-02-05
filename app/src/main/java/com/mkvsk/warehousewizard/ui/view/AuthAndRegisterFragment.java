@@ -12,7 +12,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -31,10 +33,9 @@ public class AuthAndRegisterFragment extends Fragment {
 
     private FragmentAuthAndRegisterBinding binding;
     private UserViewModel userViewModel;
-    String login = "";
-    String password = "";
+    private String login = "";
+    private String password = "";
     boolean isAuthMode = true;
-    private UserRepository userRepository;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,8 +49,6 @@ public class AuthAndRegisterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        initObservers();
-//        userRepository = new UserRepository(getContext());
         getDataFromSharedPrefs();
         initViews();
         initListeners();
@@ -62,7 +61,8 @@ public class AuthAndRegisterFragment extends Fragment {
             binding.llAuth.setVisibility(View.VISIBLE);
             binding.btnSignUp.setVisibility(View.VISIBLE);
             binding.btnSignUp.setText(R.string.don_t_have_any_account_signup);
-            binding.btnLoginRegister.setText(R.string.btn_login);
+            binding.btnLogin.setVisibility(View.VISIBLE);
+            binding.btnRegister.setVisibility(View.GONE);
             isAuthMode = false;
             if (!login.isEmpty() && !password.isEmpty()) {
                 binding.etLogin.setText(login);
@@ -73,7 +73,8 @@ public class AuthAndRegisterFragment extends Fragment {
             binding.llAuth.setVisibility(View.GONE);
             binding.btnSignUp.setVisibility(View.VISIBLE);
             binding.btnSignUp.setText(R.string.have_any_account_sign_in);
-            binding.btnLoginRegister.setText(R.string.btn_confirm_new_account);
+            binding.btnLogin.setVisibility(View.GONE);
+            binding.btnRegister.setVisibility(View.VISIBLE);
             isAuthMode = true;
         }
     }
@@ -113,7 +114,8 @@ public class AuthAndRegisterFragment extends Fragment {
         binding.etEmail.setText("");
         binding.etPhoneNumber.setText("");
         binding.etCreatePassword.setText("");
-        binding.btnLoginRegister.setEnabled(false);
+        binding.btnLogin.setEnabled(false);
+        binding.btnRegister.setEnabled(false);
     }
 
     private void saveUserDataToSharedPrefs(String login, String password) {
@@ -133,13 +135,13 @@ public class AuthAndRegisterFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (!login.isBlank() && !login.isEmpty()
-                    && !password.isBlank() && !password.isEmpty()) {
+            if (!login.isBlank() && !password.isBlank()) {
 //                userViewModel.setLogin(login);
-//                userViewModel.setPassword(password);
-                binding.etLogin.setText(login);
-                binding.etPassword.setText(password);
-                binding.btnLoginRegister.setEnabled(true);
+//                binding.etLogin.setText(login);
+//                binding.etPassword.setText(password);
+//                binding.btnLogin.setEnabled(true);
+//                binding.btnRegister.setEnabled(true);
+                loginUser();
             } else {
                 isAuthMode = true;
                 setAuthOrRegisterMode();
@@ -153,15 +155,13 @@ public class AuthAndRegisterFragment extends Fragment {
             setAuthOrRegisterMode();
         });
 
-        binding.btnLoginRegister.setOnClickListener(view -> {
-//                save user to db
-            User newUser = new User();
-            newUser.setEmail(login);
-            newUser.setPassword(password);
-            userViewModel.createNewUser(newUser);
-            saveUserDataToSharedPrefs(login, password);
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_products_from_auth);
+        binding.btnLogin.setOnClickListener(view -> {
+            login = binding.etLogin.getText().toString();
+            password = binding.etPassword.getText().toString();
+            loginUser();
         });
+        binding.btnRegister.setOnClickListener(view -> registerUser());
+
         binding.etCreatePassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -178,6 +178,7 @@ public class AuthAndRegisterFragment extends Fragment {
                 if (editable.length() > 0) {
                     if (!passwordValidate(editable.toString())) {
                         binding.textLayoutCreatePassword.setHint("Введите 6-20 символов. Разрешены !@#$%^&*");
+                        binding.btnRegister.setEnabled(false);
                     } else {
                         binding.textLayoutCreatePassword.setHint("Пароль");
                         checkDataFilled();
@@ -200,9 +201,10 @@ public class AuthAndRegisterFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 0) {
                     if (!passwordValidate(editable.toString())) {
-                        binding.textLayoutCreatePassword.setHint("Введите от 6 символов. Разрешены спец.символы !@#$%^&*");
+                        binding.textLayoutPassword.setHint("Введите от 6 символов. Разрешены спец.символы !@#$%^&*");
+                        binding.btnLogin.setEnabled(false);
                     } else {
-                        binding.textLayoutCreatePassword.setHint("Пароль");
+                        binding.textLayoutPassword.setHint("Пароль");
                         checkDataFilled();
                     }
                 }
@@ -276,15 +278,40 @@ public class AuthAndRegisterFragment extends Fragment {
 
     }
 
+    private void loginUser() {
+        User foundUser = userViewModel.login(login);
+        if (foundUser == null) {
+            Toast.makeText(requireContext(), requireContext().getString(R.string.login_error_user_not_found), Toast.LENGTH_SHORT).show();
+        } else {
+            if (foundUser.getPassword().equals(password)) {
+                saveUserDataToSharedPrefs(login, password);
+                NavHostFragment.findNavController(this).navigate(R.id.action_go_to_products_from_auth);
+            } else {
+                Toast.makeText(requireContext(), requireContext().getString(R.string.login_error_password_incorrect), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void registerUser() {
+        User newUser = new User();
+        newUser.setEmail(login);
+        newUser.setPassword(password);
+        userViewModel.createNewUser(newUser);
+        saveUserDataToSharedPrefs(login, password);
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_products_from_auth);
+    }
+
     private void checkDataFilled() {
         if (binding.llAuth.getVisibility() == View.VISIBLE) {
             if (binding.etLogin.getText().toString().isBlank()
-                    && binding.etPassword.getText().toString().isBlank()) {
-                binding.btnLoginRegister.setEnabled(false);
+                    || binding.etPassword.getText().toString().isBlank()) {
+                binding.btnLogin.setEnabled(false);
+                binding.btnRegister.setEnabled(false);
                 login = "";
                 password = "";
             } else {
-                binding.btnLoginRegister.setEnabled(true);
+                binding.btnLogin.setEnabled(true);
+                binding.btnRegister.setEnabled(true);
                 login = binding.etEmail.getText().toString();
                 password = binding.etCreatePassword.getText().toString();
             }
@@ -292,15 +319,17 @@ public class AuthAndRegisterFragment extends Fragment {
 
         if (binding.llRegister.getVisibility() == View.VISIBLE) {
             if (binding.etEmail.getText().toString().isBlank()
-                    && binding.etName.getText().toString().isBlank()
-                    && binding.etCreatePassword.getText().toString().isBlank()) {
-                binding.btnLoginRegister.setEnabled(false);
+                    || binding.etName.getText().toString().isBlank()
+                    || binding.etCreatePassword.getText().toString().isBlank()) {
+                binding.btnLogin.setEnabled(false);
+                binding.btnRegister.setEnabled(false);
                 login = "";
                 password = "";
             } else {
                 login = binding.etEmail.getText().toString();
                 password = binding.etCreatePassword.getText().toString();
-                binding.btnLoginRegister.setEnabled(true);
+                binding.btnLogin.setEnabled(true);
+                binding.btnRegister.setEnabled(true);
             }
         }
     }
@@ -309,19 +338,12 @@ public class AuthAndRegisterFragment extends Fragment {
         return PASSWORD_REGEX.matcher(password).matches();
     }
 
-//    private void handleBackPressed() {
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(false) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                if (!userViewModel.getIsAuthMode) {
-//                    userViewModel.setIsAuthMode(true);
-//                    setAuthOrRegisterMode();
-//                }
-//            }
-//        });
-//    }
-
-//    private void popBackStack() {
-//        NavHostFragment.findNavController(this).popBackStack();
-//    }
+    private void handleBackPressed() {
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().finish();
+            }
+        });
+    }
 }

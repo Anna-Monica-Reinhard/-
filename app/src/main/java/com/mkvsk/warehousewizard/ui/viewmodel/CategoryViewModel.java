@@ -4,8 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.mkvsk.warehousewizard.core.Category;
-import com.mkvsk.warehousewizard.ui.local.AppDatabase;
-import com.mkvsk.warehousewizard.ui.local.DatabaseClient;
 import com.mkvsk.warehousewizard.ui.repository.CategoryRepository;
 
 import java.util.ArrayList;

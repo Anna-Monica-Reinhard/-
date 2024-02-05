@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
@@ -67,11 +68,11 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        initViewModels();
         setupMenu();
         setupAdapters();
         initViews();
         initListeners();
+        handleBackPressed();
     }
 
     private void setupMenu() {
@@ -109,18 +110,8 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                 .StateRestorationPolicy.PREVENT_WHEN_EMPTY);
     }
 
-    private void initViewModels() {
-//        categoryViewModel.allCategories.observe(getViewLifecycleOwner(),
-//                newData -> categoryAdapter.setData(newData));
-
-//        productViewModel.allProducts.observe(getViewLifecycleOwner(),
-//                newData -> productAdapter.setData(newData));
-    }
-
     private void initViews() {
         binding.fabAdd.extend();
-
-
     }
 
     private void initListeners() {
@@ -152,7 +143,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     private void addNewCategory() {
         Category newCategory = new Category();
         CustomAlertDialogBuilder.cardAddNewCategory(this.requireContext(), newCategory, () -> {
-        Toast.makeText(requireContext(), "CATEGORY", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "CATEGORY", Toast.LENGTH_SHORT).show();
 
 //            categoryViewModel.insert(newCategory);
         }).show();
@@ -237,11 +228,18 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     @Override
     public void onPause() {
         super.onPause();
-
         mBundleRecyclerViewState = new Bundle();
         mListState = Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState();
         mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, mListState);
     }
 
+    private void handleBackPressed() {
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().finish();
+            }
+        });
+    }
 
 }

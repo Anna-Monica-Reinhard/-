@@ -190,7 +190,7 @@
                 android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_login_register"
+                android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -199,6 +199,19 @@
                 android:outlineAmbientShadowColor="@android:color/transparent"
                 android:outlineProvider="none"
                 android:text="login"
+                android:textColor="@color/text_on_btn_color" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/selector_button"
+                android:enabled="true"
+                android:visibility="gone"
+                android:outlineAmbientShadowColor="@android:color/transparent"
+                android:outlineProvider="none"
+                android:text="continue"
                 android:textColor="@color/text_on_btn_color" />
 
             <TextView

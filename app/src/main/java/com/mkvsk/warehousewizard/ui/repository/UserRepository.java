@@ -33,6 +33,10 @@ public class UserRepository implements UserDao {
         return dao.getByPhoneNumber(phoneNumber);
     }
 
+    public User getByEmailOrPhoneNumber(String login) {
+        return dao.getByEmailOrPhoneNumber(login);
+    }
+
     @Override
     public void insert(User user) {
         dao.insert(user);
