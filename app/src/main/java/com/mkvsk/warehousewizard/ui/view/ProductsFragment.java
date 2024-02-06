@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +40,7 @@ import com.mkvsk.warehousewizard.ui.viewmodel.CategoryViewModel;
 import com.mkvsk.warehousewizard.ui.viewmodel.ProductViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ProductsFragment extends Fragment implements OnCategoryClickListener, OnProductClickListener {
@@ -148,6 +150,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         CustomAlertDialogBuilder.cardAddNewCategory(this.requireContext(), newCategory, () -> {
             categoryViewModel.insert(newCategory);
             Toast.makeText(requireContext(), "Category added", Toast.LENGTH_SHORT).show();
+            Log.i("CATEGORY INSERT", "total categories: " + categoryViewModel.getAllCategoriesFromDB().size());
         }).show();
     }
 
@@ -156,6 +159,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(), newProduct, categoryViewModel.getAllCategoriesTitles(), () -> {
             productViewModel.insert(newProduct);
             Toast.makeText(getContext(), "Product added", Toast.LENGTH_SHORT).show();
+            Log.i("PRODUCT INSERT", "total products: " + productViewModel.getAllProductsFromDB().size());
         }).show();
     }
 

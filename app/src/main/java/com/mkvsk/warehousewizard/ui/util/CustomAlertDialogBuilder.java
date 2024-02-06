@@ -150,7 +150,7 @@ public final class CustomAlertDialogBuilder {
 //        newProduct.setAvailable();
 
         btnSave.setOnClickListener(v -> {
-//            listener.onSaveNewData();
+            listener.onSaveNewData();
             alertDialog.dismiss();
         });
 
@@ -180,7 +180,7 @@ public final class CustomAlertDialogBuilder {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                btnSave.setEnabled(s.length() > 0);
+                btnSave.setEnabled(s.length() > 3);
             }
 
             @Override
@@ -189,9 +189,9 @@ public final class CustomAlertDialogBuilder {
         });
 
         btnSave.setOnClickListener(v -> {
+            newCategory.setTitle(Objects.requireNonNull(tvName.getText()).toString());
             listener.onSaveNewData();
             alertDialog.dismiss();
-            Toast.makeText(context, "Category added", Toast.LENGTH_SHORT).show();
         });
         btnClose.setOnClickListener(v -> alertDialog.dismiss());
         Objects.requireNonNull(alertDialog.getWindow())

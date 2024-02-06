@@ -23,15 +23,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.mkvsk.warehousewizard.MainActivity;
 import com.mkvsk.warehousewizard.R;
+import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.databinding.FragmentDashboardBinding;
 
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import kotlin.Pair;
 
@@ -157,6 +167,41 @@ public class DashboardFragment extends Fragment {
         requireActivity().startActivity(new Intent(requireContext(), MainActivity.class));
         requireActivity().finish();
     }
+
+//    private void fillChart() {
+//        PieChart pieChart = binding.piechart;
+//        ArrayList<PieEntry> entries = new ArrayList<>();
+//
+//        Set<String> setTmp = products.stream().map(Product::getTitle).collect(Collectors.toSet());
+//        Map<String, Integer> mapTmp = new HashMap<>();
+//        for (int i = 1; i < setTmp.size() + 1; i++) {
+//            mapTmp.put(String.valueOf(products.indexOf(i)), i);
+//        }
+//
+//        for (int i = 0; i < filteredData.size(); i++) {
+////            JSONObject object = filteredData.entrySet();
+////            entries.add(new PieEntry(Float.parseFloat(object.getString("Subject_Marks")), object.getString("Subject_Name")));
+//        }
+//        ArrayList<Integer> colors = new ArrayList<>();
+//        for (int color : ColorTemplate.MATERIAL_COLORS) {
+//            colors.add(color);
+//        }
+//
+//        for (int color : ColorTemplate.VORDIPLOM_COLORS) {
+//            colors.add(color);
+//        }
+//        PieDataSet dataSet = new PieDataSet(entries, "Pie Chart Example");
+//        dataSet.setColors(colors);
+//        PieData data = new PieData(dataSet);
+//        data.setDrawValues(true);
+//        data.setValueFormatter(new PercentFormatter(pieChart));
+//        data.setValueTextSize(12f);
+//        data.setValueTextColor(Color.BLACK);
+//        pieChart.setCenterText(pie_center_text);
+//        pieChart.setData(data);
+//        pieChart.invalidate();
+//        pieChart.animateY(1400, Easing.EaseInOutQuad);
+//    }
 
     @Override
     public void onDestroyView() {

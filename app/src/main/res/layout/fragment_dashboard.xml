@@ -33,18 +33,25 @@
     <TextView
         android:id="@+id/text_stat_by_category"
         android:layout_width="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
         android:id="@+id/text_stat_total"
         android:layout_width="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/text_stat_by_category"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/text_stat_by_category" />
 
-
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/piechart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent "
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_stat_total" />
 </androidx.constraintlayout.widget.ConstraintLayout>

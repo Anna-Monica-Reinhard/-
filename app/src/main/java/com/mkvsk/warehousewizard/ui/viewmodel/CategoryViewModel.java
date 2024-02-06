@@ -14,7 +14,7 @@ public class CategoryViewModel extends ViewModel {
     private CategoryRepository repository;
 
     public MutableLiveData<Category> category;
-    public MutableLiveData<ArrayList<Category>> allCategories;
+    public MutableLiveData<ArrayList<Category>> allCategories = new MutableLiveData<>();
 
     public MutableLiveData<String> allCategoriesTitles;
 
