@@ -146,14 +146,12 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     private void addNewCategory() {
         Category newCategory = new Category();
         CustomAlertDialogBuilder.cardAddNewCategory(this.requireContext(), newCategory, () -> {
-            Toast.makeText(requireContext(), "CATEGORY", Toast.LENGTH_SHORT).show();
-
-//            categoryViewModel.insert(newCategory);
+            categoryViewModel.insert(newCategory);
+            Toast.makeText(requireContext(), "Category added", Toast.LENGTH_SHORT).show();
         }).show();
     }
 
     private void addNewProduct() {
-        Toast.makeText(requireContext(), "PRODUCT", Toast.LENGTH_SHORT).show();
         Product newProduct = new Product();
         CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(), newProduct, categoryViewModel.getAllCategoriesTitles(), () -> {
             productViewModel.insert(newProduct);

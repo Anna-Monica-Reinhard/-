@@ -44,8 +44,7 @@ public class CategoryViewModel extends ViewModel {
 
     public List<String> getAllCategoriesTitles() {
         List<Category> list = getAllCategoriesFromDB();
-        List<String> titles = list.stream().map(Category::getTitle).collect(Collectors.toList());
-        return titles;
+        return list.stream().map(Category::getTitle).collect(Collectors.toList());
     }
 
     public void setAllCategoriesTitles(MutableLiveData<String> allCategoriesTitles) {

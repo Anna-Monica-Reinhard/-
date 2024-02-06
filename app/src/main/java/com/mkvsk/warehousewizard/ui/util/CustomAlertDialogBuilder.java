@@ -25,8 +25,6 @@ import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnAddNewItemClickListener;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnProductCardClickListener;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -110,10 +108,10 @@ public final class CustomAlertDialogBuilder {
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
 
-        listCategories.add("Other");
-        listCategories.add("Skin care");
-        listCategories.add("Make up");
-        listCategories.add("Accessories");
+//        listCategories.add("Other");
+//        listCategories.add("Skin care");
+//        listCategories.add("Make up");
+//        listCategories.add("Accessories");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.list_item, listCategories);
         ddListItem.setAdapter(adapter);
