@@ -91,9 +91,25 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_corner_edittext"
             android:inputType="textPersonName"
-            android:textAllCaps="true"
             android:textAppearance="@style/myTextInputStyle" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout_add_product_price"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Price">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_add_product_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="number"
+            android:textAppearance="@style/myTextInputStyle" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_layout_add_product_qty"

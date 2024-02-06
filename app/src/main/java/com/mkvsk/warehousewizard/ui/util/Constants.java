@@ -9,4 +9,6 @@ final public class Constants {
     public final static String USERNAME_REGEX = "([a-zA-Z0-9-_]{5,32})+([-]|[_]{0,2})+([a-z]|[A-Z]{0,26})+([0-9]{0,10})";
     public final static Pattern PASSWORD_REGEX = Pattern.compile("([a-zA-Z0-9!@#$%^&*]{6,20})");
 
+    public final static String DEFAULT_PRODUCT_IMAGE = "https://bit.ly/3SGyDfX";
+
 }

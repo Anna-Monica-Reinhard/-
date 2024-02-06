@@ -38,9 +38,9 @@ import com.mkvsk.warehousewizard.ui.view.listeners.OnProductCardClickListener;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnProductClickListener;
 import com.mkvsk.warehousewizard.ui.viewmodel.CategoryViewModel;
 import com.mkvsk.warehousewizard.ui.viewmodel.ProductViewModel;
+import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class ProductsFragment extends Fragment implements OnCategoryClickListener, OnProductClickListener {
@@ -61,11 +61,13 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     private final static String KEY_RECYCLER_STATE = "recycler_state";
     private ProductViewModel productViewModel;
     private CategoryViewModel categoryViewModel;
+    private UserViewModel userViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
         categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         binding = FragmentProductsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -156,11 +158,14 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     private void addNewProduct() {
         Product newProduct = new Product();
-        CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(), newProduct, categoryViewModel.getAllCategoriesTitles(), () -> {
-            productViewModel.insert(newProduct);
-            Toast.makeText(getContext(), "Product added", Toast.LENGTH_SHORT).show();
-            Log.i("PRODUCT INSERT", "total products: " + productViewModel.getAllProductsFromDB().size());
-        }).show();
+        String editorName = userViewModel.getCurrentUser().getValue().fullName;
+        CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(),
+                Objects.requireNonNull(userViewModel.getCurrentUser().getValue()).getFullName(),
+                newProduct, categoryViewModel.getAllCategoriesTitles(), () -> {
+                    productViewModel.insert(newProduct);
+                    Toast.makeText(getContext(), "Product added", Toast.LENGTH_SHORT).show();
+                    Log.i("PRODUCT INSERT", "total products: " + productViewModel.getAllProductsFromDB().size());
+                }).show();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

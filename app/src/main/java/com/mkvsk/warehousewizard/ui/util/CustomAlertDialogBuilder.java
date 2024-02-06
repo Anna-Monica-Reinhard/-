@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.res.ResourcesCompat;
@@ -89,39 +88,48 @@ public final class CustomAlertDialogBuilder {
 
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public static AlertDialog cardAddNewProduct(final Context context, Product newProduct, List<String> listCategories, OnAddNewItemClickListener listener) {
+    public static AlertDialog cardAddNewProduct(final Context context, String username, Product newProduct, List<String> listCategories, OnAddNewItemClickListener listener) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_create_product, null, false);
         dialog.setView(dialogView);
 
-        final MaterialAutoCompleteTextView ddListItem = dialogView.findViewById(R.id.dd_list_product_category);
+        final MaterialAutoCompleteTextView ddCategory = dialogView.findViewById(R.id.dd_list_product_category);
         final TextInputEditText tvName = dialogView.findViewById(R.id.et_add_product_name);
-//        final TextInputEditText tvCategory = dialogView.findViewById(R.id.et_add_product_category);
-//        final TextInputEditText tvCode = dialogView.findViewById(R.id.et_add_product_code);
-//        final TextInputEditText tvQty = dialogView.findViewById(R.id.et_add_product_qty);
-//        final TextInputEditText tvImageLink = dialogView.findViewById(R.id.et_add_product_image);
-//        final TextInputEditText tvDescription = dialogView.findViewById(R.id.et_add_product_description);
-//        final TextInputEditText tvAvailability = dialogView.findViewById(R.id.tv_add_product_availability);
+        final TextInputEditText tvCode = dialogView.findViewById(R.id.et_add_product_code);
+        final TextInputEditText tvPrice = dialogView.findViewById(R.id.et_add_product_price);
+        final TextInputEditText tvQty = dialogView.findViewById(R.id.et_add_product_qty);
+        final TextInputEditText tvImageLink = dialogView.findViewById(R.id.et_add_product_image);
+        final TextInputEditText tvDescription = dialogView.findViewById(R.id.et_add_product_description);
+        final TextView tvAvailability = dialogView.findViewById(R.id.tv_add_product_availability);
         final AppCompatButton btnSave = dialogView.findViewById(R.id.btn_save_product);
         final ImageButton btnClose = dialogView.findViewById(R.id.btnCloseNewProduct);
 
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
 
-//        listCategories.add("Other");
-//        listCategories.add("Skin care");
-//        listCategories.add("Make up");
-//        listCategories.add("Accessories");
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.list_item, listCategories);
-        ddListItem.setAdapter(adapter);
-
-        ddListItem.setDropDownBackgroundDrawable(
+        ddCategory.setAdapter(adapter);
+        ddCategory.setDropDownBackgroundDrawable(
                 ResourcesCompat.getDrawable(context.getResources(), R.drawable.drop_down_list_bgr, null)
         );
-        ddListItem.setOnItemClickListener((adapterView, view, position, l)
+        ddCategory.setOnItemClickListener((adapterView, view, position, l)
                 -> newProduct.setCategory(adapterView.getItemAtPosition(position).toString()));
         tvName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                btnSave.setEnabled(tvName.getText() != null && tvCode.getText() != null && ddCategory.getText() != null);
+            }
+        });
+
+        tvQty.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -129,27 +137,25 @@ public final class CustomAlertDialogBuilder {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 0) {
-                    btnSave.setEnabled(true);
-                }
+                tvAvailability.setText(Long.parseLong(tvQty.getText().toString()) > 0
+                        ? R.string.available : R.string.unavailable);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
-//                btnSave.setEnabled(tvName.getText() != null || tvCode.getText() != null || tvCategory.getText() != null);
             }
         });
 
-//        newProduct.setTitle(tvName.getText().toString());
-//        newProduct.setCategory(tvCategory.getText().toString());
-//        newProduct.setCode(tvCode.getText().toString());
-//        newProduct.setQty(Long.getLong(String.valueOf(tvQty.getText())));
-//        newProduct.setImage(tvImageLink.getText().toString());
-//        newProduct.setDescription(tvDescription.getText().toString());
-//        newProduct.setAvailable();
 
         btnSave.setOnClickListener(v -> {
+            newProduct.setTitle(Objects.requireNonNull(tvName.getText()).toString());
+            newProduct.setCategory(ddCategory.getText().toString());
+            newProduct.setCode(Objects.requireNonNull(tvCode.getText()).toString());
+            newProduct.setPrice(Long.parseLong(Objects.requireNonNull(tvPrice.getText()).toString()));
+            newProduct.setQty(Long.parseLong(Objects.requireNonNullElse(tvQty.getText().toString(), "0")));
+            newProduct.setImage(Objects.requireNonNullElse(tvImageLink.getText().toString(), Constants.DEFAULT_PRODUCT_IMAGE));
+            newProduct.setDescription(tvDescription.getText().toString());
+            newProduct.setLastEditor(username);
             listener.onSaveNewData();
             alertDialog.dismiss();
         });

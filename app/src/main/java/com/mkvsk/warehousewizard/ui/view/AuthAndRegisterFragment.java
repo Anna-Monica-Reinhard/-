@@ -18,6 +18,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -278,6 +279,7 @@ public class AuthAndRegisterFragment extends Fragment {
             Toast.makeText(requireContext(), requireContext().getString(R.string.login_error_user_not_found), Toast.LENGTH_SHORT).show();
         } else {
             if (foundUser.getPassword().equals(password)) {
+                userViewModel.setCurrentUser(new MutableLiveData<>(foundUser));
                 saveUserDataToSharedPrefs(login, password);
                 NavHostFragment.findNavController(this).navigate(R.id.action_go_to_products_from_auth);
             } else {
