@@ -84,7 +84,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     }
 
     private void getData() {
-
+        allProducts.addAll(productViewModel.getAllProductsFromDB());
     }
 
     private void setupMenu() {
@@ -124,6 +124,8 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     private void initViews() {
         binding.fabAdd.extend();
+
+        productAdapter.setData(allProducts);
     }
 
     private void initListeners() {

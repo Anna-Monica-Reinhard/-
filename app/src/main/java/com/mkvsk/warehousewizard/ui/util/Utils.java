@@ -24,9 +24,9 @@ public class Utils {
     public static RequestOptions getOptions() {
         return options = new RequestOptions()
                 .optionalFitCenter()
-                .placeholder(R.drawable.loader)
-                .error(R.drawable.not_found)
-                .useAnimationPool(true);
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.loading_error);
+//                .useAnimationPool(true);
     }
 
     public static void hideKeyboard(Activity activity) {

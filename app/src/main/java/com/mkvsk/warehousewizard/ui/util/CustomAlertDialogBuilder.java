@@ -3,6 +3,8 @@ package com.mkvsk.warehousewizard.ui.util;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mkvsk.warehousewizard.R;
@@ -103,10 +106,17 @@ public final class CustomAlertDialogBuilder {
         final TextView tvAvailability = dialogView.findViewById(R.id.tv_add_product_availability);
         final AppCompatButton btnSave = dialogView.findViewById(R.id.btn_save_product);
         final ImageButton btnClose = dialogView.findViewById(R.id.btnCloseNewProduct);
-
+        final ShapeableImageView ivPreview = dialogView.findViewById(R.id.iv_add_product_image_preview);
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
 
+        Uri imageUri = Uri.parse("https://img.freepik.com/free-photo/bright-petals-gift-love-in-a-bouquet-generated-by-ai_188544-13370.jpg");
+        Glide.with(context)
+                .load(Drawable.createFromPath(imageUri.getPath()))
+                .apply(Utils.getOptions())
+                .dontAnimate()
+                .into(ivPreview);
+        
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.list_item, listCategories);
         ddCategory.setAdapter(adapter);
         ddCategory.setDropDownBackgroundDrawable(
@@ -146,13 +156,32 @@ public final class CustomAlertDialogBuilder {
             }
         });
 
+        tvImageLink.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.length() > 10) {
+                    Glide.with(context).load(Drawable.createFromPath(tvImageLink.getText().toString()))
+                            .apply(Utils.getOptions()).into(ivPreview);
+                }
+            }
+        });
 
         btnSave.setOnClickListener(v -> {
             newProduct.setTitle(Objects.requireNonNull(tvName.getText()).toString());
             newProduct.setCategory(ddCategory.getText().toString());
             newProduct.setCode(Objects.requireNonNull(tvCode.getText()).toString());
-            newProduct.setPrice(Long.parseLong(Objects.requireNonNull(tvPrice.getText()).toString()));
-            newProduct.setQty(Long.parseLong(Objects.requireNonNullElse(tvQty.getText().toString(), "0")));
+            newProduct.setPrice(tvPrice.getText().toString().isBlank() ? 0.0D : Double.parseDouble(tvPrice.getText().toString()));
+            newProduct.setQty(tvQty.getText().toString().isBlank() ? 0L : Long.parseLong(tvQty.getText().toString()));
             newProduct.setImage(Objects.requireNonNullElse(tvImageLink.getText().toString(), Constants.DEFAULT_PRODUCT_IMAGE));
             newProduct.setDescription(tvDescription.getText().toString());
             newProduct.setLastEditor(username);

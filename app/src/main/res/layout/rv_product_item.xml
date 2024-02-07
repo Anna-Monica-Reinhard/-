@@ -48,7 +48,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/text_primary_color"
-        android:textSize="9sp"
+        android:textSize="13sp"
         tools:text="Product code: 388383835555555555555555" />
 
     <TextView
@@ -57,11 +57,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginHorizontal="6dp"
-        android:autoSizeMaxTextSize="12sp"
-        android:autoSizeMinTextSize="8sp"
-        android:autoSizeStepGranularity="1sp"
         android:maxLines="2"
         android:textColor="@color/text_primary_color"
-        android:textSize="11sp"
+        android:textSize="13sp"
+        android:ellipsize="end"
+        android:textStyle="bold"
         tools:text="Text" />
 </LinearLayout>

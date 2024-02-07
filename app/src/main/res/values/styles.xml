@@ -23,6 +23,11 @@
         <item name="cornerSizeBottomLeft">40dp</item>
     </style>
 
+    <style name="ShapeAppearanceOverlayR16" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
     <!--    myTextInputLayout-->
     <style name="myTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxStrokeWidth">0dp</item>
@@ -115,14 +120,14 @@
         <item name="android:layout_gravity">bottom</item>
     </style>
 
-<!--    &lt;!&ndash; Application theme. &ndash;&gt;-->
-<!--    <style name="AppTheme" parent="Theme.WarehouseWizard">-->
-<!--        &lt;!&ndash; All customizations that are NOT specific to a particular API-level can go here. &ndash;&gt;-->
-<!--        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>-->
-<!--    </style>-->
+    <!--    &lt;!&ndash; Application theme. &ndash;&gt;-->
+    <!--    <style name="AppTheme" parent="Theme.WarehouseWizard">-->
+    <!--        &lt;!&ndash; All customizations that are NOT specific to a particular API-level can go here. &ndash;&gt;-->
+    <!--        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>-->
+    <!--    </style>-->
 
-<!--    &lt;!&ndash; Style to replace actionbar overflow icon. set item 'android:actionOverflowButtonStyle' in AppTheme &ndash;&gt;-->
-<!--    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">-->
-<!--        <item name="android:src">@drawable/ic_filter_list</item>-->
-<!--    </style>-->
+    <!--    &lt;!&ndash; Style to replace actionbar overflow icon. set item 'android:actionOverflowButtonStyle' in AppTheme &ndash;&gt;-->
+    <!--    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">-->
+    <!--        <item name="android:src">@drawable/ic_filter_list</item>-->
+    <!--    </style>-->
 </resources>
