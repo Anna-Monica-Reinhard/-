@@ -76,10 +76,15 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupMenu();
+        getData();
         setupAdapters();
         initViews();
         initListeners();
         handleBackPressed();
+    }
+
+    private void getData() {
+
     }
 
     private void setupMenu() {
