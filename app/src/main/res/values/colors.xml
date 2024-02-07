@@ -38,5 +38,7 @@
     <color name="text_hint_secondary_color">#807465</color>
     <color name="theme_ic_color">#807465</color>
     <color name="text_primary_color">#282623</color>
+    <color name="element_light_red">#C67070</color>
+    <color name="element_dark_red">#B43636</color>
 
 </resources>

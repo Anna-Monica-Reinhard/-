@@ -12,7 +12,8 @@
     <string name="btn_confirm_new_account">confirm</string>
     <string name="login_error_user_not_found">User not found</string>
     <string name="login_error_password_incorrect">Incorrect password</string>
-    <string name="available">available in online shop</string>
-    <string name="unavailable">unavailable in online shop</string>
-
+    <string name="available_in_shop">available in online shop</string>
+    <string name="unavailable_in_shop">unavailable in online shop</string>
+    <string name="available">Available:</string>
+    <string name="unavailable">Out of stock</string>
 </resources>

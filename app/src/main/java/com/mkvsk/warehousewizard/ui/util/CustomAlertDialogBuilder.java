@@ -3,6 +3,7 @@ package com.mkvsk.warehousewizard.ui.util;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,60 +30,99 @@ import com.mkvsk.warehousewizard.ui.view.listeners.OnAddNewItemClickListener;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnProductCardClickListener;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public final class CustomAlertDialogBuilder {
+    public static boolean isEditMode = false;
+
     @SuppressLint("UseCompatLoadingForDrawables")
     public static AlertDialog productCardFullInfo(final Context context, Product product, OnProductCardClickListener listener) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_full_product_info, null, false);
         dialog.setView(dialogView);
 
-        final TextView tvName = dialogView.findViewById(R.id.tv_product_name);
-        final TextView tvCode = dialogView.findViewById(R.id.tvProductCode);
-        final TextView tvDescription = dialogView.findViewById(R.id.tvDescription);
-        final TextView tvAvailability = dialogView.findViewById(R.id.tvAvailability);
-        final TextView tvQty = dialogView.findViewById(R.id.tvQty);
+        final EditText tvCategory = dialogView.findViewById(R.id.tvProductCategoryFullInfo);
+        final EditText tvName = dialogView.findViewById(R.id.tvProductNameFullInfo);
+        final EditText tvCode = dialogView.findViewById(R.id.tvProductCode);
+        final EditText tvDescription = dialogView.findViewById(R.id.tvDescription);
+        final TextView tvAvailability = dialogView.findViewById(R.id.tvAvailabilityFullInfo);
+        final EditText tvPrice = dialogView.findViewById(R.id.tvPriceFullInfo);
+        final EditText tvQty = dialogView.findViewById(R.id.tvQty);
+        final ImageView ivImage = dialogView.findViewById(R.id.ivImage);
         final ImageButton btnPlus = dialogView.findViewById(R.id.btnPlus);
         final ImageButton btnMinus = dialogView.findViewById(R.id.btnMinus);
         final ImageButton btnClose = dialogView.findViewById(R.id.btnCloseFullInfo);
-        final ImageView ivImage = dialogView.findViewById(R.id.ivImage);
+        final ImageButton btnEdit = dialogView.findViewById(R.id.btnEditProductCard);
+        final ImageButton btnDelete = dialogView.findViewById(R.id.btnDeleteProductCard);
 
         tvName.setText(product.getTitle());
-        tvCode.setText(product.getCode());
+        tvCode.setText(product.getCode().toUpperCase(Locale.getDefault()));
         tvDescription.setText(product.getDescription());
-//        tvAvailability.setText(product.isAvailable() ? "Available" : "Out of stock");
+        tvPrice.setText(String.valueOf(product.getPrice()));
         tvQty.setText(String.valueOf(product.getQty()));
-        Glide.with(context).load(product.getImage()).apply(Utils.getOptions()).into(ivImage);
+        tvAvailability.setText(product.getQty() > 0 ? R.string.available : R.string.unavailable);
+        Glide.with(context)
+                .load(Uri.parse(product.getImage()))
+                .apply(Utils.getOptions())
+                .dontAnimate()
+                .into(ivImage);
+        setEditMode(isEditMode, context, tvName, tvDescription, tvPrice, tvCategory, tvCode, tvQty);
 
-//        TODO listener
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
+
         btnPlus.setOnClickListener(v -> {
-            long qty = Long.parseLong((String) tvQty.getText());
+            long qty = Long.parseLong(tvQty.getText().toString());
             qty++;
             if (qty == 0) {
-                tvAvailability.setText("Out of stock");
+                tvAvailability.setText(R.string.available);
             } else {
-                tvAvailability.setText("Available");
+                tvAvailability.setText(R.string.unavailable);
             }
             tvQty.setText(String.valueOf(qty));
         });
 
         btnMinus.setOnClickListener(v -> {
-            long qty = Long.parseLong((String) tvQty.getText());
+            long qty = Long.parseLong(tvQty.getText().toString());
             qty--;
             if (qty == 0) {
-                tvAvailability.setText("Out of stock");
+                tvAvailability.setText(R.string.available);
             } else {
-                tvAvailability.setText("Available");
+                tvAvailability.setText(R.string.unavailable);
             }
             tvQty.setText(String.valueOf(qty));
         });
 
-        btnClose.setOnClickListener(v -> {
-//            update data
+        btnEdit.setOnClickListener(v -> {
+            if (!isEditMode) {
+//                isEditMode = true;
+                Glide.with(context)
+                        .load(R.drawable.ic_accept)
+                        .into(btnEdit);
 
+                btnDelete.setVisibility(View.VISIBLE);
+            } else {
+//                isEditMode = false;
+                Glide.with(context)
+                        .load(R.drawable.ic_edit)
+                        .into(btnEdit);
+
+                btnDelete.setVisibility(View.GONE);
+                listener.onEdit(product);
+            }
+            isEditMode = !isEditMode;
+            setEditMode(isEditMode, context, tvName, tvDescription, tvPrice, tvCategory, tvCode, tvQty);
+        });
+
+        btnDelete.setOnClickListener(view -> {
+//                    TODO undo toast
+            listener.onDelete(product);
+            alertDialog.dismiss();
+        });
+
+        btnClose.setOnClickListener(v -> {
+            listener.onCloseCard();
             alertDialog.dismiss();
         });
         Objects.requireNonNull(alertDialog.getWindow())
@@ -89,6 +130,25 @@ public final class CustomAlertDialogBuilder {
         return alertDialog;
     }
 
+    @SuppressLint("ResourceAsColor")
+    public static void setEditMode(boolean isEditMode, Context context, View... view) {
+        for (View viewItem : view) {
+            if (viewItem instanceof EditText) {
+                if (isEditMode) {
+                    viewItem.setFocusableInTouchMode(true);
+                    viewItem.setClickable(true);
+                    ((EditText) viewItem).setCursorVisible(true);
+                    viewItem.setBackgroundResource(R.drawable.bgr_edit_product_full_info);
+                } else {
+                    viewItem.setFocusableInTouchMode(false);
+                    viewItem.setClickable(false);
+                    ((EditText) viewItem).setCursorVisible(false);
+                    viewItem.setBackgroundColor(Color.TRANSPARENT);
+//                    setBackgroundColor(R.color.background_secondary_color)
+                }
+            }
+        }
+    }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public static AlertDialog cardAddNewProduct(final Context context, String username, Product newProduct, List<String> listCategories, OnAddNewItemClickListener listener) {
@@ -116,7 +176,7 @@ public final class CustomAlertDialogBuilder {
                 .apply(Utils.getOptions())
                 .dontAnimate()
                 .into(ivPreview);
-        
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.list_item, listCategories);
         ddCategory.setAdapter(adapter);
         ddCategory.setDropDownBackgroundDrawable(
@@ -148,7 +208,7 @@ public final class CustomAlertDialogBuilder {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 tvAvailability.setText(Long.parseLong(tvQty.getText().toString()) > 0
-                        ? R.string.available : R.string.unavailable);
+                        ? R.string.available_in_shop : R.string.unavailable_in_shop);
             }
 
             @Override

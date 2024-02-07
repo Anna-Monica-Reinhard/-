@@ -2,5 +2,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <size
         android:width="0dp"
-        android:height="@dimen/et_item_spacing" />
+        android:height="@dimen/cards_item_spacing" />
 </shape>

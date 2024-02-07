@@ -18,66 +18,143 @@
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
 
-    <TextView
-        android:id="@+id/tv_product_name"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/llTopButtons"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Name"
-        android:textColor="@color/text_primary_color"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivImage" />
+        android:divider="@drawable/small_wide_divider"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp"
+        android:showDividers="beginning|middle|end"
+        app:layout_constraintEnd_toEndOf="@id/ivImage"
+        app:layout_constraintTop_toTopOf="@id/ivImage">
 
-    <TextView
-        android:id="@+id/tvLabelCode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="text"
-        android:textColor="@color/text_primary_color"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
+        <ImageButton
+            android:id="@+id/btnDeleteProductCard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_corner_rect_red"
+            android:padding="8dp"
+            android:src="@drawable/ic_delete"
+            android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tvProductCode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="text"
-        android:textColor="@color/text_primary_color"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvLabelCode"
-        app:layout_constraintLeft_toRightOf="@+id/tvLabelCode"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvLabelCode" />
+        <ImageButton
+            android:id="@+id/btnEditProductCard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_corner_rect"
+            android:padding="8dp"
+            android:src="@drawable/ic_edit" />
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/text_primary_color"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLabelCode"
-        tools:text="text text text text text text text text text text text text text text text text text text text text text text text text text text text text" />
+        <ImageButton
+            android:id="@+id/btnCloseFullInfo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_corner_rect"
+            android:padding="8dp"
+            android:src="@drawable/ic_dismiss" />
+    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/llButtons"
+        android:id="@+id/llViewFullInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/small_tall_divider"
+        android:orientation="vertical"
+        android:showDividers="beginning|middle|end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivImage">
+
+        <EditText
+            android:id="@+id/tvProductCategoryFullInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_secondary_color"
+            android:padding="2dp"
+            android:textColor="@color/text_primary_color"
+            android:textSize="18sp"
+            tools:text="category" />
+
+        <EditText
+            android:id="@+id/tvProductNameFullInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_secondary_color"
+            android:padding="2dp"
+            android:textColor="@color/text_primary_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Name" />
+
+        <EditText
+            android:id="@+id/tvProductCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_secondary_color"
+            android:padding="2dp"
+            android:textColor="@color/text_primary_color"
+            android:textSize="18sp"
+            tools:text="code" />
+
+        <EditText
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_secondary_color"
+            android:inputType="none"
+            android:padding="2dp"
+            android:textColor="@color/text_primary_color"
+            android:textSize="14sp"
+            tools:text="description" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llPrice"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/buttons_bgr"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llViewFullInfo">
+
+        <EditText
+            android:id="@+id/tvPriceFullInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/background_secondary_color"
+            android:padding="2dp"
+            android:textColor="@color/text_primary_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="123" />
+
+        <TextView
+            android:id="@+id/tvPriceFullInfoEnding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cards_item_spacing"
+            android:paddingVertical="4dp"
+            android:text="BYN"
+            android:textColor="@color/text_primary_color"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llQtyButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/round_corner_rect"
         android:orientation="horizontal"
         android:paddingHorizontal="6dp"
         android:paddingVertical="4dp"
         android:weightSum="3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription">
+        app:layout_constraintBottom_toBottomOf="@id/llPrice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/llPrice">
 
         <ImageButton
             android:id="@+id/btnMinus"
@@ -88,19 +165,35 @@
             android:background="@color/accent_btn_color"
             android:paddingHorizontal="16dp"
             android:src="@drawable/ic_minus"
+            android:visibility="gone"
             app:layout_constraintRight_toRightOf="@id/ivImage"
             app:layout_constraintTop_toTopOf="@id/ivImage" />
 
         <TextView
-            android:id="@+id/tvQty"
+            android:id="@+id/tvAvailabilityFullInfo"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:gravity="center"
+            android:paddingStart="8dp"
+            android:textColor="@color/hint_text"
+            android:textSize="16sp"
+            android:visibility="visible"
+            tools:text="@string/available" />
+
+        <EditText
+            android:id="@+id/tvQty"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@color/background_secondary_color"
+            android:gravity="center"
             android:paddingHorizontal="8dp"
-            android:textColor="@color/text_on_btn_color"
-            android:textSize="20sp"
+            android:textColor="@color/text_primary_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
             tools:text="9999999" />
 
         <ImageButton
@@ -112,44 +205,10 @@
             android:background="@color/accent_btn_color"
             android:paddingHorizontal="16dp"
             android:src="@drawable/ic_plus"
+            android:visibility="gone"
             app:layout_constraintRight_toRightOf="@id/ivImage"
             app:layout_constraintTop_toTopOf="@id/ivImage" />
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/tvAvailability"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textAlignment="center"
-        android:textColor="@color/text_hint_secondary_color"
-        android:textSize="13sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llButtons"
-        tools:text="available in online shop" />
-
-    <ImageButton
-        android:id="@+id/btnCloseFullInfo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/round_corner_rect"
-        android:padding="8dp"
-        android:src="@drawable/ic_dismiss"
-        app:layout_constraintRight_toRightOf="@id/ivImage"
-        app:layout_constraintTop_toTopOf="@id/ivImage" />
-
-    <ImageButton
-        android:id="@+id/btnEditProductCard"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/round_corner_rect"
-        android:padding="8dp"
-        android:src="@drawable/ic_dismiss"
-        app:layout_constraintRight_toLeftOf="@id/btnCloseFullInfo"
-        app:layout_constraintTop_toTopOf="@id/ivImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

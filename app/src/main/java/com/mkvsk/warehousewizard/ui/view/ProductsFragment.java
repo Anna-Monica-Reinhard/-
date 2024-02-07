@@ -212,8 +212,14 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     @Override
     public void onProductClick(Product product) {
         CustomAlertDialogBuilder.productCardFullInfo(this.getContext(), product, new OnProductCardClickListener() {
+
             @Override
-            public void onEditQty(boolean add) {
+            public void onEdit(Product product) {
+
+            }
+
+            @Override
+            public void onDelete(Product product) {
 
             }
 
@@ -221,7 +227,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
             public void onCloseCard() {
 
             }
-        });
+        }).show();
 
     }
 
