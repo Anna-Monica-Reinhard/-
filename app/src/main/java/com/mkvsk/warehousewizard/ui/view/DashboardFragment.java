@@ -6,6 +6,8 @@ import static com.mkvsk.warehousewizard.ui.util.Constants.SP_TAG_USERNAME;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,16 +23,26 @@ import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.mkvsk.warehousewizard.MainActivity;
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.databinding.FragmentDashboardBinding;
+import com.mkvsk.warehousewizard.ui.viewmodel.ProductViewModel;
 
 import org.json.JSONObject;
 
@@ -51,12 +63,16 @@ public class DashboardFragment extends Fragment {
 
     private final List<Product> products = new ArrayList<>();
 
+    // category - qty:price
     private final TreeMap<String, Pair<Long, Double>> filteredData = new TreeMap<>();
 
     private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
+    private ProductViewModel productViewModel;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -73,16 +89,23 @@ public class DashboardFragment extends Fragment {
     private void loadData() {
         products.clear();
 
-        Product p0 = new Product(0, "cat0", "title0", "0", 10, "https://bit.ly/3SGyDfX", "desc1", "test", 10.2);
-        Product p1 = new Product(1, "cat0", "title1", "1", 21, "https://bit.ly/3SGyDfX", "desc1", "test", 23.3);
-        Product p2 = new Product(2, "cat0", "title2", "2", 11, "https://bit.ly/3SGyDfX", "desc1", "test", 23.3);
-        Product p3 = new Product(3, "cat0", "title3", "3", 3, "https://bit.ly/3SGyDfX", "desc1", "test", 44.0);
-        Product p4 = new Product(4, "cat1", "title4", "4", 22, "https://bit.ly/3SGyDfX", "desc1", "test", 2.22);
-        Product p5 = new Product(5, "cat1", "title5", "5", 7, "https://bit.ly/3SGyDfX", "desc1", "test", 5.3);
-        Product p6 = new Product(6, "cat2", "title6", "6", 6, "https://bit.ly/3SGyDfX", "desc1", "test", 4.2);
-        Product p7 = new Product(7, "cat3", "title7", "7", 5, "https://bit.ly/3SGyDfX", "desc1", "test", 4.3);
-        Product p8 = new Product(8, "cat4", "title8", "8", 3, "https://bit.ly/3SGyDfX", "desc1", "test", 663.0);
-        Product p9 = new Product(9, "cat4", "title9", "9", 4, "https://bit.ly/3SGyDfX", "desc1", "test", 12.3);
+//        products.addAll(productViewModel.getAllProductsFromDB());
+        String cat0 = "Макияж для лица";
+        String cat1 = "Парфюмерия для мужчин";
+        String cat2 = "Уход за телом";
+        String cat3 = "Уход за лицом";
+        String cat4 = "Для бритья";
+
+        Product p0 = new Product(0, cat0, "title0", "0", 10, "https://bit.ly/3SGyDfX", "desc1", "test", 10.2);
+        Product p1 = new Product(1, cat0, "title1", "1", 21, "https://bit.ly/3SGyDfX", "desc1", "test", 23.3);
+        Product p2 = new Product(2, cat0, "title2", "2", 11, "https://bit.ly/3SGyDfX", "desc1", "test", 23.3);
+        Product p3 = new Product(3, cat0, "title3", "3", 3, "https://bit.ly/3SGyDfX", "desc1", "test", 44.0);
+        Product p4 = new Product(4, cat1, "title4", "4", 22, "https://bit.ly/3SGyDfX", "desc1", "test", 2.22);
+        Product p5 = new Product(5, cat1, "title5", "5", 7, "https://bit.ly/3SGyDfX", "desc1", "test", 5.3);
+        Product p6 = new Product(6, cat2, "title6", "6", 6, "https://bit.ly/3SGyDfX", "desc1", "test", 4.2);
+        Product p7 = new Product(7, cat3, "title7", "7", 5, "https://bit.ly/3SGyDfX", "desc1", "test", 4.3);
+        Product p8 = new Product(8, cat4, "title8", "8", 3, "https://bit.ly/3SGyDfX", "desc1", "test", 663.0);
+        Product p9 = new Product(9, cat4, "title9", "9", 4, "https://bit.ly/3SGyDfX", "desc1", "test", 12.3);
         products.add(p0);
         products.add(p1);
         products.add(p2);
@@ -124,14 +147,8 @@ public class DashboardFragment extends Fragment {
     }
 
     private void drawData() {
-        StringBuilder sb = new StringBuilder();
-        filteredData.forEach((key, pair) -> {
-            sb.append(String.format("%s: qty=%s, sum=%s", key, pair.getFirst(), pair.getSecond()));
-            sb.append("\n");
-        });
-        binding.textStatByCategory.setText(sb.toString());
-        binding.textStatTotal.setText(String.format("total sum=%s", Double.parseDouble(decimalFormat.format(products.stream().mapToDouble(Product::getPrice).sum()))));
-//        loader stop
+        binding.textSumTotal.setText(String.format("Общая сумма товаров на складе: %s р", Double.parseDouble(decimalFormat.format(products.stream().mapToDouble(Product::getPrice).sum()))));
+        fillChart();
     }
 
     private void setupMenu() {
@@ -168,40 +185,68 @@ public class DashboardFragment extends Fragment {
         requireActivity().finish();
     }
 
-//    private void fillChart() {
-//        PieChart pieChart = binding.piechart;
-//        ArrayList<PieEntry> entries = new ArrayList<>();
-//
-//        Set<String> setTmp = products.stream().map(Product::getTitle).collect(Collectors.toSet());
-//        Map<String, Integer> mapTmp = new HashMap<>();
-//        for (int i = 1; i < setTmp.size() + 1; i++) {
-//            mapTmp.put(String.valueOf(products.indexOf(i)), i);
-//        }
-//
-//        for (int i = 0; i < filteredData.size(); i++) {
-////            JSONObject object = filteredData.entrySet();
-////            entries.add(new PieEntry(Float.parseFloat(object.getString("Subject_Marks")), object.getString("Subject_Name")));
-//        }
-//        ArrayList<Integer> colors = new ArrayList<>();
-//        for (int color : ColorTemplate.MATERIAL_COLORS) {
-//            colors.add(color);
-//        }
-//
-//        for (int color : ColorTemplate.VORDIPLOM_COLORS) {
-//            colors.add(color);
-//        }
-//        PieDataSet dataSet = new PieDataSet(entries, "Pie Chart Example");
-//        dataSet.setColors(colors);
-//        PieData data = new PieData(dataSet);
-//        data.setDrawValues(true);
-//        data.setValueFormatter(new PercentFormatter(pieChart));
-//        data.setValueTextSize(12f);
-//        data.setValueTextColor(Color.BLACK);
-//        pieChart.setCenterText(pie_center_text);
-//        pieChart.setData(data);
-//        pieChart.invalidate();
-//        pieChart.animateY(1400, Easing.EaseInOutQuad);
-//    }
+    private void fillChart() {
+        PieChart chart = binding.piechart;
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        filteredData.forEach((k, v) -> entries.add(new PieEntry(Float.parseFloat(v.getFirst().toString()), k)));
+        ArrayList<Integer> colors = new ArrayList<>();
+
+        for (int color : ColorTemplate.MATERIAL_COLORS) {
+            colors.add(color);
+        }
+        for (int color : ColorTemplate.VORDIPLOM_COLORS) {
+            colors.add(color);
+        }
+
+        PieDataSet dataSet = new PieDataSet(entries, "Процент количества товаров на складе");
+        dataSet.setColors(colors);
+
+        PieData data = new PieData(dataSet);
+        data.setDrawValues(true);
+        data.setValueFormatter(new PercentFormatter(chart));
+        data.setValueTextSize(12f);
+        data.setValueTextColor(Color.BLACK);
+
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+        l.setTextSize(11f);
+        l.setTextColor(Color.BLACK);
+        chart.setEntryLabelTextSize(0f);
+        chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                // TODO: show value
+                String categoryTitle = ((PieEntry) e).getLabel();
+                Pair<Long, Double> pair = filteredData.get(categoryTitle);
+                if (pair != null) {
+                    binding.textCategoryInfo.setText(String.format("%s:\nКоличество: %s\nСумма: %s р", categoryTitle, pair.getFirst(), pair.getSecond()));
+                }
+            }
+
+            @Override
+            public void onNothingSelected() {
+                binding.textCategoryInfo.setText("");
+            }
+        });
+        chart.setUsePercentValues(true);
+        chart.setCenterText("Процент количества товаров на складе");
+        chart.setCenterTextSize(12f);
+        chart.getDescription().setEnabled(false);
+        chart.setExtraOffsets(10,10,10,10);
+        chart.setCenterTextColor(Color.BLACK);
+        chart.setHoleRadius(50f);
+        chart.setTransparentCircleRadius(55f);
+        chart.setHoleColor(Color.TRANSPARENT);
+        chart.setData(data);
+        chart.invalidate();
+        chart.animateY(1400, Easing.EaseInOutQuad);
+        //        loader stop
+    }
 
     @Override
     public void onDestroyView() {
