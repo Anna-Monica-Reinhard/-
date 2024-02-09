@@ -104,6 +104,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     private void getData() {
         productAdapter.setData(productViewModel.getAllProducts().getValue());
+//        binding.btnUpdateRV.setEnabled(true);
     }
 
     private void setupMenu() {
@@ -130,6 +131,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                     productViewModel.sortData(SortType.SORT_BY_CATEGORY_AZ);
                 }
                 productAdapter.setData(productViewModel.getAllProducts().getValue());
+//                binding.btnUpdateRV.setEnabled(true);
                 Utils.hideKeyboard(requireActivity());
                 return false;
             }
@@ -171,6 +173,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                     findProducts(binding.etSearch.getText().toString());
                 } else {
                     productAdapter.setData((ArrayList<Product>) productViewModel.getAllProducts().getValue());
+//                    binding.btnUpdateRV.setEnabled(true);
                 }
             }
 
@@ -198,11 +201,12 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
         if (!temp.isEmpty()) {
             productAdapter.setData(temp);
-            productAdapter.notifyDataSetChanged();
+//            binding.btnUpdateRV.setEnabled(true);
         }
     }
 
     private void addNewCategory() {
+//        binding.btnUpdateRV.setEnabled(false);
         Category newCategory = new Category();
         CustomAlertDialogBuilder.cardAddNewCategory(this.requireContext(), newCategory, () -> {
             categoryViewModel.insert(newCategory);
@@ -212,13 +216,14 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     @SuppressLint("NotifyDataSetChanged")
     private void addNewProduct() {
+//        binding.btnUpdateRV.setEnabled(false);
         Product newProduct = new Product();
         String editorName = Objects.requireNonNullElse(userViewModel.getCurrentUser().getValue().fullName, "Unknown");
         CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(),
                 editorName, newProduct, categoryViewModel.getAllCategories().getValue(), () -> {
                     productViewModel.insert(newProduct);
                     productAdapter.setData(productViewModel.getAllProducts().getValue());
-                    productAdapter.notifyDataSetChanged();
+//                    binding.btnUpdateRV.setEnabled(true);
                 }).show();
     }
 
@@ -263,6 +268,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     @Override
     public void onProductClick(Product product, int bindingAdapterPosition) {
+//        binding.btnUpdateRV.setEnabled(false);
         CustomAlertDialogBuilder.productCardFullInfo(this.getContext(), product, new OnProductCardClickListener() {
 
             @Override
@@ -270,16 +276,21 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                 product.setLastEditor(Objects.requireNonNull(userViewModel.getCurrentUser().getValue()).fullName);
                 productViewModel.update(product);
                 productAdapter.notifyItemChanged(bindingAdapterPosition, product);
+
+//                binding.btnUpdateRV.setEnabled(true);
             }
 
             @Override
             public void onDelete(Product product) {
                 productViewModel.delete(product);
+                productAdapter.notifyItemRemoved(bindingAdapterPosition);
             }
 
             @Override
             public void onCloseCard() {
-
+                productViewModel.setAllProductsFromDB();
+                productAdapter.setData(productViewModel.getAllProducts().getValue());
+                productAdapter.notifyDataSetChanged();
             }
         }).show();
 

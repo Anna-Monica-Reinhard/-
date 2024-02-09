@@ -29,7 +29,7 @@
     <color name="background_secondary_color">#F3EFE8</color>
     <color name="et_bgr_color">#FCFCFC</color>
     <color name="accent_btn_color">#D3EABC</color>
-    <color name="btn_disabled_color">#C1D0B1</color>
+    <color name="btn_disabled_color">#805C5863</color>
     <color name="btn_pressed_color">#C8EEA1</color>
     <color name="btn_secondary_color">#D3EABC</color>
     <color name="btn_tertiary_color">#D3EABC</color>
