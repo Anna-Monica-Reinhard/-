@@ -21,19 +21,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemVi
     private List<String> data = new ArrayList<String>();
     private OnCategoryClickListener listener;
     private int selectedTag = 0;
-    private RvCategoryItemBinding binding;
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = RvCategoryItemBinding
+        RvCategoryItemBinding binding = RvCategoryItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ItemViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(CategoryAdapter.ItemViewHolder holder, int position) {
-        String categoryItem = (String) data.toArray()[position];
+        String categoryItem = data.get(position);
         holder.bind(categoryItem);
     }
 
@@ -46,7 +45,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemVi
         return data.size();
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     public void setData(List<String> data) {
         if (data != null) {
             this.data = data;
@@ -54,22 +52,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemVi
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     public void setSelected(int position) {
         selectedTag = position;
+        notifyDataSetChanged();
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
+        private RvCategoryItemBinding binding;
+
         ItemViewHolder(RvCategoryItemBinding binding) {
             super(binding.getRoot());
+            this.binding = binding;
         }
 
         public void bind(String categoryItem) {
-
             if (selectedTag == getBindingAdapterPosition()) {
-                selectItem(binding.cvItem, binding.tvTitle);
+                selectItem();
             } else {
-                unselectItem(binding.cvItem, binding.tvTitle);
+                unselectItem();
             }
 
             binding.tvTitle.setText(categoryItem);
@@ -80,16 +80,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemVi
             ));
         }
 
-        private void selectItem(MaterialCardView cardView, TextView textView) {
-            cardView.setBackgroundResource(R.drawable.selected_tag_item);
-            cardView.setClickable(false);
-            textView.setSelected(true);
+        private void selectItem() {
+            binding.cvItem.setBackgroundResource(R.drawable.selected_tag_item);
+            binding.cvItem.setClickable(false);
+            binding.tvTitle.setSelected(true);
         }
 
-        private void unselectItem(MaterialCardView cardView, TextView textView) {
-            cardView.setBackgroundResource(R.drawable.unselected_tag_item);
-            cardView.setClickable(true);
-            textView.setSelected(false);
+        private void unselectItem() {
+            binding.cvItem.setBackgroundResource(R.drawable.unselected_tag_item);
+            binding.cvItem.setClickable(true);
+            binding.tvTitle.setSelected(false);
         }
     }
 }
