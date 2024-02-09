@@ -76,7 +76,7 @@ public class ProductViewModel extends ViewModel {
                 sortedListProduct.sort(Comparator.comparing(Product::getQty).reversed());
                 break;
             default:
-                sortedListProduct = getAllProducts().getValue();
+                setAllProductsFromDB();
                 break;
         }
         allProducts.setValue(sortedListProduct);
