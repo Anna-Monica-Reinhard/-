@@ -214,6 +214,7 @@ public final class CustomAlertDialogBuilder {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //todo numberformatexception
                 tvAvailability.setText(Long.parseLong(tvQty.getText().toString()) > 0
                         ? R.string.available_in_shop : R.string.unavailable_in_shop);
             }
@@ -327,17 +328,18 @@ public final class CustomAlertDialogBuilder {
                 Glide.with(context)
                         .load(R.drawable.ic_accept)
                         .into(btnEdit);
-
                 btnClose.setVisibility(View.GONE);
+
+            } else {
+                Glide.with(context)
+                        .load(R.drawable.ic_edit)
+                        .into(btnEdit);
+
                 user.setFullName(tvName.getText().toString().isBlank() ? user.fullName : tvName.getText().toString());
                 user.setPassword(tvPassword.getText().toString().isBlank() ? user.password : tvPassword.getText().toString());
                 user.setEmail(tvEmail.getText().toString().isBlank() ? user.email : tvEmail.getText().toString());
                 user.setPhoneNumber(tvPhoneNumber.getText().toString().isBlank() ? user.phoneNumber : tvPhoneNumber.getText().toString());
                 listener.updateUser(user);
-            } else {
-                Glide.with(context)
-                        .load(R.drawable.ic_edit)
-                        .into(btnEdit);
 
                 btnClose.setVisibility(View.VISIBLE);
             }

@@ -44,6 +44,7 @@ import com.mkvsk.warehousewizard.ui.viewmodel.ProductViewModel;
 import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ProductsFragment extends Fragment implements OnCategoryClickListener, OnProductClickListener {
@@ -83,7 +84,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        TODO loader on
-        setupMenu();
+//        setupMenu();
         initObservers();
         getData();
         setupAdapters();
@@ -93,16 +94,14 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     }
 
     private void initObservers() {
-        productViewModel.getAllProducts().observe(getViewLifecycleOwner(), items -> {
-            productAdapter.setData((ArrayList<Product>) items);
-            productAdapter.notifyDataSetChanged();
-        });
-
-        categoryViewModel.getAllCategoriesTitles().observe(getViewLifecycleOwner(), categoryAdapter::setData);
+//        productViewModel.getAllProducts().observe(getViewLifecycleOwner(), products -> {
+//            productAdapter.setData(products);
+//        });
+//        categoryViewModel.getAllCategories().observe(getViewLifecycleOwner(), categoryAdapter::setData);
     }
 
     private void getData() {
-
+        productAdapter.setData(productViewModel.getAllProducts().getValue());
     }
 
     private void setupMenu() {
@@ -128,8 +127,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                 } else if (menuItem.getItemId() == R.id.miSortByCategory) {
                     productViewModel.sortData(SortType.SORT_BY_CATEGORY_AZ);
                 }
-                productAdapter.setData((ArrayList<Product>) productViewModel.getAllProducts().getValue());
-                productAdapter.notifyDataSetChanged();
+                productAdapter.setData(productViewModel.getAllProducts().getValue());
                 Utils.hideKeyboard(requireActivity());
                 return false;
             }
@@ -139,14 +137,12 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private void setupAdapters() {
         rvCategory = binding.rvCategory;
-//        categoryAdapter.context = this.requireContext();
-        categoryAdapter.setClickListener(this::onCategoryClick);
+        categoryAdapter.setClickListener(this);
         rvCategory.setAdapter(categoryAdapter);
 
         rvProduct = binding.rvProduct;
-        productAdapter.context = this.requireContext();
         mRecyclerView = rvProduct;
-        productAdapter.setClickListener(this::onProductClick);
+        productAdapter.setClickListener(this);
         rvProduct.setAdapter(productAdapter);
         rvProduct.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
     }
@@ -199,7 +195,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(),
                 editorName, newProduct, categoryViewModel.getAllCategories().getValue(), () -> {
                     productViewModel.insert(newProduct);
-                    productAdapter.setData((ArrayList<Product>) productViewModel.getAllProducts().getValue());
+                    productAdapter.setData(productViewModel.getAllProducts().getValue());
                     productAdapter.notifyDataSetChanged();
                 }).show();
     }

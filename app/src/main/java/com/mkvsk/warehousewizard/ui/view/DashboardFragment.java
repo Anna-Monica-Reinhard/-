@@ -85,9 +85,7 @@ public class DashboardFragment extends Fragment {
 
     private void initObservers() {
         productViewModel.getAllProducts().observe(getViewLifecycleOwner(), this::filterData);
-        userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
-            user = currentUser;
-        });
+        userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> user = currentUser);
     }
 
     private void filterData(List<Product> products) {
@@ -142,9 +140,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void showUserInfo() {
-        CustomAlertDialogBuilder.cardUserInfo(getContext(), user, user -> {
-            userViewModel.updateUser(user);
-        }).show();
+        CustomAlertDialogBuilder.cardUserInfo(getContext(), user, userResult -> userViewModel.updateUser(userResult)).show();
     }
 
     private void initListeners() {
@@ -215,7 +211,7 @@ public class DashboardFragment extends Fragment {
         chart.setCenterText("Процент количества товаров на складе");
         chart.setCenterTextSize(12f);
         chart.getDescription().setEnabled(false);
-        chart.setExtraOffsets(10, 10, 10, 10);
+        chart.setExtraOffsets(10, 10, 10, 20);
         chart.setCenterTextColor(Color.BLACK);
         chart.setHoleRadius(50f);
         chart.setTransparentCircleRadius(55f);

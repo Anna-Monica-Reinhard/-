@@ -7,17 +7,10 @@ import androidx.lifecycle.ViewModel;
 import com.mkvsk.warehousewizard.core.User;
 import com.mkvsk.warehousewizard.ui.repository.UserRepository;
 
-import java.util.List;
-
 public class UserViewModel extends ViewModel {
-    private UserRepository repository;
-    private MutableLiveData<String> login = new MutableLiveData<>("");
-    private MutableLiveData<String> password;
-    private MutableLiveData<Boolean> isAuthMode;
-    private MutableLiveData<User> currentUser = new MutableLiveData<>();
-    private MutableLiveData<User> newUser;
-    private MutableLiveData<User> userByEmail;
-    private MutableLiveData<List<User>> allUsers;
+    private final UserRepository repository;
+    private final MutableLiveData<String> login = new MutableLiveData<>("");
+    private final MutableLiveData<User> currentUser = new MutableLiveData<>();
 
     public MutableLiveData<User> getCurrentUser() {
         return currentUser;
@@ -25,14 +18,6 @@ public class UserViewModel extends ViewModel {
 
     public void setCurrentUser(User currentUser) {
         this.currentUser.setValue(currentUser);
-    }
-
-    public MutableLiveData<User> getNewUser() {
-        return newUser;
-    }
-
-    public void setNewUser(MutableLiveData<User> newUser) {
-        this.newUser = newUser;
     }
 
     public UserViewModel() {
@@ -48,53 +33,14 @@ public class UserViewModel extends ViewModel {
         return login;
     }
 
-    public void setLogin(String value) {
-        login.setValue(value);
-    }
-
-    public LiveData<String> getPassword() {
-        return password;
-    }
-
-    public void setPassword(String value) {
-        password.setValue(value);
-    }
-
-    public LiveData<Boolean> getIsAuthMode() {
-        return isAuthMode;
-    }
-
-    public void setIsAuthMode(boolean value) {
-        isAuthMode.setValue(value);
-    }
-
     // DB queries
     public void createNewUser(User user) {
         repository.insert(user);
     }
 
-    public List<User> getAllUsers() {
-        return repository.getAllUsers();
-    }
-
-    public void setAllUsers(LiveData<List<User>> allUsers) {
-        this.allUsers.setValue(allUsers.getValue());
-    }
-
-    public User getUserByEmail(String email) {
-        return repository.getByEmail(email);
-    }
-
-    public User getUserByPhoneNumber(String phoneNumber) {
-        return repository.getByPhoneNumber(phoneNumber);
-    }
-
     public void updateUser(User user) {
         repository.update(user);
-    }
-
-    public void deleteUser(User user) {
-        repository.delete(user);
+        setCurrentUser(user);
     }
 
 }

@@ -14,39 +14,34 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ProductViewModel extends ViewModel {
-    private final ProductRepository repository;
-    public MutableLiveData<Product> product;
-    public MutableLiveData<List<Product>> allProducts;
+    private final ProductRepository repository = new ProductRepository();
+    public final MutableLiveData<Product> product = new MutableLiveData<>();
+    public final MutableLiveData<List<Product>> allProducts = new MutableLiveData<>();
 
-    public ProductViewModel() {
-        repository = new ProductRepository();
-        product = new MutableLiveData<>();
-        allProducts = new MutableLiveData<>();
-    }
 
     public MutableLiveData<Product> getProduct() {
         return product;
     }
 
-    public void setProduct(MutableLiveData<Product> product) {
-        this.product = product;
+    public void setProduct(Product product) {
+        this.product.setValue(product);
     }
 
     public MutableLiveData<List<Product>> getAllProducts() {
         return allProducts;
     }
 
-    public void setAllProducts(MutableLiveData<List<Product>> allProducts) {
-        this.allProducts = allProducts;
+    public void setAllProducts(List<Product> allProducts) {
+        this.allProducts.setValue(allProducts);
     }
 
     public void setAllProductsFromDB() {
-        MutableLiveData<List<Product>> listProduct = new MutableLiveData<>(repository.getAllProducts());
-        setAllProducts(listProduct);
+        setAllProducts(repository.getAllProducts());
     }
 
     public void insert(Product product) {
         repository.insert(product);
+        setAllProductsFromDB();
     }
 
     public void update(Product product) {
@@ -58,39 +53,24 @@ public class ProductViewModel extends ViewModel {
     }
 
     public void sortData(SortType sortType) {
-        List<Product> sortedListProduct = new ArrayList<>(getAllProducts().getValue());
-        switch (sortType) {
-            case SORT_BY_ALPHABET_AZ:
-                sortedListProduct.sort(Comparator.comparing(Product::getTitle));
-                break;
-            case SORT_BY_ALPHABET_ZA:
-                sortedListProduct.sort(Comparator.comparing(Product::getTitle).reversed());
-                break;
-            case SORT_BY_CATEGORY_AZ:
-                sortedListProduct.sort(Comparator.comparing(Product::getCategory));
-                break;
-            case SORT_BY_QTY_ASCENDING:
-                sortedListProduct.sort(Comparator.comparing(Product::getQty));
-                break;
-            case SORT_BY_QTY_DESCENDING:
-                sortedListProduct.sort(Comparator.comparing(Product::getQty).reversed());
-                break;
-            default:
-                setAllProductsFromDB();
-                break;
+        List<Product> products = getAllProducts().getValue();
+        if (products != null) {
+            switch (sortType) {
+                case SORT_BY_ALPHABET_AZ -> products.sort(Comparator.comparing(Product::getTitle));
+                case SORT_BY_ALPHABET_ZA -> products.sort(Comparator.comparing(Product::getTitle).reversed());
+                case SORT_BY_CATEGORY_AZ -> products.sort(Comparator.comparing(Product::getCategory));
+                case SORT_BY_QTY_ASCENDING -> products.sort(Comparator.comparing(Product::getQty));
+                case SORT_BY_QTY_DESCENDING -> products.sort(Comparator.comparing(Product::getQty).reversed());
+                default -> setAllProductsFromDB();
+            }
         }
-        allProducts.setValue(sortedListProduct);
     }
 
     public void setAllProductsByCategory(String categoryTitle) {
         setAllProductsFromDB();
         List<Product> listProduct = new ArrayList<>(Objects.requireNonNull(allProducts.getValue()));
-
-        List<Product> filteredList = listProduct.stream()
-                .filter(product -> product.getCategory().equals(categoryTitle))
-                .collect(Collectors.toList());
-
-        setAllProducts(new MutableLiveData<>(filteredList));
+        List<Product> filteredList = listProduct.stream().filter(product -> product.getCategory().equals(categoryTitle)).collect(Collectors.toList());
+        setAllProducts(filteredList);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.mkvsk.warehousewizard.ui.view.adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,10 +14,10 @@ import com.mkvsk.warehousewizard.ui.util.Utils;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnProductClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ItemViewHolder> {
-    public Context context;
-    private ArrayList<Product> data = new ArrayList<>();
+    private final List<Product> data = new ArrayList<>();
     private OnProductClickListener listener;
     private RvProductItemBinding binding;
 
@@ -31,8 +30,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ItemView
 
     @Override
     public void onBindViewHolder(ProductAdapter.ItemViewHolder holder, int position) {
-        Product productItem = (Product) data.toArray()[position];
-        holder.bind(productItem);
+        holder.bind(data.get(position));
     }
 
     public void setClickListener(OnProductClickListener listener) {
@@ -45,9 +43,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ItemView
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setData(ArrayList<Product> data) {
+    public void setData(List<Product> data) {
         if (data != null) {
-            this.data = data;
+            this.data.clear();
+            notifyDataSetChanged();
+            this.data.addAll(data);
             notifyDataSetChanged();
         }
     }
@@ -60,7 +60,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ItemView
         public void bind(Product productItem) {
             binding.tvTitle.setText(productItem.getTitle());
             binding.tvCode.setText(productItem.getCode());
-            Glide.with(context).load(productItem.getImage()).apply(Utils.getOptions()).into(binding.ivImage);
+            Glide.with(Utils.getAppContext()).load(productItem.getImage()).apply(Utils.getOptions()).into(binding.ivImage);
             binding.cvProduct.setOnClickListener(v -> listener.onProductClick(productItem));
         }
     }
