@@ -4,51 +4,51 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.mkvsk.warehousewizard.core.Category;
+import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.ui.repository.CategoryRepository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CategoryViewModel extends ViewModel {
     private CategoryRepository repository;
 
-    public MutableLiveData<Category> category;
-    public MutableLiveData<ArrayList<Category>> allCategories = new MutableLiveData<>();
-
-    public MutableLiveData<String> allCategoriesTitles;
+    public String category;
+    public MutableLiveData<List<String>> allCategories = new MutableLiveData<List<String>>();
 
     public CategoryViewModel() {
         repository = new CategoryRepository();
     }
 
-    public MutableLiveData<Category> getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(MutableLiveData<Category> category) {
-        this.category = category;
+    public void setCategory(String categoryTitle) {
+        category = categoryTitle;
     }
 
-    public void setAllCategories(MutableLiveData<ArrayList<Category>> allCategories) {
+    public void setAllCategories(MutableLiveData<List<String>> allCategories) {
         this.allCategories = allCategories;
     }
 
-    public MutableLiveData<ArrayList<Category>> getAllCategories() {
+    public MutableLiveData<List<String>> getAllCategories() {
         return allCategories;
     }
 
-    public List<Category> getAllCategoriesFromDB() {
-        return repository.getAllCategories();
+    public void setAllCategoriesFromDB() {
+        MutableLiveData<List<String>> listTitles = new MutableLiveData<>(repository.getAllCategories()
+                .stream().map(Category::getTitle).collect(Collectors.toList()));
+        setAllCategories(listTitles);
     }
 
-    public List<String> getAllCategoriesTitles() {
-        List<Category> list = getAllCategoriesFromDB();
-        return list.stream().map(Category::getTitle).collect(Collectors.toList());
+    public MutableLiveData<List<String>> getAllCategoriesTitles() {
+        return allCategories;
     }
 
     public void setAllCategoriesTitles(MutableLiveData<String> allCategoriesTitles) {
-        this.allCategoriesTitles = allCategoriesTitles;
+        this.allCategories = allCategories;
     }
 
     public Category getCategoryById(long value) {

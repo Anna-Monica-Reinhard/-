@@ -52,7 +52,7 @@
             android:layout_height="40dp"
             android:background="@drawable/round_corner_rect"
             android:padding="8dp"
-            android:src="@drawable/ic_dismiss" />
+            android:src="@drawable/ic_close" />
     </LinearLayout>
 
     <LinearLayout
@@ -66,14 +66,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivImage">
 
-        <EditText
-            android:id="@+id/tvProductCategoryFullInfo"
+        <TextView
+            android:id="@+id/tvProductEditorFullInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_secondary_color"
+            android:maxLines="2"
+            android:textColor="@color/text_primary_color"
+            android:textSize="13sp"
+            tools:text="Editor:" />
+
+        <EditText
+            android:id="@+id/tvProductCategoryFullInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/background_secondary_color"
+            android:inputType="none"
             android:padding="2dp"
+            android:ellipsize="end"
             android:textColor="@color/text_primary_color"
             android:textSize="18sp"
+
             tools:text="category" />
 
         <EditText
@@ -81,6 +94,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_secondary_color"
+            android:inputType="textPersonName"
+            android:maxLines="2"
             android:padding="2dp"
             android:textColor="@color/text_primary_color"
             android:textSize="18sp"
@@ -92,6 +107,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_secondary_color"
+            android:inputType="textCapCharacters"
+            android:maxLines="1"
             android:padding="2dp"
             android:textColor="@color/text_primary_color"
             android:textSize="18sp"
@@ -102,7 +119,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_secondary_color"
-            android:inputType="none"
+            android:inputType="textPersonName"
+            android:maxLength="200"
+            android:maxLines="4"
             android:padding="2dp"
             android:textColor="@color/text_primary_color"
             android:textSize="14sp"
@@ -124,7 +143,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/background_secondary_color"
+            android:inputType="numberDecimal|numberSigned"
+            android:maxLength="20"
             android:padding="2dp"
+            android:singleLine="false"
             android:textColor="@color/text_primary_color"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -190,6 +212,9 @@
             android:layout_weight="1"
             android:background="@color/background_secondary_color"
             android:gravity="center"
+            android:inputType="numberDecimal"
+            android:maxLength="16"
+            android:maxLines="1"
             android:paddingHorizontal="8dp"
             android:textColor="@color/text_primary_color"
             android:textSize="18sp"

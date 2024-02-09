@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background_inset"
+    android:divider="@drawable/small_tall_divider"
+    android:orientation="vertical"
+    android:paddingVertical="16dp"
+    android:showDividers="middle|end">
+
+    <LinearLayout
+        android:id="@+id/llTopButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:divider="@drawable/small_wide_divider"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp"
+        android:showDividers="beginning|middle|end">
+
+        <ImageButton
+            android:id="@+id/btnEditUserInfo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_corner_rect"
+            android:padding="8dp"
+            android:src="@drawable/ic_edit" />
+
+        <ImageButton
+            android:id="@+id/btnCloseUserInfo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_corner_rect"
+            android:padding="8dp"
+            android:src="@drawable/ic_close" />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lDialogUserInfoName"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialogUserInfoName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_input_height"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textAppearance="@style/myTextInputStyle"
+            android:visibility="visible"
+            tools:text="Name" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lDialogUserInfoEmail"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+
+        android:hint="Email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialogUserInfoEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="textEmailAddress"
+            android:maxLength="40"
+            android:textAppearance="@style/myTextInputStyle"
+            tools:text="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lDialogUserInfoPhoneNumber"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Phone number">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialogUserInfoPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="phone"
+            android:maxLength="30"
+            android:textAppearance="@style/myTextInputStyle"
+            tools:text="Phone number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lDialogUserInfoPassword"
+        style="@style/myTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="24dp"
+        android:layout_height="@dimen/text_input_height"
+        android:hint="Password">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialogUserInfoPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_edittext"
+            android:inputType="textPassword"
+            android:maxLength="30"
+            android:textAppearance="@style/myTextInputStyle"
+            tools:text="Repeat password" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

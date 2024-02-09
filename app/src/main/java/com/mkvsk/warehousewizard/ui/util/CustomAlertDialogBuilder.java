@@ -26,8 +26,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
+import com.mkvsk.warehousewizard.core.User;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnAddNewItemClickListener;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnProductCardClickListener;
+import com.mkvsk.warehousewizard.ui.view.listeners.OnShowUserInfo;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +44,7 @@ public final class CustomAlertDialogBuilder {
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_full_product_info, null, false);
         dialog.setView(dialogView);
 
+        final TextView tvEditor = dialogView.findViewById(R.id.tvProductEditorFullInfo);
         final EditText tvCategory = dialogView.findViewById(R.id.tvProductCategoryFullInfo);
         final EditText tvName = dialogView.findViewById(R.id.tvProductNameFullInfo);
         final EditText tvCode = dialogView.findViewById(R.id.tvProductCode);
@@ -56,6 +59,7 @@ public final class CustomAlertDialogBuilder {
         final ImageButton btnEdit = dialogView.findViewById(R.id.btnEditProductCard);
         final ImageButton btnDelete = dialogView.findViewById(R.id.btnDeleteProductCard);
 
+        tvEditor.setText("Editor: " + product.getLastEditor());
         tvName.setText(product.getTitle());
         tvCode.setText(product.getCode().toUpperCase(Locale.getDefault()));
         tvDescription.setText(product.getDescription());
@@ -67,7 +71,7 @@ public final class CustomAlertDialogBuilder {
                 .apply(Utils.getOptions())
                 .dontAnimate()
                 .into(ivImage);
-        setEditMode(isEditMode, context, tvName, tvDescription, tvPrice, tvCategory, tvCode, tvQty);
+        setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCategory, tvCode, tvQty);
 
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
@@ -101,15 +105,17 @@ public final class CustomAlertDialogBuilder {
                         .load(R.drawable.ic_accept)
                         .into(btnEdit);
 
+                btnClose.setVisibility(View.GONE);
                 btnDelete.setVisibility(View.VISIBLE);
+                listener.onEdit(product);
             } else {
 //                isEditMode = false;
                 Glide.with(context)
                         .load(R.drawable.ic_edit)
                         .into(btnEdit);
 
+                btnClose.setVisibility(View.VISIBLE);
                 btnDelete.setVisibility(View.GONE);
-                listener.onEdit(product);
             }
             isEditMode = !isEditMode;
             setEditMode(isEditMode, context, tvName, tvDescription, tvPrice, tvCategory, tvCode, tvQty);
@@ -117,6 +123,7 @@ public final class CustomAlertDialogBuilder {
 
         btnDelete.setOnClickListener(view -> {
 //                    TODO undo toast
+            setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCategory, tvCode, tvQty);
             listener.onDelete(product);
             alertDialog.dismiss();
         });
@@ -133,7 +140,7 @@ public final class CustomAlertDialogBuilder {
     @SuppressLint("ResourceAsColor")
     public static void setEditMode(boolean isEditMode, Context context, View... view) {
         for (View viewItem : view) {
-            if (viewItem instanceof EditText) {
+            if (viewItem instanceof EditText || viewItem instanceof TextInputEditText) {
                 if (isEditMode) {
                     viewItem.setFocusableInTouchMode(true);
                     viewItem.setClickable(true);
@@ -275,7 +282,7 @@ public final class CustomAlertDialogBuilder {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                btnSave.setEnabled(s.length() > 3);
+                btnSave.setEnabled(s.length() > 2);
             }
 
             @Override
@@ -294,165 +301,57 @@ public final class CustomAlertDialogBuilder {
         return alertDialog;
     }
 
+    public static AlertDialog cardUserInfo(final Context context, User user, OnShowUserInfo listener) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_user_info, null, false);
+        dialog.setView(dialogView);
 
-//    public static AlertDialog dialogWithTwoButtons(final Context context, String title, String message,
-//                                                   DialogButtonClickListener listener) {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-//        View dialogView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_view_custom_buttons, null);
-//        dialog.setView(dialogView);
-//
-//        final TextView tvTitle = dialogView.findViewById(R.id.tvDialogTitle);
-//        final TextView tvMessage = dialogView.findViewById(R.id.tvDialogMessage);
-//        final Button positiveBtn = dialogView.findViewById(R.id.btnDialogPositive);
-//        final Button negativeBtn = dialogView.findViewById(R.id.btnDialogNegative);
-//
-//        setTitle(context, title, tvTitle);
-//        tvMessage.setText(message);
-//
-//        dialog.setCancelable(false);
-//        AlertDialog alertDialog = dialog.create();
-//        positiveBtn.setOnClickListener(v -> listener.onPositiveButtonClick());
-//        negativeBtn.setOnClickListener(v -> {
-//            listener.onNegativeButtonClick();
-//            alertDialog.dismiss();
-//        });
-//
-//        return alertDialog;
-//    }
-//
-//
-//    @SuppressLint({"ResourceType", "NonConstantResourceId", "UseCompatLoadingForDrawables"})
-//    public static AlertDialog dialogWithTwoButtons(final Context context, String title, String message,
-//                                                   String positiveButtonText, String negativeButtonText,
-//                                                   ImageView icon, boolean isNeedToRecolorBtn,
-//                                                   DialogButtonClickListener listener) {
-//
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-//        View dialogView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_view_custom_buttons, null);
-//        dialog.setView(dialogView);
-//
-//        final TextView tvTitle = dialogView.findViewById(R.id.tvDialogTitle);
-//        final TextView tvMessage = dialogView.findViewById(R.id.tvDialogMessage);
-//        final Button positiveBtn = dialogView.findViewById(R.id.btnDialogPositive);
-//        final Button negativeBtn = dialogView.findViewById(R.id.btnDialogNegative);
-//        final ImageView ivIcon = dialogView.findViewById(R.id.ivDialogIcon);
-//
-//        setTitle(context, title, tvTitle);
-//        tvMessage.setText(message);
-//        setIcon(context, icon, ivIcon);
-//        setButtons(context, positiveButtonText, negativeButtonText, positiveBtn, negativeBtn, isNeedToRecolorBtn);
-//
-//        dialog.setCancelable(false);
-//        AlertDialog alertDialog = dialog.create();
-//        positiveBtn.setOnClickListener(v -> listener.onPositiveButtonClick());
-//        negativeBtn.setOnClickListener(v -> {
-//            listener.onNegativeButtonClick();
-//            alertDialog.dismiss();
-//        });
-//
-//        return alertDialog;
-//    }
-//
-//
-//    public static AlertDialog dialogWithOneButton(final Context context, String title, String message,
-//                                                  DialogNeutralButtonClickListener listener) {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-//        View dialogView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_view_custom_buttons, null);
-//        dialog.setView(dialogView);
-//        final TextView tvTitle = dialogView.findViewById(R.id.tvDialogTitle);
-//        final TextView tvMessage = dialogView.findViewById(R.id.tvDialogMessage);
-//        final Button uselessBtn = dialogView.findViewById(R.id.btnDialogPositive);
-//        final Button neutralBtn = dialogView.findViewById(R.id.btnDialogNegative);
-//
-//        setTitle(context, title, tvTitle);
-//        tvMessage.setText(message);
-//
-//        uselessBtn.setVisibility(View.INVISIBLE);
-//        dialog.setCancelable(false);
-//        AlertDialog alertDialog = dialog.create();
-//        neutralBtn.setOnClickListener(v -> {
-//            listener.onNeutralButtonClick();
-//            alertDialog.dismiss();
-//        });
-//
-//        return alertDialog;
-//    }
-//
-//    @SuppressLint({"ResourceType", "NonConstantResourceId"})
-//    public static AlertDialog dialogWithOneButton(final Context context, String title, String message,
-//                                                  String neutralButtonText,
-//                                                  ImageView icon, DialogNeutralButtonClickListener listener) {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-//        View dialogView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_view_custom_buttons, null);
-//        dialog.setView(dialogView);
-//
-//        final TextView tvTitle = dialogView.findViewById(R.id.tvDialogTitle);
-//        final TextView tvMessage = dialogView.findViewById(R.id.tvDialogMessage);
-//        final Button uselessBtn = dialogView.findViewById(R.id.btnDialogPositive);
-//        final Button neutralBtn = dialogView.findViewById(R.id.btnDialogNegative);
-//        final ImageView ivIcon = dialogView.findViewById(R.id.ivDialogIcon);
-//
-//        setIcon(context, icon, ivIcon);
-//        setTitle(context, title, tvTitle);
-//        tvMessage.setText(message);
-//
-//        if (!neutralButtonText.isEmpty()) {
-//            neutralBtn.setText(neutralButtonText);
-//        } else {
-//            neutralBtn.setText(context.getString(R.string.terminal_btn_ok));
-//        }
-//
-//        uselessBtn.setVisibility(View.INVISIBLE);
-//        dialog.setCancelable(false);
-//        AlertDialog alertDialog = dialog.create();
-//
-//        neutralBtn.setOnClickListener(v -> {
-//            listener.onNeutralButtonClick();
-//            alertDialog.dismiss();
-//        });
-//
-//        return alertDialog;
-//    }
-//
-//    private static void setButtons(Context context,
-//                                   String positiveButtonText, String negativeButtonText,
-//                                   Button positiveBtn, Button negativeBtn,
-//                                   boolean isNeedToRecolorBtn) {
-//        if (!positiveButtonText.isEmpty()) {
-//            positiveBtn.setText(positiveButtonText);
-//        } else {
-//            positiveBtn.setText(context.getString(R.string.terminal_btn_ok));
-//        }
-//
-//        if (!negativeButtonText.isEmpty()) {
-//            negativeBtn.setText(negativeButtonText);
-//        } else {
-//            negativeBtn.setText(context.getString(R.string.terminal_btn_cancel));
-//        }
-//
-//        if (isNeedToRecolorBtn) {
-//            positiveBtn.setBackgroundResource(R.drawable.bg_red_round_12);
-//            positiveBtn.setTextColor(context.getColorStateList(R.color.color_white));
-//        } else {
-//            positiveBtn.setBackgroundResource(R.drawable.bg_transparent_round_12);
-//            positiveBtn.setTextColor(context.getColorStateList(R.color.dialog_button_color));
-//        }
-//    }
-//
-//    @SuppressLint("UseCompatLoadingForDrawables")
-//    private static void setIcon(Context context, ImageView icon, ImageView ivIcon) {
-//        if (icon != null) {
-//            ivIcon.setImageDrawable(icon.getDrawable());
-//        } else {
-//            ivIcon.setImageDrawable(context.getDrawable(R.drawable.ic_message_information));
-//        }
-//    }
-//
-//    private static void setTitle(Context context, String title, TextView tvTitle) {
-//        if (!title.isEmpty()) {
-//            tvTitle.setText(title);
-//        } else {
-//            tvTitle.setText(context.getString(R.string.attention));
-//        }
-//    }
+        final TextInputEditText tvName = dialogView.findViewById(R.id.dialogUserInfoName);
+        final TextInputEditText tvEmail = dialogView.findViewById(R.id.dialogUserInfoEmail);
+        final TextInputEditText tvPhoneNumber = dialogView.findViewById(R.id.dialogUserInfoPhoneNumber);
+        final TextInputEditText tvPassword = dialogView.findViewById(R.id.dialogUserInfoPassword);
+        final ImageButton btnEdit = dialogView.findViewById(R.id.btnEditUserInfo);
+        final ImageButton btnClose = dialogView.findViewById(R.id.btnCloseUserInfo);
+        dialog.setCancelable(false);
+        AlertDialog alertDialog = dialog.create();
+
+        setEditMode(isEditMode = false, context, tvName, tvEmail, tvPhoneNumber, tvPassword);
+
+        tvName.setText(user.fullName);
+        tvEmail.setText(user.email);
+        tvPhoneNumber.setText(user.phoneNumber);
+        tvPassword.setText(user.password);
+
+        btnEdit.setOnClickListener(v -> {
+            if (!isEditMode) {
+                Glide.with(context)
+                        .load(R.drawable.ic_accept)
+                        .into(btnEdit);
+
+                btnClose.setVisibility(View.GONE);
+                user.setFullName(tvName.getText().toString().isBlank() ? user.fullName : tvName.getText().toString());
+                user.setPassword(tvPassword.getText().toString().isBlank() ? user.password : tvPassword.getText().toString());
+                user.setEmail(tvEmail.getText().toString().isBlank() ? user.email : tvEmail.getText().toString());
+                user.setPhoneNumber(tvPhoneNumber.getText().toString().isBlank() ? user.phoneNumber : tvPhoneNumber.getText().toString());
+                listener.updateUser(user);
+            } else {
+                Glide.with(context)
+                        .load(R.drawable.ic_edit)
+                        .into(btnEdit);
+
+                btnClose.setVisibility(View.VISIBLE);
+            }
+            isEditMode = !isEditMode;
+            setEditMode(isEditMode, context, tvName, tvEmail, tvPhoneNumber, tvPassword);
+        });
+
+        btnClose.setOnClickListener(v -> {
+            setEditMode(isEditMode = false, context, tvName, tvEmail, tvPhoneNumber, tvPassword);
+            alertDialog.dismiss();
+        });
+
+        Objects.requireNonNull(alertDialog.getWindow())
+                .setBackgroundDrawable(context.getDrawable(R.drawable.alert_dialog_bgr));
+        return alertDialog;
+    }
 }

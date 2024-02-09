@@ -7,9 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,7 +22,6 @@ import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -39,21 +36,18 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.mkvsk.warehousewizard.MainActivity;
 import com.mkvsk.warehousewizard.R;
-import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
+import com.mkvsk.warehousewizard.core.User;
 import com.mkvsk.warehousewizard.databinding.FragmentDashboardBinding;
+import com.mkvsk.warehousewizard.ui.util.CustomAlertDialogBuilder;
 import com.mkvsk.warehousewizard.ui.viewmodel.ProductViewModel;
-
-import org.json.JSONObject;
+import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import kotlin.Pair;
 
@@ -69,10 +63,14 @@ public class DashboardFragment extends Fragment {
     private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
     private ProductViewModel productViewModel;
+    private UserViewModel userViewModel;
+    private User user = new User();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        productViewModel.setAllProductsFromDB();
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -80,47 +78,19 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        loader start
         setupMenu();
         initListeners();
-        loadData();
+        initObservers();
     }
 
-    private void loadData() {
-        products.clear();
-
-//        products.addAll(productViewModel.getAllProductsFromDB());
-        String cat0 = "Макияж для лица";
-        String cat1 = "Парфюмерия для мужчин";
-        String cat2 = "Уход за телом";
-        String cat3 = "Уход за лицом";
-        String cat4 = "Для бритья";
-
-        Product p0 = new Product(0, cat0, "title0", "0", 10, "https://bit.ly/3SGyDfX", "desc1", "test", 10.2);
-        Product p1 = new Product(1, cat0, "title1", "1", 21, "https://bit.ly/3SGyDfX", "desc1", "test", 23.3);
-        Product p2 = new Product(2, cat0, "title2", "2", 11, "https://bit.ly/3SGyDfX", "desc1", "test", 23.3);
-        Product p3 = new Product(3, cat0, "title3", "3", 3, "https://bit.ly/3SGyDfX", "desc1", "test", 44.0);
-        Product p4 = new Product(4, cat1, "title4", "4", 22, "https://bit.ly/3SGyDfX", "desc1", "test", 2.22);
-        Product p5 = new Product(5, cat1, "title5", "5", 7, "https://bit.ly/3SGyDfX", "desc1", "test", 5.3);
-        Product p6 = new Product(6, cat2, "title6", "6", 6, "https://bit.ly/3SGyDfX", "desc1", "test", 4.2);
-        Product p7 = new Product(7, cat3, "title7", "7", 5, "https://bit.ly/3SGyDfX", "desc1", "test", 4.3);
-        Product p8 = new Product(8, cat4, "title8", "8", 3, "https://bit.ly/3SGyDfX", "desc1", "test", 663.0);
-        Product p9 = new Product(9, cat4, "title9", "9", 4, "https://bit.ly/3SGyDfX", "desc1", "test", 12.3);
-        products.add(p0);
-        products.add(p1);
-        products.add(p2);
-        products.add(p3);
-        products.add(p4);
-        products.add(p5);
-        products.add(p6);
-        products.add(p7);
-        products.add(p8);
-        products.add(p9);
-
-        filterData();
+    private void initObservers() {
+        productViewModel.getAllProducts().observe(getViewLifecycleOwner(), this::filterData);
+        userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
+            user = currentUser;
+        });
     }
 
-    private void filterData() {
+    private void filterData(List<Product> products) {
         final TreeMap<String, List<Product>> categoryMap = new TreeMap<>();
         for (Product product : products) {
             if (categoryMap.containsKey(product.getCategory())) {
@@ -163,10 +133,18 @@ public class DashboardFragment extends Fragment {
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.menu_item_logout) {
                     logout();
+                } else if (menuItem.getItemId() == R.id.menu_item_user_profile) {
+                    showUserInfo();
                 }
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+    }
+
+    private void showUserInfo() {
+        CustomAlertDialogBuilder.cardUserInfo(getContext(), user, user -> {
+            userViewModel.updateUser(user);
+        }).show();
     }
 
     private void initListeners() {
@@ -174,7 +152,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void logout() {
-        SharedPreferences sharedPreferences = this.requireActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear().apply();
 
@@ -237,7 +215,7 @@ public class DashboardFragment extends Fragment {
         chart.setCenterText("Процент количества товаров на складе");
         chart.setCenterTextSize(12f);
         chart.getDescription().setEnabled(false);
-        chart.setExtraOffsets(10,10,10,10);
+        chart.setExtraOffsets(10, 10, 10, 10);
         chart.setCenterTextColor(Color.BLACK);
         chart.setHoleRadius(50f);
         chart.setTransparentCircleRadius(55f);
@@ -253,4 +231,40 @@ public class DashboardFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    private void loadData() {
+        products.clear();
+
+        products.addAll(Objects.requireNonNull(productViewModel.getAllProducts().getValue()));
+//        String cat0 = "Макияж для лица";
+//        String cat1 = "Парфюмерия для мужчин";
+//        String cat2 = "Уход за телом";
+//        String cat3 = "Уход за лицом";
+//        String cat4 = "Для бритья";
+//
+//        Product p0 = new Product(0, cat0, "title0", "0", 10, "https://bit.ly/3SGyDfX", "desc1", "test", 10.2);
+//        Product p1 = new Product(1, cat0, "title1", "1", 21, "https://bit.ly/3SGyDfX", "desc1", "test", 23.3);
+//        Product p2 = new Product(2, cat0, "title2", "2", 11, "https://bit.ly/3SGyDfX", "desc1", "test", 23.3);
+//        Product p3 = new Product(3, cat0, "title3", "3", 3, "https://bit.ly/3SGyDfX", "desc1", "test", 44.0);
+//        Product p4 = new Product(4, cat1, "title4", "4", 22, "https://bit.ly/3SGyDfX", "desc1", "test", 2.22);
+//        Product p5 = new Product(5, cat1, "title5", "5", 7, "https://bit.ly/3SGyDfX", "desc1", "test", 5.3);
+//        Product p6 = new Product(6, cat2, "title6", "6", 6, "https://bit.ly/3SGyDfX", "desc1", "test", 4.2);
+//        Product p7 = new Product(7, cat3, "title7", "7", 5, "https://bit.ly/3SGyDfX", "desc1", "test", 4.3);
+//        Product p8 = new Product(8, cat4, "title8", "8", 3, "https://bit.ly/3SGyDfX", "desc1", "test", 663.0);
+//        Product p9 = new Product(9, cat4, "title9", "9", 4, "https://bit.ly/3SGyDfX", "desc1", "test", 12.3);
+//        products.add(p0);
+//        products.add(p1);
+//        products.add(p2);
+//        products.add(p3);
+//        products.add(p4);
+//        products.add(p5);
+//        products.add(p6);
+//        products.add(p7);
+//        products.add(p8);
+//        products.add(p9);
+
+//        filterData(products);
+    }
+
 }
+

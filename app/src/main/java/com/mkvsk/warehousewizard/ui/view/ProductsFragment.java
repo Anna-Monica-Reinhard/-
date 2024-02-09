@@ -1,13 +1,13 @@
 package com.mkvsk.warehousewizard.ui.view;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,8 @@ import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.databinding.FragmentProductsBinding;
 import com.mkvsk.warehousewizard.ui.util.CustomAlertDialogBuilder;
+import com.mkvsk.warehousewizard.ui.util.SortType;
+import com.mkvsk.warehousewizard.ui.util.Utils;
 import com.mkvsk.warehousewizard.ui.view.adapters.CategoryAdapter;
 import com.mkvsk.warehousewizard.ui.view.adapters.ProductAdapter;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnCategoryClickListener;
@@ -63,19 +66,25 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     private CategoryViewModel categoryViewModel;
     private UserViewModel userViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
+        productViewModel.setAllProductsFromDB();
+
         categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
+        categoryViewModel.setAllCategoriesFromDB();
+
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         binding = FragmentProductsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+//        TODO loader on
         setupMenu();
+        initObservers();
         getData();
         setupAdapters();
         initViews();
@@ -83,8 +92,17 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         handleBackPressed();
     }
 
+    private void initObservers() {
+        productViewModel.getAllProducts().observe(getViewLifecycleOwner(), items -> {
+            productAdapter.setData((ArrayList<Product>) items);
+            productAdapter.notifyDataSetChanged();
+        });
+
+        categoryViewModel.getAllCategoriesTitles().observe(getViewLifecycleOwner(), categoryAdapter::setData);
+    }
+
     private void getData() {
-        allProducts.addAll(productViewModel.getAllProductsFromDB());
+
     }
 
     private void setupMenu() {
@@ -96,17 +114,29 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                 menuInflater.inflate(R.menu.products_actionbar_menu, menu);
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.miSortByAlphabetAZ) {
-//                    Utils.hideKeyboard(requireActivity());
-//                    //                       list sort
+                    productViewModel.sortData(SortType.SORT_BY_ALPHABET_AZ);
+                } else if (menuItem.getItemId() == R.id.miSortByAlphabetZA) {
+                    productViewModel.sortData(SortType.SORT_BY_ALPHABET_ZA);
+                } else if (menuItem.getItemId() == R.id.miSortByQtyDesc) {
+                    productViewModel.sortData(SortType.SORT_BY_QTY_DESCENDING);
+                } else if (menuItem.getItemId() == R.id.miSortByQtyAsc) {
+                    productViewModel.sortData(SortType.SORT_BY_QTY_ASCENDING);
+                } else if (menuItem.getItemId() == R.id.miSortByCategory) {
+                    productViewModel.sortData(SortType.SORT_BY_CATEGORY_AZ);
                 }
+                productAdapter.setData((ArrayList<Product>) productViewModel.getAllProducts().getValue());
+                productAdapter.notifyDataSetChanged();
+                Utils.hideKeyboard(requireActivity());
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private void setupAdapters() {
         rvCategory = binding.rvCategory;
 //        categoryAdapter.context = this.requireContext();
@@ -118,14 +148,14 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         mRecyclerView = rvProduct;
         productAdapter.setClickListener(this::onProductClick);
         rvProduct.setAdapter(productAdapter);
-        rvProduct.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter
-                .StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        rvProduct.getAdapter().setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
     }
 
     private void initViews() {
         binding.fabAdd.extend();
 
-        productAdapter.setData(allProducts);
+//        Loader off
+        // TODO: 08.02.2024
     }
 
     private void initListeners() {
@@ -159,19 +189,18 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         CustomAlertDialogBuilder.cardAddNewCategory(this.requireContext(), newCategory, () -> {
             categoryViewModel.insert(newCategory);
             Toast.makeText(requireContext(), "Category added", Toast.LENGTH_SHORT).show();
-            Log.i("CATEGORY INSERT", "total categories: " + categoryViewModel.getAllCategoriesFromDB().size());
         }).show();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void addNewProduct() {
         Product newProduct = new Product();
-        String editorName = userViewModel.getCurrentUser().getValue().fullName;
+        String editorName = Objects.requireNonNullElse(userViewModel.getCurrentUser().getValue().fullName, "Unknown");
         CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(),
-                Objects.requireNonNull(userViewModel.getCurrentUser().getValue()).getFullName(),
-                newProduct, categoryViewModel.getAllCategoriesTitles(), () -> {
+                editorName, newProduct, categoryViewModel.getAllCategories().getValue(), () -> {
                     productViewModel.insert(newProduct);
-                    Toast.makeText(getContext(), "Product added", Toast.LENGTH_SHORT).show();
-                    Log.i("PRODUCT INSERT", "total products: " + productViewModel.getAllProductsFromDB().size());
+                    productAdapter.setData((ArrayList<Product>) productViewModel.getAllProducts().getValue());
+                    productAdapter.notifyDataSetChanged();
                 }).show();
     }
 
@@ -198,15 +227,20 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         binding = null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     @Override
     public void onCategoryClick(int previousItem, int selectedItem, String categoryTitle) {
         categoryAdapter.setSelected(selectedItem);
         categoryAdapter.notifyItemChanged(previousItem);
         categoryAdapter.notifyItemChanged(selectedItem);
-//        categoryViewModel.setCategory(categoryTitle);
-        if (selectedItem > 3) {
-            binding.rvCategory.smoothScrollToPosition(selectedItem);
+        if (!categoryTitle.equalsIgnoreCase("all")) {
+            categoryViewModel.setCategory(categoryTitle);
+            productViewModel.setAllProductsByCategory(categoryTitle);
         }
+
+//        if (selectedItem > 4) {
+//            binding.rvCategory.smoothScrollToPosition(selectedItem);
+//        }
     }
 
     @Override
@@ -215,12 +249,13 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
             @Override
             public void onEdit(Product product) {
-
+                product.setLastEditor(userViewModel.getLogin().getValue());
+                productViewModel.update(product);
             }
 
             @Override
             public void onDelete(Product product) {
-
+                productViewModel.delete(product);
             }
 
             @Override

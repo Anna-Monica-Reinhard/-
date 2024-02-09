@@ -1,7 +1,6 @@
 package com.mkvsk.warehousewizard.ui.view.adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,9 +15,10 @@ import com.mkvsk.warehousewizard.databinding.RvCategoryItemBinding;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnCategoryClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemViewHolder> {
-    private ArrayList<Category> data = new ArrayList<>();
+    private List<String> data = new ArrayList<String>();
     private OnCategoryClickListener listener;
     private int selectedTag = 0;
     private RvCategoryItemBinding binding;
@@ -33,7 +33,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemVi
 
     @Override
     public void onBindViewHolder(CategoryAdapter.ItemViewHolder holder, int position) {
-        Category categoryItem = (Category) data.toArray()[position];
+        String categoryItem = (String) data.toArray()[position];
         holder.bind(categoryItem);
     }
 
@@ -47,13 +47,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemVi
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setData(ArrayList<Category> data) {
+    public void setData(List<String> data) {
         if (data != null) {
             this.data = data;
             notifyDataSetChanged();
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setSelected(int position) {
         selectedTag = position;
     }
@@ -63,29 +64,30 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemVi
             super(binding.getRoot());
         }
 
-        public void bind(Category categoryItem) {
+        public void bind(String categoryItem) {
 
             if (selectedTag == getBindingAdapterPosition()) {
                 selectItem(binding.cvItem, binding.tvTitle);
             } else {
                 unselectItem(binding.cvItem, binding.tvTitle);
             }
-            binding.tvTitle.setText(categoryItem != null ? categoryItem.getTitle() : "");
+
+            binding.tvTitle.setText(categoryItem);
             binding.cvItem.setOnClickListener(v -> listener.onCategoryClick(
                     selectedTag,
                     getBindingAdapterPosition(),
-                    categoryItem != null ? categoryItem.getTitle() : ""
+                    categoryItem
             ));
         }
 
         private void selectItem(MaterialCardView cardView, TextView textView) {
-//            cardView.setBackgroundResource(R.drawable.selected_tag_item);
+            cardView.setBackgroundResource(R.drawable.selected_tag_item);
             cardView.setClickable(false);
             textView.setSelected(true);
         }
 
         private void unselectItem(MaterialCardView cardView, TextView textView) {
-//            cardView.setBackgroundResource(R.drawable.unselected_tag_item);
+            cardView.setBackgroundResource(R.drawable.unselected_tag_item);
             cardView.setClickable(true);
             textView.setSelected(false);
         }

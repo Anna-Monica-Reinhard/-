@@ -279,7 +279,7 @@ public class AuthAndRegisterFragment extends Fragment {
             Toast.makeText(requireContext(), requireContext().getString(R.string.login_error_user_not_found), Toast.LENGTH_SHORT).show();
         } else {
             if (foundUser.getPassword().equals(password)) {
-                userViewModel.setCurrentUser(new MutableLiveData<>(foundUser));
+                userViewModel.setCurrentUser(foundUser);
                 saveUserDataToSharedPrefs(login, password);
                 NavHostFragment.findNavController(this).navigate(R.id.action_go_to_products_from_auth);
             } else {

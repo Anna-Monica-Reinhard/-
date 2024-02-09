@@ -11,10 +11,10 @@ import java.util.List;
 
 public class UserViewModel extends ViewModel {
     private UserRepository repository;
-    private MutableLiveData<String> login;
+    private MutableLiveData<String> login = new MutableLiveData<>("");
     private MutableLiveData<String> password;
     private MutableLiveData<Boolean> isAuthMode;
-    private MutableLiveData<User> currentUser;
+    private MutableLiveData<User> currentUser = new MutableLiveData<>();
     private MutableLiveData<User> newUser;
     private MutableLiveData<User> userByEmail;
     private MutableLiveData<List<User>> allUsers;
@@ -23,8 +23,8 @@ public class UserViewModel extends ViewModel {
         return currentUser;
     }
 
-    public void setCurrentUser(MutableLiveData<User> currentUser) {
-        this.currentUser = currentUser;
+    public void setCurrentUser(User currentUser) {
+        this.currentUser.setValue(currentUser);
     }
 
     public MutableLiveData<User> getNewUser() {

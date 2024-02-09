@@ -16,4 +16,6 @@
     <string name="unavailable_in_shop">unavailable in online shop</string>
     <string name="available">Available:</string>
     <string name="unavailable">Out of stock</string>
+    <string name="last_editor_format">Editor: %s</string>
+
 </resources>
