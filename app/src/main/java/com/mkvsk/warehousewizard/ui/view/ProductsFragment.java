@@ -8,12 +8,14 @@ import android.os.Looper;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -45,6 +47,7 @@ import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ProductsFragment extends Fragment implements OnCategoryClickListener, OnProductClickListener {
 
@@ -164,25 +167,45 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         binding.fabAddProduct.setOnClickListener(view -> addNewProduct());
         binding.etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence queryText, int i, int i1, int i2) {
-
+            public void beforeTextChanged(CharSequence p0, int p1, int p2, int p3) {
             }
 
             @Override
-            public void onTextChanged(CharSequence queryText, int i, int i1, int i2) {
-                if (queryText.length() > 2) {
-                    binding.nsvSearch.smoothScrollTo(0, 0);
-//                    findProduct(queryText.toString());
+            public void onTextChanged(CharSequence queryText, int p1, int p2, int p3) {
+                if (!binding.etSearch.getText().toString().trim().isEmpty() && binding.etSearch.getText().toString().length() > 1) {
+                    findProducts(binding.etSearch.getText().toString());
+                } else {
+                    productAdapter.setData((ArrayList<Product>) productViewModel.getAllProducts().getValue());
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable queryText) {
-
+            public void afterTextChanged(Editable p0) {
             }
         });
+
+        binding.etSearch.setOnEditorActionListener((textView, keyCode, event) -> {
+            if (((event != null ? event.getAction() : -1) == KeyEvent.KEYCODE_ENTER)
+                    || keyCode == EditorInfo.IME_ACTION_DONE) {
+                Utils.hideKeyboard(requireActivity());
+                return true;
+            }
+            return false;
+        });
+
     }
 
+    private void findProducts(String s) {
+        s.trim();
+        allProducts.addAll(productViewModel.getAllProducts().getValue());
+        ArrayList<Product> temp = (ArrayList<Product>) allProducts.stream().filter(it
+                -> it.getTitle().contains(s)).collect(Collectors.toList());
+
+        if (!temp.isEmpty()) {
+            productAdapter.setData(temp);
+            productAdapter.notifyDataSetChanged();
+        }
+    }
 
     private void addNewCategory() {
         Category newCategory = new Category();

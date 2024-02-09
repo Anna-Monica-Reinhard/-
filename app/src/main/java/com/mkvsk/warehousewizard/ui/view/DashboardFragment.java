@@ -40,6 +40,7 @@ import com.mkvsk.warehousewizard.core.Product;
 import com.mkvsk.warehousewizard.core.User;
 import com.mkvsk.warehousewizard.databinding.FragmentDashboardBinding;
 import com.mkvsk.warehousewizard.ui.util.CustomAlertDialogBuilder;
+import com.mkvsk.warehousewizard.ui.view.listeners.OnShowUserInfo;
 import com.mkvsk.warehousewizard.ui.viewmodel.ProductViewModel;
 import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
@@ -142,8 +143,12 @@ public class DashboardFragment extends Fragment {
     }
 
     private void showUserInfo() {
-        CustomAlertDialogBuilder.cardUserInfo(getContext(), user, user -> {
-            userViewModel.updateUser(user);
+        CustomAlertDialogBuilder.cardUserInfo(getContext(), user, new OnShowUserInfo() {
+            @Override
+            public void updateUser(User user) {
+                userViewModel.updateUser(user);
+                userViewModel.setCurrentUser(user);
+            }
         }).show();
     }
 
