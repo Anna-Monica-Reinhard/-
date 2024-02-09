@@ -32,7 +32,6 @@ import com.mkvsk.warehousewizard.ui.view.listeners.OnProductCardClickListener;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnShowUserInfo;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 public final class CustomAlertDialogBuilder {
@@ -45,7 +44,7 @@ public final class CustomAlertDialogBuilder {
         dialog.setView(dialogView);
 
         final TextView tvEditor = dialogView.findViewById(R.id.tvProductEditorFullInfo);
-        final EditText tvCategory = dialogView.findViewById(R.id.tvProductCategoryFullInfo);
+        final TextView tvCategory = dialogView.findViewById(R.id.tvProductCategoryFullInfo);
         final EditText tvName = dialogView.findViewById(R.id.tvProductNameFullInfo);
         final EditText tvCode = dialogView.findViewById(R.id.tvProductCode);
         final EditText tvDescription = dialogView.findViewById(R.id.tvDescription);
@@ -59,9 +58,10 @@ public final class CustomAlertDialogBuilder {
         final ImageButton btnEdit = dialogView.findViewById(R.id.btnEditProductCard);
         final ImageButton btnDelete = dialogView.findViewById(R.id.btnDeleteProductCard);
 
-        tvEditor.setText("Editor: " + product.getLastEditor());
+        tvCategory.setText(product.getCategory());
+        tvEditor.setText(Objects.requireNonNullElse("Editor: " + product.getLastEditor(), "Unknown"));
         tvName.setText(product.getTitle());
-        tvCode.setText(product.getCode().toUpperCase(Locale.getDefault()));
+        tvCode.setText(product.getCode());
         tvDescription.setText(product.getDescription());
         tvPrice.setText(String.valueOf(product.getPrice()));
         tvQty.setText(String.valueOf(product.getQty()));
@@ -71,7 +71,7 @@ public final class CustomAlertDialogBuilder {
                 .apply(Utils.getOptions())
                 .dontAnimate()
                 .into(ivImage);
-        setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCategory, tvCode, tvQty);
+        setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCode, tvQty);
 
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
@@ -100,30 +100,36 @@ public final class CustomAlertDialogBuilder {
 
         btnEdit.setOnClickListener(v -> {
             if (!isEditMode) {
-//                isEditMode = true;
                 Glide.with(context)
                         .load(R.drawable.ic_accept)
                         .into(btnEdit);
 
                 btnClose.setVisibility(View.GONE);
                 btnDelete.setVisibility(View.VISIBLE);
-                listener.onEdit(product);
+//                listener.onEdit(product);
             } else {
-//                isEditMode = false;
                 Glide.with(context)
                         .load(R.drawable.ic_edit)
                         .into(btnEdit);
 
                 btnClose.setVisibility(View.VISIBLE);
                 btnDelete.setVisibility(View.GONE);
+
+                product.setTitle(tvName.getText().toString());
+                product.setQty(Long.parseLong(tvQty.getText().toString()));
+                product.setPrice(Double.parseDouble(tvPrice.getText().toString()));
+                product.setDescription(tvDescription.getText().toString());
+                product.setCode(tvCode.getText().toString());
+
+                listener.onEdit(product);
             }
             isEditMode = !isEditMode;
-            setEditMode(isEditMode, context, tvName, tvDescription, tvPrice, tvCategory, tvCode, tvQty);
+            setEditMode(isEditMode, context, tvName, tvDescription, tvPrice, tvCode, tvQty);
         });
 
         btnDelete.setOnClickListener(view -> {
 //                    TODO undo toast
-            setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCategory, tvCode, tvQty);
+            setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCode, tvQty);
             listener.onDelete(product);
             alertDialog.dismiss();
         });

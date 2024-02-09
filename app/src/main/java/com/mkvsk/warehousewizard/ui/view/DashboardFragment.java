@@ -165,21 +165,21 @@ public class DashboardFragment extends Fragment {
         filteredData.forEach((k, v) -> entries.add(new PieEntry(Float.parseFloat(v.getFirst().toString()), k)));
         ArrayList<Integer> colors = new ArrayList<>();
 
-        for (int color : ColorTemplate.MATERIAL_COLORS) {
+        for (int color : ColorTemplate.PASTEL_COLORS) {
             colors.add(color);
         }
-        for (int color : ColorTemplate.VORDIPLOM_COLORS) {
+        for (int color : ColorTemplate.PASTEL_COLORS) {
             colors.add(color);
         }
 
-        PieDataSet dataSet = new PieDataSet(entries, "Процент количества товаров на складе");
+        PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setColors(colors);
 
         PieData data = new PieData(dataSet);
         data.setDrawValues(true);
         data.setValueFormatter(new PercentFormatter(chart));
-        data.setValueTextSize(12f);
-        data.setValueTextColor(Color.BLACK);
+        data.setValueTextSize(14f);
+        data.setValueTextColor(getContext().getColor(R.color.text_primary_color));
 
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -188,8 +188,8 @@ public class DashboardFragment extends Fragment {
         l.setXEntrySpace(7f);
         l.setYEntrySpace(0f);
         l.setYOffset(0f);
-        l.setTextSize(11f);
-        l.setTextColor(Color.BLACK);
+        l.setTextSize(13f);
+        l.setTextColor(getContext().getColor(R.color.text_primary_color));
         chart.setEntryLabelTextSize(0f);
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
@@ -208,11 +208,11 @@ public class DashboardFragment extends Fragment {
             }
         });
         chart.setUsePercentValues(true);
-        chart.setCenterText("Процент количества товаров на складе");
+        chart.setCenterText("");
         chart.setCenterTextSize(12f);
         chart.getDescription().setEnabled(false);
         chart.setExtraOffsets(10, 10, 10, 20);
-        chart.setCenterTextColor(Color.BLACK);
+        chart.setCenterTextColor(getContext().getColor(R.color.text_primary_color));
         chart.setHoleRadius(50f);
         chart.setTransparentCircleRadius(55f);
         chart.setHoleColor(Color.TRANSPARENT);

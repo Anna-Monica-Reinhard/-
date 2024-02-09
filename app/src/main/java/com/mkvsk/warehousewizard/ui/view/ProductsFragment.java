@@ -46,7 +46,6 @@ import com.mkvsk.warehousewizard.ui.viewmodel.ProductViewModel;
 import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -263,13 +262,14 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     }
 
     @Override
-    public void onProductClick(Product product) {
+    public void onProductClick(Product product, int bindingAdapterPosition) {
         CustomAlertDialogBuilder.productCardFullInfo(this.getContext(), product, new OnProductCardClickListener() {
 
             @Override
             public void onEdit(Product product) {
-                product.setLastEditor(userViewModel.getLogin().getValue());
+                product.setLastEditor(Objects.requireNonNull(userViewModel.getCurrentUser().getValue()).fullName);
                 productViewModel.update(product);
+                productAdapter.notifyItemChanged(bindingAdapterPosition, product);
             }
 
             @Override

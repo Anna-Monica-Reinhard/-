@@ -76,7 +76,7 @@
             android:textSize="13sp"
             tools:text="Editor:" />
 
-        <EditText
+        <TextView
             android:id="@+id/tvProductCategoryFullInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +86,6 @@
             android:ellipsize="end"
             android:textColor="@color/text_primary_color"
             android:textSize="18sp"
-
             tools:text="category" />
 
         <EditText
