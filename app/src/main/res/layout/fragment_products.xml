@@ -27,6 +27,7 @@
             local:theme="@style/ThemeOverlay.AppCompat.Dark">
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/llSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -75,6 +76,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
                 android:id="@+id/rv_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
