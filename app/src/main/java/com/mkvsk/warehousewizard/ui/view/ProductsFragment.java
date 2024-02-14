@@ -30,9 +30,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mkvsk.warehousewizard.R;
+import com.mkvsk.warehousewizard.databinding.FragmentProductsBinding;
 import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
-import com.mkvsk.warehousewizard.databinding.FragmentProductsBinding;
 import com.mkvsk.warehousewizard.ui.util.CustomAlertDialogBuilder;
 import com.mkvsk.warehousewizard.ui.util.SortType;
 import com.mkvsk.warehousewizard.ui.util.Utils;
@@ -86,7 +86,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        TODO loader on
-//        setupMenu();
+        setupMenu();
         initObservers();
         getData();
         setupAdapters();
@@ -96,10 +96,10 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     }
 
     private void initObservers() {
-//        productViewModel.getAllProducts().observe(getViewLifecycleOwner(), products -> {
-//            productAdapter.setData(products);
-//        });
-//        categoryViewModel.getAllCategories().observe(getViewLifecycleOwner(), categoryAdapter::setData);
+        productViewModel.getAllProducts().observe(getViewLifecycleOwner(), products -> {
+            productAdapter.setData(products);
+        });
+        categoryViewModel.getAllCategories().observe(getViewLifecycleOwner(), categoryAdapter::setData);
     }
 
     private void getData() {
