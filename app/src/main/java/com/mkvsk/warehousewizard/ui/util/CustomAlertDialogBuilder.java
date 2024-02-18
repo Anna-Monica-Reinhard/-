@@ -257,7 +257,7 @@ public final class CustomAlertDialogBuilder {
         btnSave.setOnClickListener(v -> {
             newProduct.setTitle(Objects.requireNonNull(tvName.getText()).toString());
             newProduct.setCategory(ddCategory.getText().toString());
-            newProduct.setExpiration(Integer.parseInt(tvExpirationMonth.getText().toString()));
+            newProduct.setExpiration(Integer.parseInt(Objects.requireNonNull(tvExpirationMonth.getText()).toString()));
             newProduct.setCode(Objects.requireNonNull(tvCode.getText()).toString());
             newProduct.setPrice(tvPrice.getText().toString().isBlank() ? 0.0D : Double.parseDouble(tvPrice.getText().toString()));
             newProduct.setQty(tvQty.getText().toString().isBlank() ? 0L : Long.parseLong(tvQty.getText().toString()));
