@@ -30,9 +30,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mkvsk.warehousewizard.R;
-import com.mkvsk.warehousewizard.databinding.FragmentProductsBinding;
 import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
+import com.mkvsk.warehousewizard.databinding.FragmentProductsBinding;
 import com.mkvsk.warehousewizard.ui.util.CustomAlertDialogBuilder;
 import com.mkvsk.warehousewizard.ui.util.SortType;
 import com.mkvsk.warehousewizard.ui.util.Utils;
@@ -118,6 +118,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                 menuInflater.inflate(R.menu.products_actionbar_menu, menu);
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
@@ -132,7 +133,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                 } else if (menuItem.getItemId() == R.id.miSortByCategory) {
                     productViewModel.sortData(SortType.SORT_BY_CATEGORY_AZ);
                 }
-                productAdapter.setData(productViewModel.getAllProducts().getValue());
+                productAdapter.setData((List<Product>) productViewModel.getSortedProducts().getValue());
                 Utils.hideKeyboard(requireActivity());
                 return false;
             }
@@ -171,7 +172,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
             @Override
             public void onTextChanged(CharSequence queryText, int p1, int p2, int p3) {
                 if (!binding.etSearch.getText().toString().trim().isEmpty() && binding.etSearch.getText().toString().length() > 1) {
-                    findProducts(queryText.toString());
+                    findProducts(binding.etSearch.getText().toString());
                 } else {
                     productAdapter.setData((ArrayList<Product>) productViewModel.getAllProducts().getValue());
                 }
@@ -193,16 +194,21 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void findProducts(String queryText) {
-        queryText.trim();
         allProducts.addAll(Objects.requireNonNull(productViewModel.getAllProducts().getValue()));
-        Set<Product> temp = (Set<Product>) allProducts.stream().filter(it
-                -> it.getTitle().contains(queryText)).collect(Collectors.toList());
+        Set<Product> temp = allProducts.stream()
+                .filter(it -> it.getTitle().contains(queryText))
+                .collect(Collectors.toSet());
 
-        if (!temp.isEmpty()) {
-            productAdapter.setData((List<Product>) temp);
+        if (temp.isEmpty()) {
+            productAdapter.setData(productViewModel.getAllProducts().getValue());
+        } else {
+            productAdapter.setData(new ArrayList<>(temp));
+            binding.rvProduct.invalidate();
         }
     }
+
 
     private void addNewCategory() {
         Category newCategory = new Category();

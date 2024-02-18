@@ -19,7 +19,15 @@ public class ProductViewModel extends ViewModel {
     private final ProductRepository repository = new ProductRepository();
     public final MutableLiveData<Product> product = new MutableLiveData<>();
     public final MutableLiveData<List<Product>> allProducts = new MutableLiveData<>();
+    MutableLiveData<Set<Product>> sortedProducts = new MutableLiveData<>();
 
+    public MutableLiveData<Set<Product>> getSortedProducts() {
+        return sortedProducts;
+    }
+
+    public void setSortedProducts(MutableLiveData<Set<Product>> sortedProducts) {
+        this.sortedProducts = sortedProducts;
+    }
 
     public MutableLiveData<Product> getProduct() {
         return product;
@@ -67,8 +75,11 @@ public class ProductViewModel extends ViewModel {
                     products.stream().sorted(Comparator.comparing(Product::getQty));
             case SORT_BY_QTY_DESCENDING ->
                     products.stream().sorted(Comparator.comparing(Product::getQty).reversed());
-            default -> setAllProductsFromDB();
+            default -> {
+                break;
+            }
         }
+        sortedProducts.setValue(products);
     }
 
     public void setAllProductsByCategory(String categoryTitle) {

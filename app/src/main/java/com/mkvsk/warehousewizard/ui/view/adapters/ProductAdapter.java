@@ -15,6 +15,7 @@ import com.mkvsk.warehousewizard.ui.view.listeners.OnProductClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ItemViewHolder> {
     private final List<Product> data = new ArrayList<>();
