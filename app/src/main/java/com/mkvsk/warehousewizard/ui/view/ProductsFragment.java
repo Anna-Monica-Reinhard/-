@@ -212,7 +212,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     @SuppressLint("NotifyDataSetChanged")
     private void addNewProduct() {
         Product newProduct = new Product();
-        String editorName = Objects.requireNonNullElse(userViewModel.getCurrentUser().getValue().fullName, "Unknown");
+        String editorName = Objects.requireNonNullElse(userViewModel.getCurrentUser().getValue().username, "Unknown");
         CustomAlertDialogBuilder.cardAddNewProduct(this.requireContext(),
                 editorName, newProduct, categoryViewModel.getAllCategories().getValue(), () -> {
                     productViewModel.insert(newProduct);
@@ -265,7 +265,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
             @Override
             public void onEdit(Product product) {
-                product.setLastEditor(Objects.requireNonNull(userViewModel.getCurrentUser().getValue()).fullName);
+                product.setLastEditor(Objects.requireNonNull(userViewModel.getCurrentUser().getValue()).username);
                 productViewModel.update(product);
                 productAdapter.notifyItemChanged(bindingAdapterPosition, product);
 

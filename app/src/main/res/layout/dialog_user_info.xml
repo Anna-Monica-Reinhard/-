@@ -37,14 +37,14 @@
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/lDialogUserInfoName"
+        android:id="@+id/lDialogUserInfoUsername"
         style="@style/myTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name">
+        android:hint="Username">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dialogUserInfoName"
+            android:id="@+id/dialogUserInfoUsername"
             android:layout_width="match_parent"
             android:layout_height="@dimen/text_input_height"
             android:background="@drawable/round_corner_edittext"
@@ -52,7 +52,7 @@
             android:maxLines="1"
             android:textAppearance="@style/myTextInputStyle"
             android:visibility="visible"
-            tools:text="Name" />
+            tools:text="Username" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -60,7 +60,6 @@
         style="@style/myTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_input_height"
-
         android:hint="Email">
 
         <com.google.android.material.textfield.TextInputEditText

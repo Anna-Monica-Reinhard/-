@@ -318,7 +318,7 @@ public final class CustomAlertDialogBuilder {
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_user_info, null, false);
         dialog.setView(dialogView);
 
-        final TextInputEditText tvName = dialogView.findViewById(R.id.dialogUserInfoName);
+        final TextInputEditText tvName = dialogView.findViewById(R.id.dialogUserInfoUsername);
         final TextInputEditText tvEmail = dialogView.findViewById(R.id.dialogUserInfoEmail);
         final TextInputEditText tvPhoneNumber = dialogView.findViewById(R.id.dialogUserInfoPhoneNumber);
         final TextInputEditText tvPassword = dialogView.findViewById(R.id.dialogUserInfoPassword);
@@ -329,10 +329,10 @@ public final class CustomAlertDialogBuilder {
 
         setEditMode(isEditMode = false, context, tvName, tvEmail, tvPhoneNumber, tvPassword);
 
-        tvName.setText(user.fullName);
-        tvEmail.setText(user.email);
-        tvPhoneNumber.setText(user.phoneNumber);
-        tvPassword.setText(user.password);
+        tvName.setText(user.getUsername());
+        tvEmail.setText(user.getEmail());
+        tvPhoneNumber.setText(user.getPhoneNumber());
+        tvPassword.setText(user.getPassword());
 
         btnEdit.setOnClickListener(v -> {
             if (!isEditMode) {
@@ -346,7 +346,7 @@ public final class CustomAlertDialogBuilder {
                         .load(R.drawable.ic_edit)
                         .into(btnEdit);
 
-                user.setFullName(tvName.getText().toString().isBlank() ? user.fullName : tvName.getText().toString());
+                user.setUsername(tvName.getText().toString().isBlank() ? user.username : tvName.getText().toString());
                 user.setPassword(tvPassword.getText().toString().isBlank() ? user.password : tvPassword.getText().toString());
                 user.setEmail(tvEmail.getText().toString().isBlank() ? user.email : tvEmail.getText().toString());
                 user.setPhoneNumber(tvPhoneNumber.getText().toString().isBlank() ? user.phoneNumber : tvPhoneNumber.getText().toString());

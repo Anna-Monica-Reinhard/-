@@ -18,7 +18,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -110,7 +109,7 @@ public class AuthAndRegisterFragment extends Fragment {
     private void clearFields() {
         binding.etLogin.setText("");
         binding.etPassword.setText("");
-        binding.etName.setText("");
+        binding.etUsername.setText("");
         binding.etEmail.setText("");
         binding.etPhoneNumber.setText("");
         binding.etCreatePassword.setText("");
@@ -237,7 +236,7 @@ public class AuthAndRegisterFragment extends Fragment {
                 checkDataFilled();
             }
         });
-        binding.etName.addTextChangedListener(new TextWatcher() {
+        binding.etUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -290,9 +289,12 @@ public class AuthAndRegisterFragment extends Fragment {
 
     private void registerUser() {
         User newUser = new User();
-        newUser.setEmail(login);
-        newUser.setPassword(password);
+        newUser.setEmail(binding.etEmail.getText().toString());
+        newUser.setPassword(binding.etPassword.getText().toString());
+        newUser.setPhoneNumber(binding.etPhoneNumber.getText().toString());
+        newUser.setUsername(binding.etUsername.getText().toString());
         userViewModel.createNewUser(newUser);
+        userViewModel.setCurrentUser(newUser);
         saveUserDataToSharedPrefs(login, password);
         NavHostFragment.findNavController(this).navigate(R.id.action_go_to_products_from_auth);
     }
@@ -315,7 +317,7 @@ public class AuthAndRegisterFragment extends Fragment {
 
         if (binding.llRegister.getVisibility() == View.VISIBLE) {
             if (binding.etEmail.getText().toString().isBlank()
-                    || binding.etName.getText().toString().isBlank()
+                    || binding.etUsername.getText().toString().isBlank()
                     || binding.etCreatePassword.getText().toString().isBlank()) {
                 binding.btnLogin.setEnabled(false);
                 binding.btnRegister.setEnabled(false);

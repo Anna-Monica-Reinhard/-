@@ -17,8 +17,8 @@ public class User {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     public long id;
-    @ColumnInfo(name = "full_name")
-    public String fullName = "";
+    @ColumnInfo(name = "username")
+    public String username = "";
     @ColumnInfo(name = "password")
     public String password = "";
     @ColumnInfo(name = "email")
@@ -30,7 +30,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", fullName='" + fullName + '\'' +
+                ", fullName='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
@@ -53,12 +53,12 @@ public class User {
         this.password = password;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
