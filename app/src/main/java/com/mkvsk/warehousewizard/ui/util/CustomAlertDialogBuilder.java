@@ -60,7 +60,7 @@ public final class CustomAlertDialogBuilder {
         final ImageButton btnDelete = dialogView.findViewById(R.id.btnDeleteProductCard);
 
         tvCategory.setText(product.getCategory());
-        tvExpMonth.setText("Expiration (month)" + product.getExpiration());
+        tvExpMonth.setText("Expiration (month): " + product.getExpiration());
         tvEditor.setText(Objects.requireNonNullElse("Editor: " + product.getLastEditor(), "Unknown"));
         tvName.setText(product.getTitle());
         tvCode.setText(product.getCode());
