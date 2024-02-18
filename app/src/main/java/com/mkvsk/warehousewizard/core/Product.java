@@ -1,12 +1,9 @@
 package com.mkvsk.warehousewizard.core;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
-import lombok.Data;
 
 @Entity(tableName = "product", indices = {@Index(value = "code", unique = true)})
 public class Product {
@@ -21,6 +18,10 @@ public class Product {
     private String code = "";
     @ColumnInfo(name = "qty")
     private long qty = 0;
+
+    @ColumnInfo(name = "expiration")
+    private int expiration = 0;
+
     @ColumnInfo(name = "image")
     private String image = "https://bit.ly/3SGyDfX";
     @ColumnInfo(name = "description")
@@ -36,6 +37,7 @@ public class Product {
     public Product(long id, String category, String title, String code, long qty, String image, String description, String lastEditor, double price) {
         this.id = id;
         this.category = category;
+        this.expiration = expiration;
         this.title = title;
         this.code = code;
         this.qty = qty;
@@ -43,6 +45,14 @@ public class Product {
         this.description = description;
         this.lastEditor = lastEditor;
         this.price = price;
+    }
+
+    public int getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(int expiration) {
+        this.expiration = expiration;
     }
 
     @Override
@@ -53,10 +63,11 @@ public class Product {
                 ", title='" + title + '\'' +
                 ", code='" + code + '\'' +
                 ", qty=" + qty +
+                ", expiration=" + expiration +
                 ", image='" + image + '\'' +
                 ", description='" + description + '\'' +
                 ", lastEditor='" + lastEditor + '\'' +
-                ", price='" + price + '\'' +
+                ", price=" + price +
                 '}';
     }
 

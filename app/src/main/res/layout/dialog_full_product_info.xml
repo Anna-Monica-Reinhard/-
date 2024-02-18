@@ -89,6 +89,18 @@
             tools:text="category" />
 
         <EditText
+            android:id="@+id/tvProductExpMonth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_secondary_color"
+            android:inputType="textCapCharacters"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:textColor="@color/text_primary_color"
+            android:textSize="18sp"
+            tools:text="Exp" />
+
+        <EditText
             android:id="@+id/tvProductNameFullInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

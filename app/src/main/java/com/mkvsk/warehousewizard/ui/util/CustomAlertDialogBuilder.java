@@ -45,6 +45,7 @@ public final class CustomAlertDialogBuilder {
 
         final TextView tvEditor = dialogView.findViewById(R.id.tvProductEditorFullInfo);
         final TextView tvCategory = dialogView.findViewById(R.id.tvProductCategoryFullInfo);
+        final TextView tvExpMonth = dialogView.findViewById(R.id.tvProductExpMonth);
         final EditText tvName = dialogView.findViewById(R.id.tvProductNameFullInfo);
         final EditText tvCode = dialogView.findViewById(R.id.tvProductCode);
         final EditText tvDescription = dialogView.findViewById(R.id.tvDescription);
@@ -59,6 +60,7 @@ public final class CustomAlertDialogBuilder {
         final ImageButton btnDelete = dialogView.findViewById(R.id.btnDeleteProductCard);
 
         tvCategory.setText(product.getCategory());
+        tvExpMonth.setText("Expiration (month)" + product.getExpiration());
         tvEditor.setText(Objects.requireNonNullElse("Editor: " + product.getLastEditor(), "Unknown"));
         tvName.setText(product.getTitle());
         tvCode.setText(product.getCode());
@@ -172,6 +174,7 @@ public final class CustomAlertDialogBuilder {
         final MaterialAutoCompleteTextView ddCategory = dialogView.findViewById(R.id.dd_list_product_category);
         final TextInputEditText tvName = dialogView.findViewById(R.id.et_add_product_name);
         final TextInputEditText tvCode = dialogView.findViewById(R.id.et_add_product_code);
+        final TextInputEditText tvExpirationMonth = dialogView.findViewById(R.id.et_add_product_exp);
         final TextInputEditText tvPrice = dialogView.findViewById(R.id.et_add_product_price);
         final TextInputEditText tvQty = dialogView.findViewById(R.id.et_add_product_qty);
         final TextInputEditText tvImageLink = dialogView.findViewById(R.id.et_add_product_image);
@@ -208,7 +211,8 @@ public final class CustomAlertDialogBuilder {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                btnSave.setEnabled(tvName.getText() != null && tvCode.getText() != null && ddCategory.getText() != null);
+                btnSave.setEnabled(tvName.getText() != null && tvCode.getText() != null
+                        && ddCategory.getText() != null && tvExpirationMonth.getText() != null);
             }
         });
 
@@ -253,6 +257,7 @@ public final class CustomAlertDialogBuilder {
         btnSave.setOnClickListener(v -> {
             newProduct.setTitle(Objects.requireNonNull(tvName.getText()).toString());
             newProduct.setCategory(ddCategory.getText().toString());
+            newProduct.setExpiration(Integer.getInteger(tvExpirationMonth.getText().toString()));
             newProduct.setCode(Objects.requireNonNull(tvCode.getText()).toString());
             newProduct.setPrice(tvPrice.getText().toString().isBlank() ? 0.0D : Double.parseDouble(tvPrice.getText().toString()));
             newProduct.setQty(tvQty.getText().toString().isBlank() ? 0L : Long.parseLong(tvQty.getText().toString()));

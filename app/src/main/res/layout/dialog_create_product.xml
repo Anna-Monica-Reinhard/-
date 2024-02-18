@@ -93,23 +93,54 @@
             android:textAppearance="@style/myTextInputStyle" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_layout_add_product_price"
-        style="@style/myTextInputLayout"
+    <LinearLayout
+        android:id="@+id/llCodePriceExp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/text_input_height"
-        android:hint="Price">
+        android:weightSum="2"
+        android:divider="@drawable/small_wide_divider"
+        android:showDividers="middle"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_add_product_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_edittext"
-            android:ems="10"
-            android:inputType="numberDecimal|numberSigned"
-            android:maxLength="20"
-            android:textAppearance="@style/myTextInputStyle" />
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_layout_add_product_exp"
+            style="@style/myTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/text_input_height"
+            android:layout_weight="1"
+
+            android:hint="Expiration month">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_add_product_exp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_corner_edittext"
+                android:inputType="numberDecimal"
+                android:textAppearance="@style/myTextInputStyle" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_layout_add_product_price"
+            style="@style/myTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/text_input_height"
+            android:hint="Price">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_add_product_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_corner_edittext"
+                android:ems="10"
+                android:inputType="numberDecimal|numberSigned"
+                android:maxLength="20"
+                android:textAppearance="@style/myTextInputStyle" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
 
 
     <com.google.android.material.textfield.TextInputLayout
