@@ -9,8 +9,10 @@ import com.mkvsk.warehousewizard.ui.util.SortType;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProductViewModel extends ViewModel {
@@ -53,16 +55,19 @@ public class ProductViewModel extends ViewModel {
     }
 
     public void sortData(SortType sortType) {
-        List<Product> products = getAllProducts().getValue();
-        if (products != null) {
-            switch (sortType) {
-                case SORT_BY_ALPHABET_AZ -> products.sort(Comparator.comparing(Product::getTitle));
-                case SORT_BY_ALPHABET_ZA -> products.sort(Comparator.comparing(Product::getTitle).reversed());
-                case SORT_BY_CATEGORY_AZ -> products.sort(Comparator.comparing(Product::getCategory));
-                case SORT_BY_QTY_ASCENDING -> products.sort(Comparator.comparing(Product::getQty));
-                case SORT_BY_QTY_DESCENDING -> products.sort(Comparator.comparing(Product::getQty).reversed());
-                default -> setAllProductsFromDB();
-            }
+        Set<Product> products = new HashSet<>(Objects.requireNonNull(getAllProducts().getValue()));
+        switch (sortType) {
+            case SORT_BY_ALPHABET_AZ ->
+                    products.stream().sorted(Comparator.comparing(Product::getTitle));
+            case SORT_BY_ALPHABET_ZA ->
+                    products.stream().sorted(Comparator.comparing(Product::getTitle).reversed());
+            case SORT_BY_CATEGORY_AZ ->
+                    products.stream().sorted(Comparator.comparing(Product::getCategory));
+            case SORT_BY_QTY_ASCENDING ->
+                    products.stream().sorted(Comparator.comparing(Product::getQty));
+            case SORT_BY_QTY_DESCENDING ->
+                    products.stream().sorted(Comparator.comparing(Product::getQty).reversed());
+            default -> setAllProductsFromDB();
         }
     }
 
