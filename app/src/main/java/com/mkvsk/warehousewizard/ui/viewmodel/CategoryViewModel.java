@@ -57,14 +57,17 @@ public class CategoryViewModel extends ViewModel {
 
     public void insert(Category category) {
         repository.insert(category);
+        setAllCategoriesFromDB();
     }
 
     public void update(Category category) {
         repository.update(category);
+        setAllCategoriesFromDB();
     }
 
     public void delete(Category value) {
         repository.delete(value);
+        setAllCategoriesFromDB();
     }
 
 }

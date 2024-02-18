@@ -46,7 +46,10 @@ import com.mkvsk.warehousewizard.ui.viewmodel.ProductViewModel;
 import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProductsFragment extends Fragment implements OnCategoryClickListener, OnProductClickListener {
@@ -55,11 +58,11 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     private boolean isFabGroupVisible = false;
     private final CategoryAdapter categoryAdapter = new CategoryAdapter();
     private RecyclerView rvCategory;
-    private ArrayList<Category> allCategories = new ArrayList<>();
+    private Set<Category> allCategories = new HashSet<>();
     private final ProductAdapter productAdapter = new ProductAdapter();
     private RecyclerView rvProduct;
-    private ArrayList<Product> productsByCategory;
-    private ArrayList<Product> allProducts = new ArrayList<>();
+    private Set<Product> productsByCategory;
+    private Set<Product> allProducts = new HashSet<>();
     private Parcelable mListState = null;
     private RecyclerView mRecyclerView = null;
     private Bundle mBundleRecyclerViewState = null;
@@ -168,7 +171,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
             @Override
             public void onTextChanged(CharSequence queryText, int p1, int p2, int p3) {
                 if (!binding.etSearch.getText().toString().trim().isEmpty() && binding.etSearch.getText().toString().length() > 1) {
-                    findProducts(binding.etSearch.getText().toString());
+                    findProducts(queryText.toString());
                 } else {
                     productAdapter.setData((ArrayList<Product>) productViewModel.getAllProducts().getValue());
                 }
@@ -190,14 +193,14 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     }
 
-    private void findProducts(String s) {
-        s.trim();
-        allProducts.addAll(productViewModel.getAllProducts().getValue());
-        ArrayList<Product> temp = (ArrayList<Product>) allProducts.stream().filter(it
-                -> it.getTitle().contains(s)).collect(Collectors.toList());
+    private void findProducts(String queryText) {
+        queryText.trim();
+        allProducts.addAll(Objects.requireNonNull(productViewModel.getAllProducts().getValue()));
+        Set<Product> temp = (Set<Product>) allProducts.stream().filter(it
+                -> it.getTitle().contains(queryText)).collect(Collectors.toList());
 
         if (!temp.isEmpty()) {
-            productAdapter.setData(temp);
+            productAdapter.setData((List<Product>) temp);
         }
     }
 
@@ -205,6 +208,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         Category newCategory = new Category();
         CustomAlertDialogBuilder.cardAddNewCategory(this.requireContext(), newCategory, () -> {
             categoryViewModel.insert(newCategory);
+            categoryAdapter.setData(categoryViewModel.getAllCategories().getValue());
             Toast.makeText(requireContext(), "Category added", Toast.LENGTH_SHORT).show();
         }).show();
     }
