@@ -84,6 +84,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void initObservers() {
+        loadData();
         productViewModel.getAllProducts().observe(getViewLifecycleOwner(), this::filterData);
         userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> user = currentUser);
     }
@@ -115,7 +116,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void drawData() {
-        binding.textSumTotal.setText(String.format("Общая сумма товаров на складе: %s р", Double.parseDouble(decimalFormat.format(products.stream().mapToDouble(Product::getPrice).sum()))));
+        binding.textSumTotal.setText(String.format("Total cost of goods in stock: %s BYN", decimalFormat.format(products.stream().mapToDouble(Product::getPrice).sum())));
         fillChart();
     }
 
@@ -198,7 +199,7 @@ public class DashboardFragment extends Fragment {
                 String categoryTitle = ((PieEntry) e).getLabel();
                 Pair<Long, Double> pair = filteredData.get(categoryTitle);
                 if (pair != null) {
-                    binding.textCategoryInfo.setText(String.format("%s:\nКоличество: %s\nСумма: %s р", categoryTitle, pair.getFirst(), pair.getSecond()));
+                    binding.textCategoryInfo.setText(String.format("Category: %s\nQuantity: %s\nTotal sum: %s BYN", categoryTitle, pair.getFirst(), pair.getSecond()));
                 }
             }
 

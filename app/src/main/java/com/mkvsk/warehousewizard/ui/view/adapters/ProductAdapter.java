@@ -1,6 +1,7 @@
 package com.mkvsk.warehousewizard.ui.view.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.mkvsk.warehousewizard.core.Product;
+import com.mkvsk.warehousewizard.databinding.RvCategoryItemBinding;
 import com.mkvsk.warehousewizard.databinding.RvProductItemBinding;
 import com.mkvsk.warehousewizard.ui.util.Utils;
 import com.mkvsk.warehousewizard.ui.view.listeners.OnProductClickListener;
@@ -18,15 +20,13 @@ import java.util.List;
 import java.util.Set;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ItemViewHolder> {
-    private final List<Product> data = new ArrayList<>();
+    private List<Product> data = new ArrayList<>();
     private OnProductClickListener listener;
-    private RvProductItemBinding binding;
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = RvProductItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ItemViewHolder(binding);
+        return new ItemViewHolder(RvProductItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -46,16 +46,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ItemView
     @SuppressLint("NotifyDataSetChanged")
     public void setData(List<Product> data) {
         if (data != null) {
-            this.data.clear();
-            notifyDataSetChanged();
-            this.data.addAll(data);
+            this.data = data;
             notifyDataSetChanged();
         }
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        private final RvProductItemBinding binding;
+
         ItemViewHolder(RvProductItemBinding binding) {
             super(binding.getRoot());
+            this.binding = binding;
         }
 
         public void bind(Product productItem) {

@@ -1,5 +1,7 @@
 package com.mkvsk.warehousewizard.ui.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -19,13 +21,15 @@ public class ProductViewModel extends ViewModel {
     private final ProductRepository repository = new ProductRepository();
     public final MutableLiveData<Product> product = new MutableLiveData<>();
     public final MutableLiveData<List<Product>> allProducts = new MutableLiveData<>();
-    MutableLiveData<Set<Product>> sortedProducts = new MutableLiveData<>();
+    MutableLiveData<List<Product>> sortedProducts = new MutableLiveData<>();
 
-    public MutableLiveData<Set<Product>> getSortedProducts() {
+    private final String TAG = "SORTED";
+
+    public MutableLiveData<List<Product>> getSortedProducts() {
         return sortedProducts;
     }
 
-    public void setSortedProducts(MutableLiveData<Set<Product>> sortedProducts) {
+    public void setSortedProducts(MutableLiveData<List<Product>> sortedProducts) {
         this.sortedProducts = sortedProducts;
     }
 
@@ -63,22 +67,24 @@ public class ProductViewModel extends ViewModel {
     }
 
     public void sortData(SortType sortType) {
-        Set<Product> products = new HashSet<>(Objects.requireNonNull(getAllProducts().getValue()));
+        List<Product> products = new ArrayList<>(Objects.requireNonNull(getAllProducts().getValue()));
         switch (sortType) {
             case SORT_BY_ALPHABET_AZ ->
-                    products.stream().sorted(Comparator.comparing(Product::getTitle));
+                    products =  products.stream().sorted(Comparator.comparing(Product::getTitle)).collect(Collectors.toList());
             case SORT_BY_ALPHABET_ZA ->
-                    products.stream().sorted(Comparator.comparing(Product::getTitle).reversed());
+                    products = products.stream().sorted(Comparator.comparing(Product::getTitle).reversed()).collect(Collectors.toList());
             case SORT_BY_CATEGORY_AZ ->
-                    products.stream().sorted(Comparator.comparing(Product::getCategory));
+                    products = products.stream().sorted(Comparator.comparing(Product::getCategory)).collect(Collectors.toList());
             case SORT_BY_QTY_ASCENDING ->
-                    products.stream().sorted(Comparator.comparing(Product::getQty));
+                    products = products.stream().sorted(Comparator.comparing(Product::getQty)).collect(Collectors.toList());
             case SORT_BY_QTY_DESCENDING ->
-                    products.stream().sorted(Comparator.comparing(Product::getQty).reversed());
+                    products = products.stream().sorted(Comparator.comparing(Product::getQty).reversed()).collect(Collectors.toList());
             default -> {
-                break;
             }
         }
+        Log.d(TAG, "===============================================================");
+        Log.d(TAG, "sortData: " + products.stream().map(Product::getTitle).collect(Collectors.toList()));
+        Log.d(TAG, "===============================================================");
         sortedProducts.setValue(products);
     }
 

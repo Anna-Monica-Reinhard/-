@@ -20,14 +20,13 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemViewHolder> {
     private List<String> data = new ArrayList<String>();
     private OnCategoryClickListener listener;
-    private int selectedTag = 0;
+    private int selectedTag = -1;
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RvCategoryItemBinding binding = RvCategoryItemBinding
-                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ItemViewHolder(binding);
+        return new ItemViewHolder(RvCategoryItemBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -58,7 +57,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemVi
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        private RvCategoryItemBinding binding;
+        private final RvCategoryItemBinding binding;
 
         ItemViewHolder(RvCategoryItemBinding binding) {
             super(binding.getRoot());

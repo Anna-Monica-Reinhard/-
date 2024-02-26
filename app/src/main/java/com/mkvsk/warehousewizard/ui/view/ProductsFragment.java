@@ -47,7 +47,6 @@ import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -57,16 +56,11 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
     private FragmentProductsBinding binding;
     private boolean isFabGroupVisible = false;
     private final CategoryAdapter categoryAdapter = new CategoryAdapter();
-    private RecyclerView rvCategory;
-    private Set<Category> allCategories = new HashSet<>();
     private final ProductAdapter productAdapter = new ProductAdapter();
-    private RecyclerView rvProduct;
-    private Set<Product> productsByCategory;
-    private Set<Product> allProducts = new HashSet<>();
+    private final Set<Product> allProducts = new HashSet<>();
     private Parcelable mListState = null;
     private RecyclerView mRecyclerView = null;
     private Bundle mBundleRecyclerViewState = null;
-
     private final static String KEY_RECYCLER_STATE = "recycler_state";
     private ProductViewModel productViewModel;
     private CategoryViewModel categoryViewModel;
@@ -90,9 +84,9 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         super.onViewCreated(view, savedInstanceState);
 //        TODO loader on
         setupMenu();
+        setupAdapters();
         initObservers();
         getData();
-        setupAdapters();
         initViews();
         initListeners();
         handleBackPressed();
@@ -133,7 +127,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                 } else if (menuItem.getItemId() == R.id.miSortByCategory) {
                     productViewModel.sortData(SortType.SORT_BY_CATEGORY_AZ);
                 }
-                productAdapter.setData((List<Product>) productViewModel.getSortedProducts().getValue());
+                productAdapter.setData(productViewModel.getSortedProducts().getValue());
                 Utils.hideKeyboard(requireActivity());
                 return false;
             }
@@ -142,11 +136,11 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private void setupAdapters() {
-        rvCategory = binding.rvCategory;
+        RecyclerView rvCategory = binding.rvCategory;
         categoryAdapter.setClickListener(this);
         rvCategory.setAdapter(categoryAdapter);
 
-        rvProduct = binding.rvProduct;
+        RecyclerView rvProduct = binding.rvProduct;
         mRecyclerView = rvProduct;
         productAdapter.setClickListener(this);
         rvProduct.setAdapter(productAdapter);
@@ -263,10 +257,6 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
             categoryViewModel.setCategory(categoryTitle);
             productViewModel.setAllProductsByCategory(categoryTitle);
         }
-
-//        if (selectedItem > 4) {
-//            binding.rvCategory.smoothScrollToPosition(selectedItem);
-//        }
     }
 
     @Override
