@@ -53,6 +53,16 @@ public class ProductViewModel extends ViewModel {
         setAllProducts(repository.getAllProducts());
     }
 
+    public List<Product> getAll() {
+        return repository.getAllProducts();
+    }
+
+    public void clearAll() {
+        for (Product product : repository.getAllProducts()) {
+            repository.delete(product);
+        }
+    }
+
     public void insert(Product product) {
         repository.insert(product);
         setAllProductsFromDB();
@@ -64,6 +74,7 @@ public class ProductViewModel extends ViewModel {
 
     public void delete(Product product) {
         repository.delete(product);
+        setAllProductsFromDB();
     }
 
     public void sortData(SortType sortType) {
@@ -90,11 +101,22 @@ public class ProductViewModel extends ViewModel {
 
     public void setAllProductsByCategory(String categoryTitle) {
         setAllProductsFromDB();
+        if (categoryTitle.equals("все")) {
+            return;
+        }
         List<Product> listProduct = new ArrayList<>(Objects.requireNonNull(allProducts.getValue()));
         List<Product> filteredList = listProduct.stream().filter(product -> product.getCategory().equals(categoryTitle)).collect(Collectors.toList());
         setAllProducts(filteredList);
     }
 
+    private boolean isDataLoaded = false;
+    public void setDataLoaded(boolean b) {
+        isDataLoaded = b;
+    }
+
+    public boolean isDataLoaded() {
+        return isDataLoaded;
+    }
 }
 
 

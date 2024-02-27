@@ -4,27 +4,27 @@
 
     <item
         android:id="@+id/miSortByAlphabetAZ"
-        android:title="Sort by alphabet A-Z"
+        android:title="В алфавитном А-Я"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/miSortByAlphabetZA"
-        android:title="Sort by alphabet Z-A"
+        android:title="В алфавитном Я-А"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/miSortByQtyDesc"
-        android:title="Sort by quantity descending"
+        android:title="По убыванию количества"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/miSortByQtyAsc"
-        android:title="Sort by quantity ascending"
+        android:title="По возрастанию количества"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/miSortByCategory"
-        android:title="Sort by category"
+        android:title="По категории"
         app:showAsAction="never" />
 
 </menu>

@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_input_height"
         android:background="@drawable/round_corner_edittext"
-        android:hint="Category"
+        android:hint="Категория"
         app:boxBackgroundColor="@color/et_bgr_color"
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -65,7 +65,7 @@
         style="@style/myTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_input_height"
-        android:hint="Product name">
+        android:hint="Название продукта">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_add_product_name"
@@ -74,7 +74,7 @@
             android:background="@drawable/round_corner_edittext"
             android:inputType="textPersonName"
             android:textAppearance="@style/myTextInputStyle"
-            tools:text="product name" />
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -82,14 +82,14 @@
         style="@style/myTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_input_height"
-        android:hint="Code">
+        android:hint="Код продукта">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_add_product_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/round_corner_edittext"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:textAppearance="@style/myTextInputStyle" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,8 +108,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/text_input_height"
             android:layout_weight="1"
-
-            android:hint="Expiration month">
+            android:hint="Срок годности">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_add_product_exp"
@@ -126,7 +125,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="@dimen/text_input_height"
-            android:hint="Price">
+            android:hint="Цена">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_add_product_price"
@@ -148,7 +147,7 @@
         style="@style/myTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_input_height"
-        android:hint="Quantity">
+        android:hint="Количество">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_add_product_qty"
@@ -170,7 +169,7 @@
         android:layout_marginEnd="10dp"
         android:paddingBottom="4dp"
         android:textAppearance="@style/additionalTextStyle"
-        tools:text="available in online shop" />
+        tools:text="доступно для покупки" />
 
     <LinearLayout
         android:id="@+id/llImage"
@@ -187,7 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:hint="Image link">
+            android:hint="Ссылка на изображение">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_add_product_image"
@@ -233,7 +232,7 @@
         style="@style/myTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_input_height"
-        android:hint="Description">
+        android:hint="Описание">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_add_product_description"
@@ -254,7 +253,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/selector_button"
         android:enabled="false"
-        android:text="save"
+        android:text="Сохранить"
         android:textColor="@color/text_on_btn_color" />
 
 </LinearLayout>

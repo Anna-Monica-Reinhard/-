@@ -49,7 +49,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/text_primary_color"
-        android:textSize="13sp"
+        android:textSize="9sp"
         tools:text="Product code: 388383835555555555555555" />
 
     <TextView

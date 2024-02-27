@@ -70,4 +70,10 @@ public class CategoryViewModel extends ViewModel {
         setAllCategoriesFromDB();
     }
 
+    public void clearAll() {
+        for (Category category : repository.getAllCategories()) {
+            repository.delete(category);
+        }
+
+    }
 }

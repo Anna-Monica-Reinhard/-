@@ -20,7 +20,7 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ItemViewHolder> {
     private List<String> data = new ArrayList<String>();
     private OnCategoryClickListener listener;
-    private int selectedTag = -1;
+    private int selectedTag = 0;
 
     @NonNull
     @Override

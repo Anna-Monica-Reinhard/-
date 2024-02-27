@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import kotlin.Pair;
 
@@ -107,16 +108,17 @@ public class DashboardFragment extends Fragment {
         for (String k : categoryMap.keySet()) {
             List<Product> list = categoryMap.get(k);
             if (list != null) {
-                long qty = list.stream().mapToLong(Product::getQty).sum();
-                double price = Double.parseDouble(decimalFormat.format(list.stream().mapToDouble(Product::getPrice).sum()));
-                filteredData.put(k, new Pair<>(qty, price));
+                long qtyTotal = list.stream().mapToLong(Product::getQty).sum();
+                double priceTotal = list.stream().mapToDouble(product -> product.getQty() * product.getPrice()).sum();
+                String format = decimalFormat.format(priceTotal);
+                filteredData.put(k, new Pair<>(qtyTotal, Double.parseDouble(format.replace(",", "."))));
             }
         }
         drawData();
     }
 
     private void drawData() {
-        binding.textSumTotal.setText(String.format("Total cost of goods in stock: %s BYN", decimalFormat.format(products.stream().mapToDouble(Product::getPrice).sum())));
+        binding.textSumTotal.setText(String.format("Общая стоимость товаров на складе: %s BYN", decimalFormat.format(products.stream().mapToDouble(product -> product.getQty() * product.getPrice()).sum())));
         fillChart();
     }
 
@@ -199,7 +201,7 @@ public class DashboardFragment extends Fragment {
                 String categoryTitle = ((PieEntry) e).getLabel();
                 Pair<Long, Double> pair = filteredData.get(categoryTitle);
                 if (pair != null) {
-                    binding.textCategoryInfo.setText(String.format("Category: %s\nQuantity: %s\nTotal sum: %s BYN", categoryTitle, pair.getFirst(), pair.getSecond()));
+                    binding.textCategoryInfo.setText(String.format("Категория: %s\nКоличество: %s\nОбщая стоимость: %s BYN", categoryTitle, pair.getFirst(), pair.getSecond()));
                 }
             }
 

@@ -1,21 +1,24 @@
 <resources>
-    <string name="app_name">WarehouseWizard</string>
+    <string name="app_name" translatable="false">WarehouseWizard</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="phone_number">phone number</string>
+    <string name="hint_phone_number">Phone number</string>
     <string name="don_t_have_any_account_signup">Don\'t have any account? <b><u>Sign Up</u></b></string>
     <string name="have_any_account_sign_in">Already have any account? <b><u>Sign In</u></b></string>
-    <string name="btn_login">login</string>
-    <string name="btn_confirm_new_account">confirm</string>
     <string name="login_error_user_not_found">User not found</string>
     <string name="login_error_password_incorrect">Incorrect password</string>
-    <string name="available_in_shop">available in online shop</string>
-    <string name="unavailable_in_shop">unavailable in online shop</string>
+    <string name="available_in_shop">доступно для покупки</string>
+    <string name="unavailable_in_shop">отсутствует на складе</string>
     <string name="available">Available:</string>
     <string name="unavailable">Out of stock</string>
     <string name="last_editor_format">Editor: %s</string>
+    <string name="btn_login_text">login</string>
+    <string name="btn_continue_text">continue</string>
+    <string name="label_login">Login</string>
+    <string name="hint_email_or_phone_number">Email or phone number</string>
+    <string name="hint_password_base">Password</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_email" translatable="false">Email</string>
+    <string name="hint_password_error"><![CDATA[Length 6-20, !@#$%^&* allowed]]></string>
 
 </resources>

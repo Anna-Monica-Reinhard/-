@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mkvsk.warehousewizard.R;
 import com.mkvsk.warehousewizard.core.Category;
 import com.mkvsk.warehousewizard.core.Product;
+import com.mkvsk.warehousewizard.core.User;
 import com.mkvsk.warehousewizard.databinding.FragmentProductsBinding;
 import com.mkvsk.warehousewizard.ui.util.CustomAlertDialogBuilder;
 import com.mkvsk.warehousewizard.ui.util.SortType;
@@ -47,6 +49,7 @@ import com.mkvsk.warehousewizard.ui.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -85,11 +88,218 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 //        TODO loader on
         setupMenu();
         setupAdapters();
+        loadData();
         initObservers();
         getData();
         initViews();
         initListeners();
         handleBackPressed();
+    }
+
+    private void loadData() {
+        if (!productViewModel.isDataLoaded()) {
+            String TAG = "LOAD_DATA";
+            User user = userViewModel.login("anna");
+            if (user == null) {
+                userViewModel.createNewUser(new User(5555, "anna", "123123", "anna@gmail.com", "+375291111111"));
+                Log.d(TAG, "loadData: user added");
+            }
+
+            categoryViewModel.clearAll();
+            Log.d(TAG, "loadData: categories cleared");
+            List<Category> categories = new ArrayList<>();
+            categories.add(new Category(1, "все"));
+            categories.add(new Category(2, "тени для бровей"));
+            categories.add(new Category(3, "маски"));
+            categories.add(new Category(4, "парфюмерия"));
+//            categories.add(new Category(5, "шампунь"));
+            for (Category category : categories) {
+                categoryViewModel.insert(category);
+            }
+            Log.d(TAG, "loadData: categories added");
+
+            productViewModel.clearAll();
+            Log.d(TAG, "loadData: products cleared");
+            List<Product> products = new ArrayList<>();
+            //тени для бровей
+            products.add(
+                    new Product(
+                            1,
+                            "тени для бровей",
+                            "KIKI brow",
+                            "19000177754",
+                            13,
+                            36,
+                            "https://pcdn.goldapple.ru/p/p/19000177754/web/696d67416464318db8eb010ccb4eafullhd.webp",
+                            "страна происхождения: США",
+                            "anna",
+                            7.13)
+            );
+            products.add(
+                    new Product(
+                            2,
+                            "тени для бровей",
+                            "ANASTASIA BEVERLY HILLS brow powder duo",
+                            "24900800005",
+                            6,
+                            36,
+                            "https://pcdn.goldapple.ru/p/p/24900800005/web/696d674d61696e8dbba9e2fde98fdfullhd.webp",
+                            "Китай (Китайская Народная Республика)",
+                            "anna",
+                            104.3)
+            );
+            products.add(
+                    new Product(
+                            3,
+                            "тени для бровей",
+                            "ARTDECO eye brow powder",
+                            "17344800001",
+                            13,
+                            24,
+                            "https://pcdn.goldapple.ru/p/p/17344800001/web/696d674d61696e8dbebf31c8d43eafullhd.webp",
+                            "Франция",
+                            "anna",
+                            20.51)
+            );
+            products.add(
+                    new Product(
+                            4,
+                            "тени для бровей",
+                            "LIMONI еyebrow shadow",
+                            "19000007658",
+                            5,
+                            24,
+                            "https://pcdn.goldapple.ru/p/p/19000007658/web/696d674d61696e8dbf19f1826728efullhd.webp",
+                            "Италия",
+                            "anna",
+                            12.63)
+            );
+            products.add(
+                    new Product(
+                            5,
+                            "тени для бровей",
+                            "BELOR DESIGN color brow",
+                            "19000022449",
+                            1,
+                            24,
+                            "",
+                            "Беларусь",
+                            "anna",
+                            14.77)
+            );
+            // маски
+            products.add(
+                    new Product(
+                            6,
+                            "маски",
+                            "ORJENA natural moisture mask sheet - black bean",
+                            "19000035571",
+                            31,
+                            24,
+                            "https://pcdn.goldapple.ru/p/p/19000035571/web/696d674d61696e8dad7fe8ff9a212fullhd.webp",
+                            "Республика Корея\n",
+                            "anna",
+                            3.26)
+            );
+            products.add(
+                    new Product(
+                            7,
+                            "маски",
+                            "URIID neroli garden",
+                            "19000196292",
+                            5,
+                            20,
+                            "https://pcdn.goldapple.ru/p/p/19000196292/web/696d674d61696e8dc331911bfcc40fullhd.webp",
+                            "Республика Корея",
+                            "anna",
+                            93.61)
+            );
+            products.add(
+                    new Product(
+                            8,
+                            "маски",
+                            "COSWORKER elasticity & lifting moisture mask pack",
+                            "19760320732",
+                            21,
+                            18,
+                            "https://pcdn.goldapple.ru/p/p/19760320732/web/696d674d61696e8dad7b4379bbe8ffullhd.webp",
+                            "Республика Корея",
+                            "anna",
+                            0)
+            );
+            //парфюмерия
+            products.add(
+                    new Product(
+                            9,
+                            "парфюмерия",
+                            "BASTILLE rayon vert 50 мл",
+                            "19000125773",
+                            7,
+                            0,
+                            "https://pcdn.goldapple.ru/p/p/19000125773/web/696d674d61696e8dc32bc4d4840edtablet.webp",
+                            "Франция",
+                            "anna",
+                            229.23)
+            );
+            products.add(
+                    new Product(
+                            10,
+                            "парфюмерия",
+                            "BASTILLE rayon vert 100 мл",
+                            "19000150181",
+                            4,
+                            60,
+                            "https://pcdn.goldapple.ru/p/p/19000150181/web/696d674d61696e8dc32bc8226105btablet.webp",
+                            "Франция",
+                            "anna",
+                            405.47)
+            );
+            products.add(
+                    new Product(
+                            11,
+                            "парфюмерия",
+                            "PACO RABANNE 1 million elixir 100 мл",
+                            "19000119732",
+                            7,
+                            72,
+                            "https://pcdn.goldapple.ru/p/p/19000119732/web/696d674d61696e8dc32bc2772f2b8tablet.webp",
+                            "Россия",
+                            "anna",
+                            355.46)
+            );
+            products.add(
+                    new Product(
+                            12,
+                            "парфюмерия",
+                            "STATE OF MIND creative inspiration",
+                            "83670100005",
+                            21,
+                            72,
+                            "https://pcdn.goldapple.ru/p/p/83670100005/web/696d674d61696e8dc32b9f4205ca6tablet.webp",
+                            "Франция",
+                            "anna",
+                            583.65)
+            );
+
+//            products.add(
+//                    new Product(
+//                            13,
+//                            "шампунь",
+//                            "KLORANE a la grenade",
+//                            "123456789",
+//                            14,
+//                            36,
+//                            "https://pcdn.goldapple.ru/p/p/19000019753/web/696d674d61696e8dad7e70c02f1edfullhd.webp",
+//                            "Этот шампунь разработан с целью минимизации рисков возникновения аллергических реакций",
+//                            "iba",
+//                            26.89)
+//            );
+            for (Product product : products) {
+                productViewModel.insert(product);
+            }
+            Log.d(TAG, "loadData: products added");
+            productViewModel.setDataLoaded(true);
+        }
     }
 
     private void initObservers() {
@@ -190,17 +400,22 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
 
     @SuppressLint("NotifyDataSetChanged")
     private void findProducts(String queryText) {
-        allProducts.addAll(Objects.requireNonNull(productViewModel.getAllProducts().getValue()));
-        Set<Product> temp = allProducts.stream()
-                .filter(it -> it.getTitle().contains(queryText))
-                .collect(Collectors.toSet());
+        List<Product> collect = productViewModel.getAllProducts().getValue().stream().filter(product -> product.getTitle().toLowerCase().contains(queryText.toLowerCase())).collect(Collectors.toList());
 
-        if (temp.isEmpty()) {
-            productAdapter.setData(productViewModel.getAllProducts().getValue());
-        } else {
-            productAdapter.setData(new ArrayList<>(temp));
-            binding.rvProduct.invalidate();
-        }
+//        allProducts.addAll(Objects.requireNonNull(productViewModel.getAllProducts().getValue()));
+//        Set<Product> temp = allProducts.stream()
+//                .filter(it -> it.getTitle().contains(queryText))
+//                .collect(Collectors.toSet());
+
+        productAdapter.setData(collect);
+        binding.rvProduct.invalidate();
+
+//        if (temp.isEmpty()) {
+//            productAdapter.setData(productViewModel.getAllProducts().getValue());
+//        } else {
+//            productAdapter.setData(new ArrayList<>(temp));
+//            binding.rvProduct.invalidate();
+//        }
     }
 
 
@@ -209,7 +424,8 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         CustomAlertDialogBuilder.cardAddNewCategory(this.requireContext(), newCategory, () -> {
             categoryViewModel.insert(newCategory);
             categoryAdapter.setData(categoryViewModel.getAllCategories().getValue());
-            Toast.makeText(requireContext(), "Category added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Категория добавлена", Toast.LENGTH_SHORT).show();
+            binding.fabAdd.performClick();
         }).show();
     }
 
@@ -221,6 +437,7 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
                 editorName, newProduct, categoryViewModel.getAllCategories().getValue(), () -> {
                     productViewModel.insert(newProduct);
                     productAdapter.setData(productViewModel.getAllProducts().getValue());
+                    binding.fabAdd.callOnClick();
                 }).show();
     }
 
@@ -253,10 +470,13 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
         categoryAdapter.setSelected(selectedItem);
         categoryAdapter.notifyItemChanged(previousItem);
         categoryAdapter.notifyItemChanged(selectedItem);
-        if (!categoryTitle.equalsIgnoreCase("all")) {
-            categoryViewModel.setCategory(categoryTitle);
-            productViewModel.setAllProductsByCategory(categoryTitle);
-        }
+        productViewModel.setAllProductsByCategory(categoryTitle);
+//        if (!categoryTitle.equalsIgnoreCase("все")) {
+//            categoryViewModel.setCategory(categoryTitle);
+//            productViewModel.setAllProductsByCategory(categoryTitle);
+//        } else {
+//            productViewModel.setAllProductsByCategory("все");
+//        }
     }
 
     @Override
@@ -274,7 +494,8 @@ public class ProductsFragment extends Fragment implements OnCategoryClickListene
             @Override
             public void onDelete(Product product) {
                 productViewModel.delete(product);
-                productAdapter.notifyItemRemoved(bindingAdapterPosition);
+//                productAdapter.notifyItemRemoved(bindingAdapterPosition);
+                productAdapter.notifyDataSetChanged();
             }
 
             @Override

@@ -56,6 +56,7 @@ public class AuthAndRegisterFragment extends Fragment {
     private void setAuthOrRegisterMode() {
         clearFields();
         if (isAuthMode) {
+            binding.tvTitle.setText("Вход");
             binding.llRegister.setVisibility(View.GONE);
             binding.llAuth.setVisibility(View.VISIBLE);
             binding.btnSignUp.setVisibility(View.VISIBLE);
@@ -68,6 +69,7 @@ public class AuthAndRegisterFragment extends Fragment {
                 binding.etPassword.setText(password);
             }
         } else {
+            binding.tvTitle.setText("Регистрация");
             binding.llRegister.setVisibility(View.VISIBLE);
             binding.llAuth.setVisibility(View.GONE);
             binding.btnSignUp.setVisibility(View.VISIBLE);
@@ -147,10 +149,10 @@ public class AuthAndRegisterFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 0) {
                     if (!passwordValidate(editable.toString())) {
-                        binding.textLayoutCreatePassword.setHint("Length 6-20, !@#$%^&* allowed");
+                        binding.textLayoutCreatePassword.setHint(R.string.hint_password_error);
                         binding.btnRegister.setEnabled(false);
                     } else {
-                        binding.textLayoutCreatePassword.setHint("Password");
+                        binding.textLayoutCreatePassword.setHint(R.string.hint_password_base);
                         checkDataFilled();
                     }
                 }
@@ -171,10 +173,10 @@ public class AuthAndRegisterFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 0) {
                     if (!passwordValidate(editable.toString())) {
-                        binding.textLayoutPassword.setHint("Password");
+                        binding.textLayoutPassword.setHint(R.string.hint_password_base);
                         binding.btnLogin.setEnabled(false);
                     } else {
-                        binding.textLayoutPassword.setHint("Password");
+                        binding.textLayoutPassword.setHint(R.string.hint_password_base);
                         checkDataFilled();
                     }
                 }

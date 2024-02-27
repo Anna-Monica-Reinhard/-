@@ -9,9 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity(tableName = "user", indices = {@Index(value = {"email", "phone_number"})})
 public class User {
     @PrimaryKey(autoGenerate = true)
@@ -25,6 +22,17 @@ public class User {
     public String email = "";
     @ColumnInfo(name = "phone_number")
     public String phoneNumber = "";
+
+    public User() {
+    }
+
+    public User(long id, String username, String password, String email, String phoneNumber) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
 
     @Override
     public String toString() {

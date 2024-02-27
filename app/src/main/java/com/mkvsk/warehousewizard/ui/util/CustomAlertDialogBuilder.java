@@ -45,11 +45,10 @@ public final class CustomAlertDialogBuilder {
 
         final TextView tvEditor = dialogView.findViewById(R.id.tvProductEditorFullInfo);
         final TextView tvCategory = dialogView.findViewById(R.id.tvProductCategoryFullInfo);
-        final TextView tvExpMonth = dialogView.findViewById(R.id.tvProductExpMonth);
+        final EditText tvExpMonth = dialogView.findViewById(R.id.tvProductExpMonth);
         final EditText tvName = dialogView.findViewById(R.id.tvProductNameFullInfo);
         final EditText tvCode = dialogView.findViewById(R.id.tvProductCode);
         final EditText tvDescription = dialogView.findViewById(R.id.tvDescription);
-        final TextView tvAvailability = dialogView.findViewById(R.id.tvAvailabilityFullInfo);
         final EditText tvPrice = dialogView.findViewById(R.id.tvPriceFullInfo);
         final EditText tvQty = dialogView.findViewById(R.id.tvQty);
         final ImageView ivImage = dialogView.findViewById(R.id.ivImage);
@@ -60,20 +59,21 @@ public final class CustomAlertDialogBuilder {
         final ImageButton btnDelete = dialogView.findViewById(R.id.btnDeleteProductCard);
 
         tvCategory.setText(product.getCategory());
-        tvExpMonth.setText("Expiration (month): " + product.getExpiration());
-        tvEditor.setText(Objects.requireNonNullElse("Editor: " + product.getLastEditor(), "Unknown"));
+        tvExpMonth.setText(String.valueOf(product.getExpiration()));
+        tvEditor.setText(Objects.requireNonNullElse("Последнее редактирование: " + product.getLastEditor(), "..."));
         tvName.setText(product.getTitle());
-        tvCode.setText(product.getCode());
-        tvDescription.setText(product.getDescription());
+        tvCode.setText(String.format("%s", product.getCode()));
+        tvDescription.setText(String.format("%s", product.getDescription()));
         tvPrice.setText(String.valueOf(product.getPrice()));
         tvQty.setText(String.valueOf(product.getQty()));
-        tvAvailability.setText(product.getQty() > 0 ? R.string.available : R.string.unavailable);
         Glide.with(context)
                 .load(Uri.parse(product.getImage()))
                 .apply(Utils.getOptions())
                 .dontAnimate()
                 .into(ivImage);
-        setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCode, tvQty);
+        setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCode, tvQty, tvExpMonth);
+        btnPlus.setVisibility(View.GONE);
+        btnMinus.setVisibility(View.GONE);
 
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
@@ -82,9 +82,9 @@ public final class CustomAlertDialogBuilder {
             long qty = Long.parseLong(tvQty.getText().toString());
             qty++;
             if (qty == 0) {
-                tvAvailability.setText(R.string.available);
-            } else {
-                tvAvailability.setText(R.string.unavailable);
+//                tvAvailability.setText(R.string.unavailable);
+//            } else {
+//                tvAvailability.setText(R.string.available);
             }
             tvQty.setText(String.valueOf(qty));
         });
@@ -93,9 +93,9 @@ public final class CustomAlertDialogBuilder {
             long qty = Long.parseLong(tvQty.getText().toString());
             qty--;
             if (qty == 0) {
-                tvAvailability.setText(R.string.available);
-            } else {
-                tvAvailability.setText(R.string.unavailable);
+//                tvAvailability.setText(R.string.unavailable);
+//            } else {
+//                tvAvailability.setText(R.string.available);
             }
             tvQty.setText(String.valueOf(qty));
         });
@@ -126,12 +126,12 @@ public final class CustomAlertDialogBuilder {
                 listener.onEdit(product);
             }
             isEditMode = !isEditMode;
-            setEditMode(isEditMode, context, tvName, tvDescription, tvPrice, tvCode, tvQty);
+            setEditMode(isEditMode, context, tvName, tvDescription, tvPrice, tvCode, tvQty, tvExpMonth);
         });
 
         btnDelete.setOnClickListener(view -> {
 //                    TODO undo toast
-            setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCode, tvQty);
+            setEditMode(isEditMode = false, context, tvName, tvDescription, tvPrice, tvCode, tvQty, tvExpMonth);
             listener.onDelete(product);
             alertDialog.dismiss();
         });
@@ -186,9 +186,8 @@ public final class CustomAlertDialogBuilder {
         dialog.setCancelable(false);
         AlertDialog alertDialog = dialog.create();
 
-        Uri imageUri = Uri.parse("https://img.freepik.com/free-photo/bright-petals-gift-love-in-a-bouquet-generated-by-ai_188544-13370.jpg");
         Glide.with(context)
-                .load(Drawable.createFromPath(imageUri.getPath()))
+                .load(Utils.getOptions())
                 .apply(Utils.getOptions())
                 .dontAnimate()
                 .into(ivPreview);
@@ -248,8 +247,10 @@ public final class CustomAlertDialogBuilder {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 10) {
-                    Glide.with(context).load(Drawable.createFromPath(tvImageLink.getText().toString()))
-                            .apply(Utils.getOptions()).into(ivPreview);
+                    Glide.with(context)
+                            .load(editable.toString())
+                            .apply(Utils.getOptions())
+                            .into(ivPreview);
                 }
             }
         });

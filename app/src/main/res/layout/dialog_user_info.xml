@@ -41,7 +41,7 @@
         style="@style/myTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username">
+        android:hint="Имя пользователя">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dialogUserInfoUsername"
@@ -78,7 +78,7 @@
         style="@style/myTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_input_height"
-        android:hint="Phone number">
+        android:hint="Номер телефона">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dialogUserInfoPhoneNumber"
@@ -98,7 +98,7 @@
         android:layout_width="match_parent"
         android:layout_marginBottom="24dp"
         android:layout_height="@dimen/text_input_height"
-        android:hint="Password">
+        android:hint="Пароль">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dialogUserInfoPassword"

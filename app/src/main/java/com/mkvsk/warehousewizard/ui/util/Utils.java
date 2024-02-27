@@ -25,8 +25,7 @@ public class Utils {
         return options = new RequestOptions()
                 .optionalFitCenter()
                 .placeholder(R.drawable.loading)
-                .error(R.drawable.loading_error);
-//                .useAnimationPool(true);
+                .error(R.drawable.ic_default);
     }
 
     public static void hideKeyboard(Activity activity) {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Главная</string>
+    <string name="title_dashboard">Дашборд</string>
+    <string name="don_t_have_any_account_signup">Нет аккаунта? <b><u>Регистрация</u></b></string>
+    <string name="have_any_account_sign_in">Уже есть аккаунт? <b><u>Войти</u></b></string>
+    <string name="login_error_user_not_found">Пользователь не найден</string>
+    <string name="hint_password">Пароль</string>
+    <string name="btn_login_text">Войти</string>
+    <string name="label_login">Вход</string>
+    <string name="hint_email_or_phone_number">Email или номер телефона</string>
+    <string name="hint_password_base">Пароль</string>
+    <string name="hint_phone_number">Номер телефона</string>
+    <string name="login_error_password_incorrect">Неверный пароль</string>
+    <string name="available">Доступно:</string>
+    <string name="unavailable">Нет в наличии</string>
+    <string name="last_editor_format">Ред: %s</string>
+    <string name="btn_continue_text">Продолжить</string>
+    <string name="hint_username">Имя пользователя</string>
+    <string name="hint_password_error"><![CDATA[Введите 6-20 символов. Разрешены !@#$%^&*]]></string>
+</resources>

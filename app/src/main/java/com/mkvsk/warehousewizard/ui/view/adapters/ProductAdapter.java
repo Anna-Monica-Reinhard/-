@@ -62,7 +62,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ItemView
 
         public void bind(Product productItem) {
             binding.tvTitle.setText(productItem.getTitle());
-            binding.tvCode.setText(productItem.getCode());
+            binding.tvCode.setText(String.format("Артикул: %s", productItem.getCode()));
             Glide.with(Utils.getAppContext()).load(productItem.getImage()).apply(Utils.getOptions()).into(binding.ivImage);
             binding.cvProduct.setOnClickListener(v -> {
                 listener.onProductClick(productItem, getBindingAdapterPosition());
